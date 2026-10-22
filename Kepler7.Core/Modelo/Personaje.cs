@@ -24,5 +24,35 @@ namespace Kepler7.Core.Modelo
         {
             Estado = nuevoEstado;
         }
+
+        public EstadoVisual EstadoVisual
+        {
+            get { return Estado.Visual; }
+        }
+
+        public ResultadoAccion Atacar(Personaje objetivo)
+        {
+            ResultadoAccion resultado = Estado.Atacar(this);
+            if (resultado.Exito)
+            {
+                objetivo.RecibirDanio(new Danio(resultado.Valor, "Fisico", this));
+            }
+            return resultado;
+        }
+
+        public ResultadoAccion Mover(int dx, int dy)
+        {
+            return Estado.Mover(this, dx, dy);
+        }
+
+        public ResultadoDanio RecibirDanio(Danio danio)
+        {
+            return Estado.RecibirDanio(this, danio);
+        }
+
+        public void FinTurno()
+        {
+            Estado.FinTurno(this);
+        }
     }
 }
