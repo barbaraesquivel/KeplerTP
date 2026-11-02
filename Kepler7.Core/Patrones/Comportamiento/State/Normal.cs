@@ -30,7 +30,16 @@ namespace Kepler7.Core.Patrones.Comportamiento.State
 
         public ResultadoDanio RecibirDanio(Personaje personaje, Danio danio)
         {
-            return personaje.Defensa.Procesar(danio);
+            ResultadoDanio resultado = personaje.Defensa.Procesar(danio);
+            if (danio.Tipo == "Veneno" && resultado.DanioFinal > 0)
+            {
+                personaje.CambiarEstado(new Envenenado(5, 3));
+            }
+            else if (personaje.Vida > 0 && personaje.Vida <= personaje.VidaMax * 3 / 10)
+            {
+                personaje.CambiarEstado(new Berserk(3));
+            }
+            return resultado;
         }
 
         public void FinTurno(Personaje personaje)

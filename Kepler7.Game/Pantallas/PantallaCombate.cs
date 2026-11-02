@@ -1,6 +1,7 @@
 using System.Drawing.Drawing2D;
 using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Comportamiento.Chain;
+using Kepler7.Core.Patrones.Comportamiento.Command;
 using Kepler7.Core.Patrones.Comportamiento.State;
 
 namespace Kepler7.Game.Pantallas
@@ -11,6 +12,9 @@ namespace Kepler7.Game.Pantallas
         private const int Columnas = 10;
         private const int Filas = 6;
         private const int EscudoMax = 30;
+        private const int Curacion = 20;
+        private const int CostoTorreta = 30;
+        private const int DanioTorreta = 6;
 
         private NavegadorPantallas navegador;
         private Personaje jugador;
@@ -18,6 +22,8 @@ namespace Kepler7.Game.Pantallas
         private Random random = new Random();
         private PanelCadenaDefensa panelCadena;
         private PanelEstadoPersonaje panelEstado;
+        private GestorComandos gestor = new GestorComandos();
+        private Base baseJugador = new Base();
 
         public PantallaCombate(NavegadorPantallas navegador)
         {
@@ -42,6 +48,8 @@ namespace Kepler7.Game.Pantallas
             jugador.Defensa.Agregar(new Armadura(3));
             jugador.Defensa.Agregar(new Vida(jugador));
 
+            baseJugador.Recursos = 100;
+
             enemigos.Add(CrearEnemigo("Alien 1", 7, 1));
             enemigos.Add(CrearEnemigo("Alien 2", 8, 4));
         }
@@ -56,14 +64,19 @@ namespace Kepler7.Game.Pantallas
 
         public void Actualizar()
         {
-            bool vivo = jugador.Vida > 0;
-            bool puedeActuar = vivo && jugador.EstadoVisual != EstadoVisual.Aturdido;
+            bool enJuego = jugador.Vida > 0 && QuedanEnemigos();
+            bool puedeActuar = enJuego && jugador.EstadoVisual != EstadoVisual.Aturdido;
             btnAtacar.Enabled = puedeActuar;
             btnIzquierda.Enabled = puedeActuar;
             btnArriba.Enabled = puedeActuar;
             btnAbajo.Enabled = puedeActuar;
             btnDerecha.Enabled = puedeActuar;
-            btnTurnoEnemigo.Enabled = vivo;
+            btnCurar.Enabled = enJuego;
+            btnConstruir.Enabled = enJuego;
+            btnDeshacer.Enabled = enJuego;
+            btnRehacer.Enabled = enJuego;
+            btnTurnoEnemigo.Enabled = enJuego;
+            lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
             panelEstado.ActualizarEstado();
             panelEscenario.Invalidate();
         }
@@ -87,6 +100,27 @@ namespace Kepler7.Game.Pantallas
             foreach (Personaje enemigo in enemigos)
             {
                 if (enemigo.Vida > 0 && enemigo.X == x && enemigo.Y == y)
+                {
+                    return true;
+                }
+            }
+            return HayTorreta(x, y);
+        }
+
+        private Point PosicionDeTorreta(string torreta)
+        {
+            int inicio = torreta.IndexOf('(') + 1;
+            int fin = torreta.IndexOf(')');
+            string[] partes = torreta.Substring(inicio, fin - inicio).Split(',');
+            return new Point(int.Parse(partes[0]), int.Parse(partes[1]));
+        }
+
+        private bool HayTorreta(int x, int y)
+        {
+            foreach (string torreta in baseJugador.Estructuras)
+            {
+                Point posicion = PosicionDeTorreta(torreta);
+                if (posicion.X == x && posicion.Y == y)
                 {
                     return true;
                 }
@@ -150,6 +184,7 @@ namespace Kepler7.Game.Pantallas
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             DibujarGrilla(g);
+            DibujarTorretas(g);
             foreach (Personaje enemigo in enemigos)
             {
                 DibujarEnemigo(g, enemigo);
@@ -166,6 +201,23 @@ namespace Kepler7.Game.Pantallas
             for (int j = 0; j <= Filas; j++)
             {
                 g.DrawLine(Pens.DimGray, 0, j * Celda, Columnas * Celda, j * Celda);
+            }
+        }
+
+        private void DibujarTorretas(Graphics g)
+        {
+            foreach (string torreta in baseJugador.Estructuras)
+            {
+                Point posicion = PosicionDeTorreta(torreta);
+                int x = posicion.X * Celda;
+                int y = posicion.Y * Celda;
+                Point[] triangulo =
+                {
+                    new Point(x + Celda / 2, y + 5),
+                    new Point(x + 5, y + Celda - 5),
+                    new Point(x + Celda - 5, y + Celda - 5)
+                };
+                g.FillPolygon(Brushes.Silver, triangulo);
             }
         }
 
@@ -209,7 +261,13 @@ namespace Kepler7.Game.Pantallas
                 lblMensaje.Text = "No hay ningún enemigo al lado para atacar";
                 return;
             }
-            ResultadoAccion resultado = jugador.Atacar(objetivo);
+            ResultadoAccion resultado = jugador.Estado.Atacar(jugador);
+            if (!resultado.Exito)
+            {
+                lblMensaje.Text = resultado.Mensaje;
+                return;
+            }
+            gestor.Ejecutar(new AtacarComando(objetivo, resultado.Valor));
             lblMensaje.Text = resultado.Mensaje + " a " + objetivo.Nombre;
             if (!QuedanEnemigos())
             {
@@ -232,8 +290,65 @@ namespace Kepler7.Game.Pantallas
                 lblMensaje.Text = "Esa casilla está ocupada";
                 return;
             }
-            ResultadoAccion resultado = jugador.Mover(dx, dy);
-            lblMensaje.Text = resultado.Mensaje;
+            gestor.Ejecutar(new MoverComando(jugador, nuevaX, nuevaY));
+            MostrarUltimoComando();
+            Actualizar();
+        }
+
+        private void MostrarUltimoComando()
+        {
+            lblMensaje.Text = gestor.Historial[gestor.Historial.Count - 1];
+        }
+
+        private void btnCurar_Click(object sender, EventArgs e)
+        {
+            if (jugador.Vida == jugador.VidaMax)
+            {
+                lblMensaje.Text = "Ya tenés la vida al máximo";
+                return;
+            }
+            gestor.Ejecutar(new CurarComando(jugador, Curacion));
+            MostrarUltimoComando();
+            Actualizar();
+        }
+
+        private void btnConstruir_Click(object sender, EventArgs e)
+        {
+            if (baseJugador.Recursos < CostoTorreta)
+            {
+                lblMensaje.Text = "No alcanzan los recursos para construir";
+                return;
+            }
+            if (HayTorreta(jugador.X, jugador.Y))
+            {
+                lblMensaje.Text = "Ya hay una torreta en esta casilla";
+                return;
+            }
+            string torreta = "Torreta (" + jugador.X + "," + jugador.Y + ")";
+            gestor.Ejecutar(new ConstruirComando(baseJugador, torreta, CostoTorreta));
+            MostrarUltimoComando();
+            Actualizar();
+        }
+
+        private void btnDeshacer_Click(object sender, EventArgs e)
+        {
+            if (!gestor.Deshacer())
+            {
+                lblMensaje.Text = "No hay nada para deshacer";
+                return;
+            }
+            MostrarUltimoComando();
+            Actualizar();
+        }
+
+        private void btnRehacer_Click(object sender, EventArgs e)
+        {
+            if (!gestor.Rehacer())
+            {
+                lblMensaje.Text = "No hay nada para rehacer";
+                return;
+            }
+            MostrarUltimoComando();
             Actualizar();
         }
 
@@ -257,14 +372,57 @@ namespace Kepler7.Game.Pantallas
             MoverJugador(1, 0);
         }
 
-        private void btnTurnoEnemigo_Click(object sender, EventArgs e)
+        private string DispararTorretas()
         {
             string mensaje = "";
+            foreach (string torreta in baseJugador.Estructuras)
+            {
+                Point posicion = PosicionDeTorreta(torreta);
+                Personaje objetivo = BuscarEnemigoVivoMasCercano(posicion.X, posicion.Y);
+                if (objetivo != null)
+                {
+                    objetivo.Vida = Math.Max(0, objetivo.Vida - DanioTorreta);
+                    mensaje += "Torreta dispara a " + objetivo.Nombre + " (" + DanioTorreta + "). ";
+                }
+            }
+            return mensaje;
+        }
+
+        private Personaje BuscarEnemigoVivoMasCercano(int x, int y)
+        {
+            Personaje masCercano = null;
+            int menorDistancia = int.MaxValue;
+            foreach (Personaje enemigo in enemigos)
+            {
+                int distancia = Math.Abs(enemigo.X - x) + Math.Abs(enemigo.Y - y);
+                if (enemigo.Vida > 0 && distancia < menorDistancia)
+                {
+                    masCercano = enemigo;
+                    menorDistancia = distancia;
+                }
+            }
+            return masCercano;
+        }
+
+        private void btnTurnoEnemigo_Click(object sender, EventArgs e)
+        {
+            string mensaje = DispararTorretas();
+            if (!QuedanEnemigos())
+            {
+                lblMensaje.Text = mensaje + "¡Ganaste el combate!";
+                Actualizar();
+                return;
+            }
             foreach (Personaje enemigo in enemigos)
             {
                 if (enemigo.Vida > 0 && EstanAlLado(jugador, enemigo))
                 {
-                    ResultadoDanio resultado = jugador.RecibirDanio(new Danio(enemigo.AtaqueBase, "Fisico", enemigo));
+                    string tipo = "Fisico";
+                    if (random.Next(100) < 25)
+                    {
+                        tipo = "Veneno";
+                    }
+                    ResultadoDanio resultado = jugador.RecibirDanio(new Danio(enemigo.AtaqueBase, tipo, enemigo));
                     mensaje += enemigo.Nombre + " te hace " + resultado.DanioFinal + " de daño. ";
                     panelCadena.MostrarRecorrido(enemigo.Nombre, resultado);
                 }

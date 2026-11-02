@@ -26,6 +26,11 @@ namespace Kepler7.Game.Pantallas
             btnTurnoEnemigo = new Button();
             btnVolver = new Button();
             lblMensaje = new Label();
+            btnCurar = new Button();
+            btnConstruir = new Button();
+            btnDeshacer = new Button();
+            btnRehacer = new Button();
+            lblBase = new Label();
             SuspendLayout();
             //
             // panelEscenario
@@ -99,9 +104,9 @@ namespace Kepler7.Game.Pantallas
             //
             // lblMensaje
             //
-            lblMensaje.Location = new Point(10, 300);
+            lblMensaje.Location = new Point(10, 335);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(401, 100);
+            lblMensaje.Size = new Size(401, 45);
             lblMensaje.TabIndex = 7;
             lblMensaje.Text = "¡Comienza el combate!";
             //
@@ -114,6 +119,54 @@ namespace Kepler7.Game.Pantallas
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = true;
             btnVolver.Click += btnVolver_Click;
+            //
+            // btnCurar
+            //
+            btnCurar.Location = new Point(10, 297);
+            btnCurar.Name = "btnCurar";
+            btnCurar.Size = new Size(80, 30);
+            btnCurar.TabIndex = 9;
+            btnCurar.Text = "Curar";
+            btnCurar.UseVisualStyleBackColor = true;
+            btnCurar.Click += btnCurar_Click;
+            //
+            // btnConstruir
+            //
+            btnConstruir.Location = new Point(100, 297);
+            btnConstruir.Name = "btnConstruir";
+            btnConstruir.Size = new Size(110, 30);
+            btnConstruir.TabIndex = 10;
+            btnConstruir.Text = "Construir torreta";
+            btnConstruir.UseVisualStyleBackColor = true;
+            btnConstruir.Click += btnConstruir_Click;
+            //
+            // btnDeshacer
+            //
+            btnDeshacer.Location = new Point(220, 297);
+            btnDeshacer.Name = "btnDeshacer";
+            btnDeshacer.Size = new Size(90, 30);
+            btnDeshacer.TabIndex = 11;
+            btnDeshacer.Text = "Deshacer";
+            btnDeshacer.UseVisualStyleBackColor = true;
+            btnDeshacer.Click += btnDeshacer_Click;
+            //
+            // btnRehacer
+            //
+            btnRehacer.Location = new Point(320, 297);
+            btnRehacer.Name = "btnRehacer";
+            btnRehacer.Size = new Size(91, 30);
+            btnRehacer.TabIndex = 12;
+            btnRehacer.Text = "Rehacer";
+            btnRehacer.UseVisualStyleBackColor = true;
+            btnRehacer.Click += btnRehacer_Click;
+            //
+            // lblBase
+            //
+            lblBase.Location = new Point(10, 385);
+            lblBase.Name = "lblBase";
+            lblBase.Size = new Size(401, 20);
+            lblBase.TabIndex = 13;
+            lblBase.Text = "Recursos: 0";
             //
             // PantallaCombate
             //
@@ -128,6 +181,11 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(btnTurnoEnemigo);
             Controls.Add(lblMensaje);
             Controls.Add(btnVolver);
+            Controls.Add(btnCurar);
+            Controls.Add(btnConstruir);
+            Controls.Add(btnDeshacer);
+            Controls.Add(btnRehacer);
+            Controls.Add(lblBase);
             Name = "PantallaCombate";
             Size = new Size(800, 450);
             ResumeLayout(false);
@@ -144,5 +202,10 @@ namespace Kepler7.Game.Pantallas
         private Button btnTurnoEnemigo;
         private Button btnVolver;
         private Label lblMensaje;
+        private Button btnCurar;
+        private Button btnConstruir;
+        private Button btnDeshacer;
+        private Button btnRehacer;
+        private Label lblBase;
     }
 }
