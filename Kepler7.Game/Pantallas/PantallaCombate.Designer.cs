@@ -17,7 +17,7 @@ namespace Kepler7.Game.Pantallas
 
         private void InitializeComponent()
         {
-            panelEscenario = new Panel();
+            panelEscenario = new PanelEscenario();
             btnAtacar = new Button();
             btnIzquierda = new Button();
             btnArriba = new Button();
@@ -193,7 +193,7 @@ namespace Kepler7.Game.Pantallas
 
         #endregion
 
-        private Panel panelEscenario;
+        private PanelEscenario panelEscenario;
         private Button btnAtacar;
         private Button btnIzquierda;
         private Button btnArriba;
