@@ -44,5 +44,20 @@ namespace Kepler7.Game
         {
             Mostrar(new PantallaFinal(this));
         }
+
+        public void IrAFlyweight()
+        {
+            Mostrar(new PantallaFlyweight());
+        }
+
+        public void IrAProxy()
+        {
+            Mostrar(new PantallaProxy());
+        }
+
+        public void IrAVisitor()
+        {
+            Mostrar(new PantallaVisitor());
+        }
     }
 }

@@ -20,5 +20,20 @@ namespace Kepler7.Game.Pantallas
         {
             navegador.IrATutorial();
         }
+
+        private void btnProbarFlyweight_Click(object sender, EventArgs e)
+        {
+            navegador.IrAFlyweight();
+        }
+
+        private void btnProbarProxy_Click_1(object sender, EventArgs e)
+        {
+            navegador.IrAProxy();
+        }
+
+        private void btnProbarVisitor_Click(object sender, EventArgs e)
+        {
+            navegador.IrAVisitor();
+        }
     }
 }
