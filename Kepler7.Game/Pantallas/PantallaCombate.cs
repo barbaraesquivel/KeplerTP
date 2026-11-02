@@ -15,6 +15,7 @@ namespace Kepler7.Game.Pantallas
         private const int Curacion = 20;
         private const int CostoTorreta = 30;
         private const int DanioTorreta = 6;
+        private const int AlcanceTorreta = 3;
 
         private NavegadorPantallas navegador;
         private Personaje jugador;
@@ -379,7 +380,7 @@ namespace Kepler7.Game.Pantallas
             {
                 Point posicion = PosicionDeTorreta(torreta);
                 Personaje objetivo = BuscarEnemigoVivoMasCercano(posicion.X, posicion.Y);
-                if (objetivo != null)
+                if (objetivo != null && Math.Abs(objetivo.X - posicion.X) + Math.Abs(objetivo.Y - posicion.Y) <= AlcanceTorreta)
                 {
                     objetivo.Vida = Math.Max(0, objetivo.Vida - DanioTorreta);
                     mensaje += "Torreta dispara a " + objetivo.Nombre + " (" + DanioTorreta + "). ";
