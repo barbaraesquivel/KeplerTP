@@ -3,6 +3,7 @@ using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Comportamiento.Chain;
 using Kepler7.Core.Patrones.Comportamiento.Command;
 using Kepler7.Core.Patrones.Comportamiento.State;
+using Kepler7.Game.Animacion;
 
 namespace Kepler7.Game.Pantallas
 {
@@ -25,12 +26,20 @@ namespace Kepler7.Game.Pantallas
         private PanelEstadoPersonaje panelEstado;
         private GestorComandos gestor = new GestorComandos();
         private Base baseJugador = new Base();
+        private AnimadorTimer animador;
+        private Font fuenteEfectos = new Font("Segoe UI", 9F, FontStyle.Bold);
 
         public PantallaCombate(NavegadorPantallas navegador)
         {
             InitializeComponent();
             this.navegador = navegador;
             CrearPersonajes();
+            animador = new AnimadorTimer(panelEscenario, PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual));
+            animador.Registrar(jugador);
+            foreach (Personaje enemigo in enemigos)
+            {
+                animador.Registrar(enemigo);
+            }
             panelCadena = new PanelCadenaDefensa(jugador, random, this);
             panelCadena.Location = new Point(420, 10);
             Controls.Add(panelCadena);
@@ -79,6 +88,7 @@ namespace Kepler7.Game.Pantallas
             btnTurnoEnemigo.Enabled = enJuego;
             lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
             panelEstado.ActualizarEstado();
+            animador.ColorObjetivo = PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual);
             panelEscenario.Invalidate();
         }
 
@@ -191,6 +201,18 @@ namespace Kepler7.Game.Pantallas
                 DibujarEnemigo(g, enemigo);
             }
             DibujarJugador(g);
+            DibujarEfectos(g);
+        }
+
+        private void DibujarEfectos(Graphics g)
+        {
+            foreach (EfectoDanio efecto in animador.Efectos)
+            {
+                using (SolidBrush pincel = new SolidBrush(Color.FromArgb(efecto.Opacidad, efecto.Color)))
+                {
+                    g.DrawString(efecto.Texto, fuenteEfectos, pincel, efecto.X * Celda + 4, efecto.Y * Celda + 8);
+                }
+            }
         }
 
         private void DibujarGrilla(Graphics g)
@@ -224,34 +246,45 @@ namespace Kepler7.Game.Pantallas
 
         private void DibujarJugador(Graphics g)
         {
-            int x = jugador.X * Celda;
-            int y = jugador.Y * Celda;
-            using (SolidBrush pincel = new SolidBrush(PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual)))
+            PointF posicion = animador.Posicion(jugador);
+            float x = posicion.X * Celda;
+            float y = posicion.Y * Celda;
+            Color color = animador.ColorJugador;
+            if (animador.EstaParpadeando(jugador))
+            {
+                color = Color.White;
+            }
+            using (SolidBrush pincel = new SolidBrush(color))
             {
                 g.FillEllipse(pincel, x + 7, y + 11, Celda - 14, Celda - 14);
             }
-            DibujarBarra(g, x + 3, y + 1, (float)jugador.Vida / jugador.VidaMax, Brushes.LimeGreen);
+            DibujarBarra(g, x + 3, y + 1, animador.VidaDibujada(jugador) / jugador.VidaMax, Brushes.LimeGreen);
             DibujarBarra(g, x + 3, y + 6, (float)PuntosDeEscudo() / EscudoMax, Brushes.DeepSkyBlue);
         }
 
         private void DibujarEnemigo(Graphics g, Personaje enemigo)
         {
-            int x = enemigo.X * Celda;
-            int y = enemigo.Y * Celda;
+            PointF posicion = animador.Posicion(enemigo);
+            float x = posicion.X * Celda;
+            float y = posicion.Y * Celda;
             Brush color = Brushes.DarkRed;
             if (enemigo.Vida == 0)
             {
                 color = Brushes.Gray;
             }
+            if (animador.EstaParpadeando(enemigo))
+            {
+                color = Brushes.White;
+            }
             g.FillRectangle(color, x + 7, y + 11, Celda - 14, Celda - 14);
-            DibujarBarra(g, x + 3, y + 1, (float)enemigo.Vida / enemigo.VidaMax, Brushes.LimeGreen);
+            DibujarBarra(g, x + 3, y + 1, animador.VidaDibujada(enemigo) / enemigo.VidaMax, Brushes.LimeGreen);
         }
 
-        private void DibujarBarra(Graphics g, int x, int y, float porcentaje, Brush color)
+        private void DibujarBarra(Graphics g, float x, float y, float porcentaje, Brush color)
         {
             int ancho = Celda - 6;
             g.FillRectangle(Brushes.DarkSlateGray, x, y, ancho, 4);
-            g.FillRectangle(color, x, y, ancho * Math.Min(1, porcentaje), 4);
+            g.FillRectangle(color, x, y, ancho * Math.Max(0, Math.Min(1, porcentaje)), 4);
         }
 
         private void btnAtacar_Click(object sender, EventArgs e)
@@ -425,6 +458,10 @@ namespace Kepler7.Game.Pantallas
                     }
                     ResultadoDanio resultado = jugador.RecibirDanio(new Danio(enemigo.AtaqueBase, tipo, enemigo));
                     mensaje += enemigo.Nombre + " te hace " + resultado.DanioFinal + " de daño. ";
+                    if (resultado.DanioFinal == 0)
+                    {
+                        animador.MostrarTexto(jugador, "Bloqueado", Color.LightSkyBlue);
+                    }
                     panelCadena.MostrarRecorrido(enemigo.Nombre, resultado);
                 }
                 else if (enemigo.Vida > 0)
@@ -444,6 +481,7 @@ namespace Kepler7.Game.Pantallas
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            animador.Detener();
             navegador.IrAInicio();
         }
     }
