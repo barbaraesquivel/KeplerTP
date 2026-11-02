@@ -42,7 +42,13 @@ namespace Kepler7.Core.Modelo
 
         public ResultadoAccion Mover(int dx, int dy)
         {
-            return Estado.Mover(this, dx, dy);
+            ResultadoAccion resultado = Estado.Mover(this, dx, dy);
+            if (resultado.Exito)
+            {
+                X += dx;
+                Y += dy;
+            }
+            return resultado;
         }
 
         public ResultadoDanio RecibirDanio(Danio danio)

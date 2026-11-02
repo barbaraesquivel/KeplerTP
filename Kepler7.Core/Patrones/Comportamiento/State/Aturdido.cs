@@ -24,12 +24,12 @@ namespace Kepler7.Core.Patrones.Comportamiento.State
 
         public ResultadoAccion Atacar(Personaje personaje)
         {
-            return new ResultadoAccion(false, personaje.Nombre + " está aturdido y no puede atacar", 0);
+            return new ResultadoAccion(false, personaje.Nombre + " está aturdido y no puede actuar este turno", 0);
         }
 
         public ResultadoAccion Mover(Personaje personaje, int dx, int dy)
         {
-            return new ResultadoAccion(false, personaje.Nombre + " está aturdido y no puede moverse", 0);
+            return new ResultadoAccion(false, personaje.Nombre + " está aturdido y no puede actuar este turno", 0);
         }
 
         public ResultadoDanio RecibirDanio(Personaje personaje, Danio danio)

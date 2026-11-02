@@ -75,17 +75,25 @@ namespace Kepler7.Game.Pantallas
         public void Actualizar()
         {
             bool enJuego = jugador.Vida > 0 && QuedanEnemigos();
-            bool puedeActuar = enJuego && jugador.EstadoVisual != EstadoVisual.Aturdido;
-            btnAtacar.Enabled = puedeActuar;
-            btnIzquierda.Enabled = puedeActuar;
-            btnArriba.Enabled = puedeActuar;
-            btnAbajo.Enabled = puedeActuar;
-            btnDerecha.Enabled = puedeActuar;
-            btnCurar.Enabled = enJuego;
-            btnConstruir.Enabled = enJuego;
-            btnDeshacer.Enabled = enJuego;
-            btnRehacer.Enabled = enJuego;
+            ResultadoAccion permisoAtacar = jugador.Estado.Atacar(jugador);
+            ResultadoAccion permisoMover = jugador.Estado.Mover(jugador, 0, 0);
+            bool puedeAtacar = enJuego && permisoAtacar.Exito;
+            bool puedeMover = enJuego && permisoMover.Exito;
+            bool puedeActuar = puedeAtacar || puedeMover;
+            btnAtacar.Enabled = puedeAtacar;
+            btnIzquierda.Enabled = puedeMover;
+            btnArriba.Enabled = puedeMover;
+            btnAbajo.Enabled = puedeMover;
+            btnDerecha.Enabled = puedeMover;
+            btnCurar.Enabled = puedeActuar;
+            btnConstruir.Enabled = puedeActuar;
+            btnDeshacer.Enabled = puedeActuar;
+            btnRehacer.Enabled = puedeActuar;
             btnTurnoEnemigo.Enabled = enJuego;
+            if (enJuego && !puedeActuar)
+            {
+                InformarBloqueo(permisoMover.Mensaje);
+            }
             lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
             panelEstado.ActualizarEstado();
             animador.ColorObjetivo = PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual);
@@ -95,6 +103,19 @@ namespace Kepler7.Game.Pantallas
         public void MostrarMensaje(string mensaje)
         {
             lblMensaje.Text = mensaje;
+        }
+
+        private void InformarBloqueo(string mensaje)
+        {
+            if (lblMensaje.Text.Contains(mensaje))
+            {
+                return;
+            }
+            if (lblMensaje.Text != "")
+            {
+                lblMensaje.Text += "\n";
+            }
+            lblMensaje.Text += mensaje + ".";
         }
 
         private bool EstanAlLado(Personaje a, Personaje b)
@@ -322,6 +343,12 @@ namespace Kepler7.Game.Pantallas
             if (EstaOcupada(nuevaX, nuevaY))
             {
                 lblMensaje.Text = "Esa casilla está ocupada";
+                return;
+            }
+            ResultadoAccion resultado = jugador.Estado.Mover(jugador, dx, dy);
+            if (!resultado.Exito)
+            {
+                lblMensaje.Text = resultado.Mensaje;
                 return;
             }
             gestor.Ejecutar(new MoverComando(jugador, nuevaX, nuevaY));

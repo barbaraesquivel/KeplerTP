@@ -4,21 +4,37 @@ namespace Kepler7.Core.Patrones.Creacionales.Prototype
     {
         public List<string> Ejecutar(TripulanteClonable original)
         {
+            string originalAntes = original.ToString();
             TripulanteClonable clon = original.Clonar();
             clon.Nombre = original.Nombre + " (clon)";
-            clon.Nivel = original.Nivel + 5;
-            clon.Habilidades.Add("Telepatia");
+            ModificarClon(clon);
+            return Comparar(original, originalAntes, clon);
+        }
+
+        public void ModificarClon(TripulanteClonable clon)
+        {
+            clon.Nivel++;
+            clon.Habilidades.Add("Habilidad nivel " + clon.Nivel);
             clon.Equipo.Arma = "Rifle de plasma";
             clon.Equipo.Objetos.Add("Botiquin");
+        }
 
+        public List<string> Comparar(TripulanteClonable original, string originalAntes, TripulanteClonable clon)
+        {
             List<string> resultado = new List<string>();
-            resultado.Add("Original: " + original);
-            resultado.Add("Clon: " + clon);
-            resultado.Add("Misma lista de habilidades: " + ReferenceEquals(original.Habilidades, clon.Habilidades));
-            resultado.Add("Mismo equipamiento: " + ReferenceEquals(original.Equipo, clon.Equipo));
-            resultado.Add("Original tiene Telepatia: " + original.Habilidades.Contains("Telepatia"));
-            resultado.Add("Original tiene Botiquin: " + original.Equipo.Objetos.Contains("Botiquin"));
+            resultado.Add("¿Comparten la lista de habilidades? " + SiNo(ReferenceEquals(original.Habilidades, clon.Habilidades)));
+            resultado.Add("¿Comparten el equipamiento? " + SiNo(ReferenceEquals(original.Equipo, clon.Equipo)));
+            resultado.Add("¿El original sigue igual que al principio? " + SiNo(original.ToString() == originalAntes));
             return resultado;
+        }
+
+        private string SiNo(bool valor)
+        {
+            if (valor)
+            {
+                return "Sí";
+            }
+            return "No";
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Kepler7.Game.Pantallas
         private void CambiarEstado(IEstadoPersonaje nuevoEstado)
         {
             jugador.CambiarEstado(nuevoEstado);
-            pantalla.MostrarMensaje(jugador.Nombre + " ahora está " + nuevoEstado.Nombre);
+            pantalla.MostrarMensaje("");
             pantalla.Actualizar();
         }
 

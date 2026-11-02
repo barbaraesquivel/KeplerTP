@@ -30,9 +30,7 @@ namespace Kepler7.Core.Patrones.Comportamiento.State
 
         public ResultadoAccion Mover(Personaje personaje, int dx, int dy)
         {
-            personaje.X += dx;
-            personaje.Y += dy;
-            return new ResultadoAccion(true, personaje.Nombre + " se mueve a (" + personaje.X + ", " + personaje.Y + ")", 1);
+            return new ResultadoAccion(true, personaje.Nombre + " se mueve", 1);
         }
 
         public ResultadoDanio RecibirDanio(Personaje personaje, Danio danio)

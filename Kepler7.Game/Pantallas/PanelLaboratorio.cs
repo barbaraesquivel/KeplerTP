@@ -9,6 +9,7 @@ namespace Kepler7.Game.Pantallas
         private TripulanteClonable original;
         private TripulanteClonable clon;
         private string originalAlEmpezar;
+        private PruebaIndependencia prueba = new PruebaIndependencia();
 
         public PanelLaboratorio(NavegadorPantallas navegador)
         {
@@ -56,15 +57,6 @@ namespace Kepler7.Game.Pantallas
             }
         }
 
-        private string SiNo(bool valor)
-        {
-            if (valor)
-            {
-                return "Sí";
-            }
-            return "No";
-        }
-
         private void ActualizarPantalla()
         {
             lblRecursos.Text = "Recursos: " + laboratorio.Recursos;
@@ -75,9 +67,7 @@ namespace Kepler7.Game.Pantallas
                 lblComparacion.Text = "Cloná al tripulante para comparar.";
                 return;
             }
-            lblComparacion.Text = "¿Comparten la lista de habilidades? " + SiNo(ReferenceEquals(original.Habilidades, clon.Habilidades))
-                + "     ¿Comparten el equipamiento? " + SiNo(ReferenceEquals(original.Equipo, clon.Equipo))
-                + "\n¿El original sigue igual que al principio? " + SiNo(original.ToString() == originalAlEmpezar);
+            lblComparacion.Text = string.Join("\n", prueba.Comparar(original, originalAlEmpezar, clon));
         }
 
         private void btnClonar_Click(object sender, EventArgs e)
@@ -100,10 +90,7 @@ namespace Kepler7.Game.Pantallas
                 lblComparacion.Text = "Primero tenés que clonar.";
                 return;
             }
-            clon.Nivel++;
-            clon.Habilidades.Add("Habilidad nivel " + clon.Nivel);
-            clon.Equipo.Arma = "Rifle de plasma";
-            clon.Equipo.Objetos.Add("Botiquin");
+            prueba.ModificarClon(clon);
             ActualizarPantalla();
         }
 
