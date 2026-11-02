@@ -35,5 +35,15 @@ namespace Kepler7.Game.Pantallas
         {
             navegador.IrAVisitor();
         }
+
+        private void btnProbarCombate_Click(object sender, EventArgs e)
+        {
+            navegador.IrACombate();
+        }
+
+        private void btnProbarLaboratorio_Click(object sender, EventArgs e)
+        {
+            navegador.IrALaboratorio();
+        }
     }
 }

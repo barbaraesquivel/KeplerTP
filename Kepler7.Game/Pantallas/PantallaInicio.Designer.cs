@@ -23,6 +23,8 @@ namespace Kepler7.Game.Pantallas
             btnProbarFlyweight = new Button();
             btnProbarProxy = new Button();
             btnProbarVisitor = new Button();
+            btnProbarCombate = new Button();
+            btnProbarLaboratorio = new Button();
             SuspendLayout();
             // 
             // lblTitulo
@@ -90,11 +92,35 @@ namespace Kepler7.Game.Pantallas
             btnProbarVisitor.Text = "Probar Visitor";
             btnProbarVisitor.UseVisualStyleBackColor = true;
             btnProbarVisitor.Click += btnProbarVisitor_Click;
-            // 
+            //
+            // btnProbarCombate
+            //
+            btnProbarCombate.Location = new Point(43, 566);
+            btnProbarCombate.Margin = new Padding(4, 5, 4, 5);
+            btnProbarCombate.Name = "btnProbarCombate";
+            btnProbarCombate.Size = new Size(229, 58);
+            btnProbarCombate.TabIndex = 6;
+            btnProbarCombate.Text = "Probar Combate";
+            btnProbarCombate.UseVisualStyleBackColor = true;
+            btnProbarCombate.Click += btnProbarCombate_Click;
+            //
+            // btnProbarLaboratorio
+            //
+            btnProbarLaboratorio.Location = new Point(43, 645);
+            btnProbarLaboratorio.Margin = new Padding(4, 5, 4, 5);
+            btnProbarLaboratorio.Name = "btnProbarLaboratorio";
+            btnProbarLaboratorio.Size = new Size(229, 58);
+            btnProbarLaboratorio.TabIndex = 7;
+            btnProbarLaboratorio.Text = "Probar Laboratorio";
+            btnProbarLaboratorio.UseVisualStyleBackColor = true;
+            btnProbarLaboratorio.Click += btnProbarLaboratorio_Click;
+            //
             // PantallaInicio
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnProbarLaboratorio);
+            Controls.Add(btnProbarCombate);
             Controls.Add(btnProbarVisitor);
             Controls.Add(btnProbarProxy);
             Controls.Add(btnProbarFlyweight);
@@ -116,5 +142,7 @@ namespace Kepler7.Game.Pantallas
         private Button btnProbarFlyweight;
         private Button btnProbarProxy;
         private Button btnProbarVisitor;
+        private Button btnProbarCombate;
+        private Button btnProbarLaboratorio;
     }
 }

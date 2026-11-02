@@ -59,5 +59,15 @@ namespace Kepler7.Game
         {
             Mostrar(new PantallaVisitor());
         }
+
+        public void IrACombate()
+        {
+            Mostrar(new PantallaCombate(this));
+        }
+
+        public void IrALaboratorio()
+        {
+            Mostrar(new PanelLaboratorio(this));
+        }
     }
 }
