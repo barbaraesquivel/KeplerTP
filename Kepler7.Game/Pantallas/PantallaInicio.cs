@@ -21,29 +21,10 @@ namespace Kepler7.Game.Pantallas
             navegador.IrATutorial();
         }
 
-        private void btnProbarFlyweight_Click(object sender, EventArgs e)
+        // Cierra la aplicación
+        private void btnSalir_Click(object sender, EventArgs e)
         {
-            navegador.IrAFlyweight();
-        }
-
-        private void btnProbarProxy_Click_1(object sender, EventArgs e)
-        {
-            navegador.IrAProxy();
-        }
-
-        private void btnProbarVisitor_Click(object sender, EventArgs e)
-        {
-            navegador.IrAVisitor();
-        }
-
-        private void btnProbarCombate_Click(object sender, EventArgs e)
-        {
-            navegador.IrACombate();
-        }
-
-        private void btnProbarLaboratorio_Click(object sender, EventArgs e)
-        {
-            navegador.IrALaboratorio();
+            Application.Exit();
         }
     }
 }

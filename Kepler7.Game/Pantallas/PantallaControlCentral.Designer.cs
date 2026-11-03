@@ -43,6 +43,7 @@ namespace Kepler7.Game.Pantallas
             btnIniciarTurno.Size = new Size(160, 35);
             btnIniciarTurno.Text = "Iniciar turno";
             btnIniciarTurno.UseVisualStyleBackColor = true;
+            btnIniciarTurno.Click += btnIniciarTurno_Click;
             //
             // btnEmergencia
             //
@@ -51,6 +52,7 @@ namespace Kepler7.Game.Pantallas
             btnEmergencia.Size = new Size(160, 35);
             btnEmergencia.Text = "Emergencia";
             btnEmergencia.UseVisualStyleBackColor = true;
+            btnEmergencia.Click += btnEmergencia_Click;
             //
             // btnApagar
             //
@@ -59,6 +61,7 @@ namespace Kepler7.Game.Pantallas
             btnApagar.Size = new Size(160, 35);
             btnApagar.Text = "Apagar estación";
             btnApagar.UseVisualStyleBackColor = true;
+            btnApagar.Click += btnApagar_Click;
             //
             // lblEstado
             //

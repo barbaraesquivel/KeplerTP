@@ -31,6 +31,7 @@ namespace Kepler7.Game.Pantallas
             btnDeshacer = new Button();
             btnRehacer = new Button();
             lblBase = new Label();
+            lstHistorial = new ListBox();
             SuspendLayout();
             //
             // panelEscenario
@@ -168,6 +169,15 @@ namespace Kepler7.Game.Pantallas
             lblBase.TabIndex = 13;
             lblBase.Text = "Recursos: 0";
             //
+            // lstHistorial
+            //
+            lstHistorial.FormattingEnabled = true;
+            lstHistorial.ItemHeight = 15;
+            lstHistorial.Location = new Point(10, 450);
+            lstHistorial.Name = "lstHistorial";
+            lstHistorial.Size = new Size(780, 100);
+            lstHistorial.TabIndex = 14;
+            //
             // PantallaCombate
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -186,8 +196,9 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(btnDeshacer);
             Controls.Add(btnRehacer);
             Controls.Add(lblBase);
+            Controls.Add(lstHistorial);
             Name = "PantallaCombate";
-            Size = new Size(800, 450);
+            Size = new Size(800, 560);
             ResumeLayout(false);
         }
 
@@ -207,5 +218,6 @@ namespace Kepler7.Game.Pantallas
         private Button btnDeshacer;
         private Button btnRehacer;
         private Label lblBase;
+        private ListBox lstHistorial;
     }
 }

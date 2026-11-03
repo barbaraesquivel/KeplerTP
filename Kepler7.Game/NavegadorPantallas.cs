@@ -1,3 +1,4 @@
+using Kepler7.Core.Modelo;
 using Kepler7.Game.Pantallas;
 
 namespace Kepler7.Game
@@ -7,9 +8,13 @@ namespace Kepler7.Game
     {
         private Control contenedor;
 
+        // Partida actual: todas las pantallas comparten estos datos
+        public Partida Partida { get; private set; }
+
         public NavegadorPantallas(Control contenedor)
         {
             this.contenedor = contenedor;
+            Partida = new Partida();
         }
 
         // Saca la pantalla actual y pone la nueva ocupando todo el espacio

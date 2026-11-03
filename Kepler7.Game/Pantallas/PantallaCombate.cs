@@ -98,6 +98,23 @@ namespace Kepler7.Game.Pantallas
             panelEstado.ActualizarEstado();
             animador.ColorObjetivo = PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual);
             panelEscenario.Invalidate();
+            // Agregado: Actualizar() se llama después de cada acción, deshacer o rehacer
+            MostrarHistorial();
+        }
+
+        // Agregado: muestra todo el historial de Command (incluye lo deshecho y rehecho)
+        private void MostrarHistorial()
+        {
+            lstHistorial.Items.Clear();
+            foreach (string linea in gestor.Historial)
+            {
+                lstHistorial.Items.Add(linea);
+            }
+            // Deja visible la última línea
+            if (lstHistorial.Items.Count > 0)
+            {
+                lstHistorial.TopIndex = lstHistorial.Items.Count - 1;
+            }
         }
 
         public void MostrarMensaje(string mensaje)
