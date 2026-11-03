@@ -69,5 +69,10 @@ namespace Kepler7.Game
         {
             Mostrar(new PanelLaboratorio(this));
         }
+
+        public void IrAControlCentral()
+        {
+            Mostrar(new PantallaControlCentral(this));
+        }
     }
 }
