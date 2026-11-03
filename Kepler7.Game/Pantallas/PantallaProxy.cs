@@ -19,10 +19,18 @@ namespace Kepler7.Game.Pantallas
 
         private IBoveda _bovedaProxy;
 
-        public PantallaProxy()
+        private NavegadorPantallas navegador;
+
+        public PantallaProxy(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            this.navegador = navegador;
             _bovedaProxy = new BovedaProxy();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            navegador.IrAHub();
         }
 
         private void PantallaProxy_Load(object sender, EventArgs e)

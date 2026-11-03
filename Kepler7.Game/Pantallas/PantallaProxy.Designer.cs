@@ -35,6 +35,7 @@
             lstLogs = new ListBox();
             txtUsuario = new TextBox();
             label2 = new Label();
+            btnVolver = new Button();
             SuspendLayout();
             // 
             // cmbRol
@@ -97,10 +98,22 @@
             label2.TabIndex = 6;
             label2.Text = "Nombre:";
             // 
+            // btnVolver
+            // 
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVolver.Location = new Point(29, 469);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(229, 58);
+            btnVolver.TabIndex = 7;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // PantallaProxy
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnVolver);
             Controls.Add(label2);
             Controls.Add(txtUsuario);
             Controls.Add(lstLogs);
@@ -109,7 +122,7 @@
             Controls.Add(label1);
             Controls.Add(cmbRol);
             Name = "PantallaProxy";
-            Size = new Size(1160, 482);
+            Size = new Size(1160, 560);
             Load += PantallaProxy_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -117,6 +130,7 @@
 
         #endregion
 
+        private Button btnVolver;
         private ComboBox cmbRol;
         private Label label1;
         private Button btnAcceder;

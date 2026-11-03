@@ -18,10 +18,18 @@ namespace Kepler7.Game.Pantallas
     {
         private List<ItemInventario> _inventario;
 
-        public PantallaVisitor()
+        private NavegadorPantallas navegador;
+
+        public PantallaVisitor(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            this.navegador = navegador;
             CargarInventarioEjemplo();
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            navegador.IrAHub();
         }
 
         private void CargarInventarioEjemplo()

@@ -32,6 +32,7 @@
             txtReporte = new TextBox();
             lblValorTotal = new Label();
             lblTotalItems = new Label();
+            btnVolver = new Button();
             SuspendLayout();
             // 
             // btnAnalizar
@@ -70,10 +71,22 @@
             lblTotalItems.TabIndex = 3;
             lblTotalItems.Text = "Total Items:";
             // 
+            // btnVolver
+            // 
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVolver.Location = new Point(29, 384);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(229, 58);
+            btnVolver.TabIndex = 4;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // PantallaVisitor
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnVolver);
             Controls.Add(lblTotalItems);
             Controls.Add(lblValorTotal);
             Controls.Add(txtReporte);
@@ -86,6 +99,7 @@
 
         #endregion
 
+        private Button btnVolver;
         private Button btnAnalizar;
         private TextBox txtReporte;
         private Label lblValorTotal;

@@ -11,10 +11,14 @@ namespace Kepler7.Game
         // Partida actual: todas las pantallas comparten estos datos
         public Partida Partida { get; private set; }
 
+        // Misión actual (por ahora hay una sola)
+        public Mision Mision { get; private set; }
+
         public NavegadorPantallas(Control contenedor)
         {
             this.contenedor = contenedor;
             Partida = new Partida();
+            Mision = new Mision();
         }
 
         // Saca la pantalla actual y pone la nueva ocupando todo el espacio
@@ -52,17 +56,17 @@ namespace Kepler7.Game
 
         public void IrAFlyweight()
         {
-            Mostrar(new PantallaFlyweight());
+            Mostrar(new PantallaFlyweight(this));
         }
 
         public void IrAProxy()
         {
-            Mostrar(new PantallaProxy());
+            Mostrar(new PantallaProxy(this));
         }
 
         public void IrAVisitor()
         {
-            Mostrar(new PantallaVisitor());
+            Mostrar(new PantallaVisitor(this));
         }
 
         public void IrACombate()
@@ -78,6 +82,38 @@ namespace Kepler7.Game
         public void IrAControlCentral()
         {
             Mostrar(new PantallaControlCentral(this));
+        }
+
+        public void IrAHangar()
+        {
+            Mostrar(new PantallaHangar(this));
+        }
+
+        // Guarda el resultado del combate en la partida y muestra victoria o derrota
+        public void TerminarCombate(bool gano, int danio, int comandos)
+        {
+            Partida.DanioTotal += danio;
+            Partida.ComandosUsados += comandos;
+            if (gano)
+            {
+                Partida.MisionesGanadas++;
+                IrAVictoria();
+            }
+            else
+            {
+                Partida.MisionesPerdidas++;
+                IrADerrota();
+            }
+        }
+
+        public void IrAVictoria()
+        {
+            Mostrar(new PantallaVictoria(this, Mision));
+        }
+
+        public void IrADerrota()
+        {
+            Mostrar(new PantallaDerrota(this));
         }
     }
 }

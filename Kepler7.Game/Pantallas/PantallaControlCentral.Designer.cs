@@ -96,7 +96,8 @@ namespace Kepler7.Game.Pantallas
             //
             // btnVolver
             //
-            btnVolver.Location = new Point(30, 385);
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVolver.Location = new Point(20, 505);
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(160, 35);
             btnVolver.Text = "Volver al hub";
@@ -117,7 +118,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lstSecuencia);
             Controls.Add(btnVolver);
             Name = "PantallaControlCentral";
-            Size = new Size(800, 450);
+            Size = new Size(800, 560);
             ResumeLayout(false);
             PerformLayout();
         }

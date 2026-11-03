@@ -90,6 +90,8 @@ namespace Kepler7.Game.Pantallas
             btnDeshacer.Enabled = puedeActuar;
             btnRehacer.Enabled = puedeActuar;
             btnTurnoEnemigo.Enabled = enJuego;
+            // Agregado: al terminar el combate el botón lleva a victoria o derrota
+            btnVolver.Text = enJuego ? "Volver al hub" : "Continuar";
             if (enJuego && !puedeActuar)
             {
                 InformarBloqueo(permisoMover.Mensaje);
@@ -339,7 +341,13 @@ namespace Kepler7.Game.Pantallas
                 lblMensaje.Text = resultado.Mensaje;
                 return;
             }
-            gestor.Ejecutar(new AtacarComando(objetivo, resultado.Valor));
+            // Agregado: la nave elegida en el Hangar (Builder) suma Ataque / 10 al daño
+            int danio = resultado.Valor;
+            if (navegador.Partida.NaveElegida != null)
+            {
+                danio += navegador.Partida.NaveElegida.Ataque / 10;
+            }
+            gestor.Ejecutar(new AtacarComando(objetivo, danio));
             lblMensaje.Text = resultado.Mensaje + " a " + objetivo.Nombre;
             if (!QuedanEnemigos())
             {
@@ -523,10 +531,29 @@ namespace Kepler7.Game.Pantallas
             Actualizar();
         }
 
+        // Agregado: daño total que recibieron los enemigos (ataques y torretas del jugador).
+        // Se calcula al final, así lo deshecho no cuenta
+        private int DanioHecho()
+        {
+            int danio = 0;
+            foreach (Personaje enemigo in enemigos)
+            {
+                danio += enemigo.VidaMax - enemigo.Vida;
+            }
+            return danio;
+        }
+
         private void btnVolver_Click(object sender, EventArgs e)
         {
             animador.Detener();
-            navegador.IrAInicio();
+            // Agregado: si el combate terminó, el navegador guarda el resultado y muestra victoria o derrota
+            if (jugador.Vida == 0 || !QuedanEnemigos())
+            {
+                navegador.TerminarCombate(jugador.Vida > 0, DanioHecho(), gestor.Historial.Count);
+                return;
+            }
+            // Cambiado: si se abandona el combate a mitad, vuelve al hub (antes iba al inicio)
+            navegador.IrAHub();
         }
     }
 }

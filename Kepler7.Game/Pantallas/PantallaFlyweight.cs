@@ -6,9 +6,17 @@ namespace Kepler7.Game.Pantallas
 {
     public partial class PantallaFlyweight : UserControl // o Form, según cómo estén las otras pantallas
     {
-        public PantallaFlyweight()
+        private NavegadorPantallas navegador;
+
+        public PantallaFlyweight(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            this.navegador = navegador;
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            navegador.IrAHub();
         }
 
         private void btnEjecutarPrueba_Click_1(object sender, EventArgs e)

@@ -113,11 +113,12 @@ namespace Kepler7.Game.Pantallas
             //
             // btnVolver
             //
-            btnVolver.Location = new Point(10, 410);
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVolver.Location = new Point(20, 505);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(100, 30);
+            btnVolver.Size = new Size(160, 35);
             btnVolver.TabIndex = 8;
-            btnVolver.Text = "Volver";
+            btnVolver.Text = "Volver al hub";
             btnVolver.UseVisualStyleBackColor = true;
             btnVolver.Click += btnVolver_Click;
             //
@@ -173,9 +174,9 @@ namespace Kepler7.Game.Pantallas
             //
             lstHistorial.FormattingEnabled = true;
             lstHistorial.ItemHeight = 15;
-            lstHistorial.Location = new Point(10, 450);
+            lstHistorial.Location = new Point(190, 450);
             lstHistorial.Name = "lstHistorial";
-            lstHistorial.Size = new Size(780, 100);
+            lstHistorial.Size = new Size(600, 100);
             lstHistorial.TabIndex = 14;
             //
             // PantallaCombate

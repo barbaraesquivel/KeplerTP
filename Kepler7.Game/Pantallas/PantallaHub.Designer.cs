@@ -18,6 +18,12 @@ namespace Kepler7.Game.Pantallas
         private void InitializeComponent()
         {
             lblTitulo = new Label();
+            btnHangar = new Button();
+            btnLaboratorio = new Button();
+            btnControlCentral = new Button();
+            btnCenso = new Button();
+            btnBoveda = new Button();
+            btnInventario = new Button();
             btnMision = new Button();
             btnSalir = new Button();
             SuspendLayout();
@@ -30,20 +36,74 @@ namespace Kepler7.Game.Pantallas
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Text = "Hub de la estación";
             // 
+            // btnHangar
+            // 
+            btnHangar.Location = new Point(30, 90);
+            btnHangar.Name = "btnHangar";
+            btnHangar.Size = new Size(300, 35);
+            btnHangar.Text = "Hangar: construir tu nave";
+            btnHangar.UseVisualStyleBackColor = true;
+            btnHangar.Click += btnHangar_Click;
+            // 
+            // btnLaboratorio
+            // 
+            btnLaboratorio.Location = new Point(30, 135);
+            btnLaboratorio.Name = "btnLaboratorio";
+            btnLaboratorio.Size = new Size(300, 35);
+            btnLaboratorio.Text = "Laboratorio: clonar tripulantes";
+            btnLaboratorio.UseVisualStyleBackColor = true;
+            btnLaboratorio.Click += btnLaboratorio_Click;
+            // 
+            // btnControlCentral
+            // 
+            btnControlCentral.Location = new Point(30, 180);
+            btnControlCentral.Name = "btnControlCentral";
+            btnControlCentral.Size = new Size(300, 35);
+            btnControlCentral.Text = "Control Central: manejar la estación";
+            btnControlCentral.UseVisualStyleBackColor = true;
+            btnControlCentral.Click += btnControlCentral_Click;
+            // 
+            // btnCenso
+            // 
+            btnCenso.Location = new Point(30, 225);
+            btnCenso.Name = "btnCenso";
+            btnCenso.Size = new Size(300, 35);
+            btnCenso.Text = "Censo: especies de la tripulación";
+            btnCenso.UseVisualStyleBackColor = true;
+            btnCenso.Click += btnCenso_Click;
+            // 
+            // btnBoveda
+            // 
+            btnBoveda.Location = new Point(30, 270);
+            btnBoveda.Name = "btnBoveda";
+            btnBoveda.Size = new Size(300, 35);
+            btnBoveda.Text = "Bóveda: datos con acceso restringido";
+            btnBoveda.UseVisualStyleBackColor = true;
+            btnBoveda.Click += btnBoveda_Click;
+            // 
+            // btnInventario
+            // 
+            btnInventario.Location = new Point(30, 315);
+            btnInventario.Name = "btnInventario";
+            btnInventario.Size = new Size(300, 35);
+            btnInventario.Text = "Inventario: valor y reporte de ítems";
+            btnInventario.UseVisualStyleBackColor = true;
+            btnInventario.Click += btnInventario_Click;
+            // 
             // btnMision
             // 
-            btnMision.Location = new Point(30, 100);
+            btnMision.Location = new Point(30, 360);
             btnMision.Name = "btnMision";
-            btnMision.Size = new Size(160, 35);
-            btnMision.Text = "Ir a la misión";
+            btnMision.Size = new Size(300, 35);
+            btnMision.Text = "Misión: combate contra los aliens";
             btnMision.UseVisualStyleBackColor = true;
             btnMision.Click += btnMision_Click;
             // 
             // btnSalir
             // 
-            btnSalir.Location = new Point(30, 150);
+            btnSalir.Location = new Point(30, 405);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(160, 35);
+            btnSalir.Size = new Size(300, 35);
             btnSalir.Text = "Salir al inicio";
             btnSalir.UseVisualStyleBackColor = true;
             btnSalir.Click += btnSalir_Click;
@@ -53,6 +113,12 @@ namespace Kepler7.Game.Pantallas
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lblTitulo);
+            Controls.Add(btnHangar);
+            Controls.Add(btnLaboratorio);
+            Controls.Add(btnControlCentral);
+            Controls.Add(btnCenso);
+            Controls.Add(btnBoveda);
+            Controls.Add(btnInventario);
             Controls.Add(btnMision);
             Controls.Add(btnSalir);
             Name = "PantallaHub";
@@ -64,6 +130,12 @@ namespace Kepler7.Game.Pantallas
         #endregion
 
         private Label lblTitulo;
+        private Button btnHangar;
+        private Button btnLaboratorio;
+        private Button btnControlCentral;
+        private Button btnCenso;
+        private Button btnBoveda;
+        private Button btnInventario;
         private Button btnMision;
         private Button btnSalir;
     }

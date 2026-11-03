@@ -18,31 +18,41 @@ namespace Kepler7.Game.Pantallas
         private void InitializeComponent()
         {
             lblTitulo = new Label();
+            lblResumen = new Label();
             btnInicio = new Button();
             SuspendLayout();
-            // 
+            //
             // lblTitulo
-            // 
+            //
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             lblTitulo.Location = new Point(30, 30);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Text = "Fin de la partida";
-            // 
+            lblTitulo.Text = "Resumen de la partida";
+            //
+            // lblResumen
+            //
+            lblResumen.AutoSize = true;
+            lblResumen.Font = new Font("Segoe UI", 11F);
+            lblResumen.Location = new Point(30, 90);
+            lblResumen.Name = "lblResumen";
+            lblResumen.Text = "";
+            //
             // btnInicio
-            // 
-            btnInicio.Location = new Point(30, 100);
+            //
+            btnInicio.Location = new Point(30, 280);
             btnInicio.Name = "btnInicio";
             btnInicio.Size = new Size(160, 35);
             btnInicio.Text = "Volver al inicio";
             btnInicio.UseVisualStyleBackColor = true;
             btnInicio.Click += btnInicio_Click;
-            // 
+            //
             // PantallaFinal
-            // 
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lblTitulo);
+            Controls.Add(lblResumen);
             Controls.Add(btnInicio);
             Name = "PantallaFinal";
             Size = new Size(800, 450);
@@ -53,6 +63,7 @@ namespace Kepler7.Game.Pantallas
         #endregion
 
         private Label lblTitulo;
+        private Label lblResumen;
         private Button btnInicio;
     }
 }

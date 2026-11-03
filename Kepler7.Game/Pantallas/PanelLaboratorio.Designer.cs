@@ -110,11 +110,12 @@ namespace Kepler7.Game.Pantallas
             //
             // btnVolver
             //
-            btnVolver.Location = new Point(10, 410);
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVolver.Location = new Point(20, 505);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(100, 30);
+            btnVolver.Size = new Size(160, 35);
             btnVolver.TabIndex = 9;
-            btnVolver.Text = "Volver";
+            btnVolver.Text = "Volver al hub";
             btnVolver.UseVisualStyleBackColor = true;
             btnVolver.Click += btnVolver_Click;
             //
@@ -133,7 +134,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblComparacion);
             Controls.Add(btnVolver);
             Name = "PanelLaboratorio";
-            Size = new Size(800, 450);
+            Size = new Size(800, 560);
             ResumeLayout(false);
             PerformLayout();
         }

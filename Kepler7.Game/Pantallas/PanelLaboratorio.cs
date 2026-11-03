@@ -96,7 +96,7 @@ namespace Kepler7.Game.Pantallas
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            navegador.IrAInicio();
+            navegador.IrAHub();
         }
     }
 }

@@ -30,6 +30,7 @@
         {
             lblResultado = new Label();
             btnEjecutarPrueba = new Button();
+            btnVolver = new Button();
             SuspendLayout();
             // 
             // lblResultado
@@ -50,10 +51,22 @@
             btnEjecutarPrueba.UseVisualStyleBackColor = true;
             btnEjecutarPrueba.Click += btnEjecutarPrueba_Click_1;
             // 
+            // btnVolver
+            // 
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnVolver.Location = new Point(29, 369);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(229, 58);
+            btnVolver.TabIndex = 2;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // PantallaFlyweight
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnVolver);
             Controls.Add(btnEjecutarPrueba);
             Controls.Add(lblResultado);
             Name = "PantallaFlyweight";
@@ -64,6 +77,7 @@
 
         #endregion
 
+        private Button btnVolver;
         private Label lblResultado;
         private Button btnEjecutarPrueba;
     }
