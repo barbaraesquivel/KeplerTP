@@ -115,5 +115,10 @@ namespace Kepler7.Game
         {
             Mostrar(new PantallaDerrota(this));
         }
+
+        public void IrAComunicaciones()
+        {
+            Mostrar(new PantallaComunicaciones());
+        }
     }
 }

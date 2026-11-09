@@ -16,6 +16,12 @@ namespace Kepler7.Core.Patrones.Estructurales.Bridge
             this.mecanismoCifrado = cifrado;
             this.contenido = contenido;
         }
+
+        public void CambiarCifrado(ICifrado nuevoCifrado)
+        {
+            this.mecanismoCifrado = nuevoCifrado;
+        }
+
         public abstract string Enviar();
 
     }

@@ -1,0 +1,89 @@
+﻿using Kepler7.Core.Patrones.Estructurales.Bridge;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Kepler7.Game.Pantallas
+{
+    public partial class PantallaComunicaciones : UserControl
+    {
+        private Mensaje mensajeActual;
+        public PantallaComunicaciones()
+        {
+            InitializeComponent();
+            ConfigurarListas();
+        }
+
+        private void ConfigurarListas()
+        {
+            cmbTipoMensaje.Items.Add("Texto Estándar");
+            cmbTipoMensaje.Items.Add("Alerta");
+            cmbTipoMensaje.Items.Add("Emergencia");
+            cmbTipoMensaje.SelectedIndex = 0;
+
+            cmbCifrado.Items.Add("Sin Cifrado");
+            cmbCifrado.Items.Add("AES-256");
+            cmbCifrado.Items.Add("Cuántico");
+            cmbCifrado.SelectedIndex = 0;
+        }
+
+        private void PantallaComunicaciones_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEnviar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMensaje.Text))
+            {
+                MessageBox.Show("Ingresá un texto para enviar.");
+                return;
+            }
+
+            ICifrado cifradoSeleccionado = ObtenerCifradoSeleccionado();
+            string texto = txtMensaje.Text;
+
+            string tipo = cmbTipoMensaje.SelectedItem.ToString();
+            if (tipo == "Texto Estándar")
+                mensajeActual = new MensajeTexto(cifradoSeleccionado, texto);
+            else if (tipo == "Alerta")
+                mensajeActual = new MensajeAlerta(cifradoSeleccionado, texto);
+            else if (tipo == "Emergencia")
+                mensajeActual = new MensajeEmergencia(cifradoSeleccionado, texto);
+
+            ActualizarPantalla();
+        }
+
+        private ICifrado ObtenerCifradoSeleccionado()
+        {
+            string seleccion = cmbCifrado.SelectedItem.ToString();
+            if (seleccion == "AES-256") return new CifradoAES();
+            if (seleccion == "Cuántico") return new CifradoCuantico();
+
+            return new SinCifrado();
+        }
+
+        private void ActualizarPantalla()
+        {
+            txtMensajeOriginalMuestra.Text = mensajeActual.contenido;
+            txtMensajeCifradoMuestra.Text = mensajeActual.Enviar();
+        }
+
+        private void cmbCifrado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (mensajeActual != null)
+            {
+                ICifrado nuevoCifrado = ObtenerCifradoSeleccionado();
+                mensajeActual.CambiarCifrado(nuevoCifrado);
+
+                ActualizarPantalla();
+            }
+        }
+    }
+}

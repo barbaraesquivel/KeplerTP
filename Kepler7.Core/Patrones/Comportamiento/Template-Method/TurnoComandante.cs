@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kepler7.Core.Patrones.Comportamiento.Template_Method
 {
-    public class TurnoComando : TurnoUnidad
+    public class TurnoComandante : TurnoUnidad
     {
         protected override string Decision()
         {

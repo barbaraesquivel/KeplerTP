@@ -26,6 +26,9 @@ namespace Kepler7.Game.Pantallas
             btnInventario = new Button();
             btnMision = new Button();
             btnSalir = new Button();
+            btnComunicaciones = new Button();
+            button2 = new Button();
+            button3 = new Button();
             SuspendLayout();
             // 
             // lblTitulo
@@ -34,6 +37,8 @@ namespace Kepler7.Game.Pantallas
             lblTitulo.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             lblTitulo.Location = new Point(30, 30);
             lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(254, 37);
+            lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Hub de la estación";
             // 
             // btnHangar
@@ -41,6 +46,7 @@ namespace Kepler7.Game.Pantallas
             btnHangar.Location = new Point(30, 90);
             btnHangar.Name = "btnHangar";
             btnHangar.Size = new Size(300, 35);
+            btnHangar.TabIndex = 1;
             btnHangar.Text = "Hangar: construir tu nave";
             btnHangar.UseVisualStyleBackColor = true;
             btnHangar.Click += btnHangar_Click;
@@ -50,6 +56,7 @@ namespace Kepler7.Game.Pantallas
             btnLaboratorio.Location = new Point(30, 135);
             btnLaboratorio.Name = "btnLaboratorio";
             btnLaboratorio.Size = new Size(300, 35);
+            btnLaboratorio.TabIndex = 2;
             btnLaboratorio.Text = "Laboratorio: clonar tripulantes";
             btnLaboratorio.UseVisualStyleBackColor = true;
             btnLaboratorio.Click += btnLaboratorio_Click;
@@ -59,6 +66,7 @@ namespace Kepler7.Game.Pantallas
             btnControlCentral.Location = new Point(30, 180);
             btnControlCentral.Name = "btnControlCentral";
             btnControlCentral.Size = new Size(300, 35);
+            btnControlCentral.TabIndex = 3;
             btnControlCentral.Text = "Control Central: manejar la estación";
             btnControlCentral.UseVisualStyleBackColor = true;
             btnControlCentral.Click += btnControlCentral_Click;
@@ -68,6 +76,7 @@ namespace Kepler7.Game.Pantallas
             btnCenso.Location = new Point(30, 225);
             btnCenso.Name = "btnCenso";
             btnCenso.Size = new Size(300, 35);
+            btnCenso.TabIndex = 4;
             btnCenso.Text = "Censo: especies de la tripulación";
             btnCenso.UseVisualStyleBackColor = true;
             btnCenso.Click += btnCenso_Click;
@@ -77,6 +86,7 @@ namespace Kepler7.Game.Pantallas
             btnBoveda.Location = new Point(30, 270);
             btnBoveda.Name = "btnBoveda";
             btnBoveda.Size = new Size(300, 35);
+            btnBoveda.TabIndex = 5;
             btnBoveda.Text = "Bóveda: datos con acceso restringido";
             btnBoveda.UseVisualStyleBackColor = true;
             btnBoveda.Click += btnBoveda_Click;
@@ -86,6 +96,7 @@ namespace Kepler7.Game.Pantallas
             btnInventario.Location = new Point(30, 315);
             btnInventario.Name = "btnInventario";
             btnInventario.Size = new Size(300, 35);
+            btnInventario.TabIndex = 6;
             btnInventario.Text = "Inventario: valor y reporte de ítems";
             btnInventario.UseVisualStyleBackColor = true;
             btnInventario.Click += btnInventario_Click;
@@ -95,23 +106,56 @@ namespace Kepler7.Game.Pantallas
             btnMision.Location = new Point(30, 360);
             btnMision.Name = "btnMision";
             btnMision.Size = new Size(300, 35);
+            btnMision.TabIndex = 7;
             btnMision.Text = "Misión: combate contra los aliens";
             btnMision.UseVisualStyleBackColor = true;
             btnMision.Click += btnMision_Click;
             // 
             // btnSalir
             // 
-            btnSalir.Location = new Point(30, 405);
+            btnSalir.Location = new Point(30, 553);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(300, 35);
+            btnSalir.TabIndex = 8;
             btnSalir.Text = "Salir al inicio";
             btnSalir.UseVisualStyleBackColor = true;
             btnSalir.Click += btnSalir_Click;
+            // 
+            // btnComunicaciones
+            // 
+            btnComunicaciones.Location = new Point(30, 405);
+            btnComunicaciones.Name = "btnComunicaciones";
+            btnComunicaciones.Size = new Size(300, 35);
+            btnComunicaciones.TabIndex = 9;
+            btnComunicaciones.Text = "Comunicaciones";
+            btnComunicaciones.UseVisualStyleBackColor = true;
+            btnComunicaciones.Click += btnComunicaciones_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(30, 450);
+            button2.Name = "button2";
+            button2.Size = new Size(300, 35);
+            button2.TabIndex = 9;
+            button2.Text = "button1";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(30, 495);
+            button3.Name = "button3";
+            button3.Size = new Size(300, 35);
+            button3.TabIndex = 9;
+            button3.Text = "button1";
+            button3.UseVisualStyleBackColor = true;
             // 
             // PantallaHub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(button3);
+            Controls.Add(button2);
+            Controls.Add(btnComunicaciones);
             Controls.Add(lblTitulo);
             Controls.Add(btnHangar);
             Controls.Add(btnLaboratorio);
@@ -122,7 +166,8 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(btnMision);
             Controls.Add(btnSalir);
             Name = "PantallaHub";
-            Size = new Size(800, 450);
+            Size = new Size(800, 617);
+            Load += PantallaHub_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -138,5 +183,8 @@ namespace Kepler7.Game.Pantallas
         private Button btnInventario;
         private Button btnMision;
         private Button btnSalir;
+        private Button btnComunicaciones;
+        private Button button2;
+        private Button button3;
     }
 }

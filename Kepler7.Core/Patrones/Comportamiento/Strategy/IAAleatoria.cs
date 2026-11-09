@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kepler7.Core.Patrones.Comportamiento.Strategy
 {
-    public class IAAleatoria
+    public class IAAleatoria : IEstrategiaIA
     {
         private Random numRandom = new Random();
         public string DecidirAccion(Enemigo enemigo, Contexto contexto)

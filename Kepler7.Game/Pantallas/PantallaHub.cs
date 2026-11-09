@@ -51,5 +51,15 @@ namespace Kepler7.Game.Pantallas
         {
             navegador.IrAInicio();
         }
+
+        private void PantallaHub_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnComunicaciones_Click(object sender, EventArgs e)
+        {
+            navegador.IrAComunicaciones();
+        }
     }
 }

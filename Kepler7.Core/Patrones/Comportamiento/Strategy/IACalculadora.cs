@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kepler7.Core.Patrones.Comportamiento.Strategy
 {
-    public class IACalculadora
+    public class IACalculadora : IEstrategiaIA
     {
         public string DecidirAccion(Enemigo enemigo, Contexto contexto)
         {
