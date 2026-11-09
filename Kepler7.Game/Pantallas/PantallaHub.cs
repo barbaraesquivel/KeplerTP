@@ -61,5 +61,10 @@ namespace Kepler7.Game.Pantallas
         {
             navegador.IrAComunicaciones();
         }
+
+        private void btnEstrategiaIA_Click(object sender, EventArgs e)
+        {
+            navegador.IrAEstrategiaIA();
+        }
     }
 }

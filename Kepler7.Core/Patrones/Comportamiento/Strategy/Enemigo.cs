@@ -30,5 +30,7 @@ namespace Kepler7.Core.Patrones.Comportamiento.Strategy
             return this.estrategia.DecidirAccion(this, contextoActual);
         }
 
+        public string NombreEstrategiaActual => this.estrategia.GetType().Name;
+
     }
 }

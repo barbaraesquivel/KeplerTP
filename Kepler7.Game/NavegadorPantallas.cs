@@ -120,5 +120,10 @@ namespace Kepler7.Game
         {
             Mostrar(new PantallaComunicaciones());
         }
+
+        public void IrAEstrategiaIA()
+        {
+            Mostrar(new PantallaEstrategiaIA_strategy());
+        }
     }
 }

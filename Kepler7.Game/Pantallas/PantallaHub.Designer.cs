@@ -27,7 +27,7 @@ namespace Kepler7.Game.Pantallas
             btnMision = new Button();
             btnSalir = new Button();
             btnComunicaciones = new Button();
-            button2 = new Button();
+            btnEstrategiaIA = new Button();
             button3 = new Button();
             SuspendLayout();
             // 
@@ -131,14 +131,15 @@ namespace Kepler7.Game.Pantallas
             btnComunicaciones.UseVisualStyleBackColor = true;
             btnComunicaciones.Click += btnComunicaciones_Click;
             // 
-            // button2
+            // btnEstrategiaIA
             // 
-            button2.Location = new Point(30, 450);
-            button2.Name = "button2";
-            button2.Size = new Size(300, 35);
-            button2.TabIndex = 9;
-            button2.Text = "button1";
-            button2.UseVisualStyleBackColor = true;
+            btnEstrategiaIA.Location = new Point(30, 450);
+            btnEstrategiaIA.Name = "btnEstrategiaIA";
+            btnEstrategiaIA.Size = new Size(300, 35);
+            btnEstrategiaIA.TabIndex = 9;
+            btnEstrategiaIA.Text = "EstrategiaIA";
+            btnEstrategiaIA.UseVisualStyleBackColor = true;
+            btnEstrategiaIA.Click += btnEstrategiaIA_Click;
             // 
             // button3
             // 
@@ -154,7 +155,7 @@ namespace Kepler7.Game.Pantallas
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(button3);
-            Controls.Add(button2);
+            Controls.Add(btnEstrategiaIA);
             Controls.Add(btnComunicaciones);
             Controls.Add(lblTitulo);
             Controls.Add(btnHangar);
@@ -184,7 +185,7 @@ namespace Kepler7.Game.Pantallas
         private Button btnMision;
         private Button btnSalir;
         private Button btnComunicaciones;
-        private Button button2;
+        private Button btnEstrategiaIA;
         private Button button3;
     }
 }
