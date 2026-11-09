@@ -28,7 +28,7 @@ namespace Kepler7.Game.Pantallas
             btnSalir = new Button();
             btnComunicaciones = new Button();
             btnEstrategiaIA = new Button();
-            button3 = new Button();
+            btnTurnos = new Button();
             SuspendLayout();
             // 
             // lblTitulo
@@ -141,20 +141,21 @@ namespace Kepler7.Game.Pantallas
             btnEstrategiaIA.UseVisualStyleBackColor = true;
             btnEstrategiaIA.Click += btnEstrategiaIA_Click;
             // 
-            // button3
+            // btnTurnos
             // 
-            button3.Location = new Point(30, 495);
-            button3.Name = "button3";
-            button3.Size = new Size(300, 35);
-            button3.TabIndex = 9;
-            button3.Text = "button1";
-            button3.UseVisualStyleBackColor = true;
+            btnTurnos.Location = new Point(30, 495);
+            btnTurnos.Name = "btnTurnos";
+            btnTurnos.Size = new Size(300, 35);
+            btnTurnos.TabIndex = 9;
+            btnTurnos.Text = "Turnos";
+            btnTurnos.UseVisualStyleBackColor = true;
+            btnTurnos.Click += btnTurnos_Click;
             // 
             // PantallaHub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(button3);
+            Controls.Add(btnTurnos);
             Controls.Add(btnEstrategiaIA);
             Controls.Add(btnComunicaciones);
             Controls.Add(lblTitulo);
@@ -186,6 +187,6 @@ namespace Kepler7.Game.Pantallas
         private Button btnSalir;
         private Button btnComunicaciones;
         private Button btnEstrategiaIA;
-        private Button button3;
+        private Button btnTurnos;
     }
 }

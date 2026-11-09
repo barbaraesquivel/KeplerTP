@@ -125,5 +125,10 @@ namespace Kepler7.Game
         {
             Mostrar(new PantallaEstrategiaIA_strategy());
         }
+
+        public void IrATurnos()
+        {
+            Mostrar(new PantallaTurnos());
+        }
     }
 }

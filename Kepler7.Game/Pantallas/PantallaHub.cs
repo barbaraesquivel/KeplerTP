@@ -66,5 +66,10 @@ namespace Kepler7.Game.Pantallas
         {
             navegador.IrAEstrategiaIA();
         }
+
+        private void btnTurnos_Click(object sender, EventArgs e)
+        {
+            navegador.IrATurnos();
+        }
     }
 }
