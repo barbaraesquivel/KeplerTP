@@ -33,154 +33,154 @@ namespace Kepler7.Game.Pantallas
             lblBase = new Label();
             lstHistorial = new ListBox();
             SuspendLayout();
-            //
+            // 
             // panelEscenario
-            //
+            // 
             panelEscenario.BackColor = Color.FromArgb(20, 20, 40);
-            panelEscenario.Location = new Point(10, 10);
+            panelEscenario.Location = new Point(15, 12);
             panelEscenario.Name = "panelEscenario";
             panelEscenario.Size = new Size(401, 241);
             panelEscenario.TabIndex = 0;
             panelEscenario.Paint += panelEscenario_Paint;
-            //
+            // 
             // btnAtacar
-            //
-            btnAtacar.Location = new Point(10, 260);
+            // 
+            btnAtacar.Location = new Point(15, 259);
             btnAtacar.Name = "btnAtacar";
-            btnAtacar.Size = new Size(80, 30);
+            btnAtacar.Size = new Size(75, 32);
             btnAtacar.TabIndex = 1;
             btnAtacar.Text = "Atacar";
             btnAtacar.UseVisualStyleBackColor = true;
             btnAtacar.Click += btnAtacar_Click;
-            //
+            // 
             // btnIzquierda
-            //
-            btnIzquierda.Location = new Point(100, 260);
+            // 
+            btnIzquierda.Location = new Point(94, 259);
             btnIzquierda.Name = "btnIzquierda";
-            btnIzquierda.Size = new Size(35, 30);
+            btnIzquierda.Size = new Size(34, 32);
             btnIzquierda.TabIndex = 2;
             btnIzquierda.Text = "←";
             btnIzquierda.UseVisualStyleBackColor = true;
             btnIzquierda.Click += btnIzquierda_Click;
-            //
+            // 
             // btnArriba
-            //
-            btnArriba.Location = new Point(140, 260);
+            // 
+            btnArriba.Location = new Point(132, 259);
             btnArriba.Name = "btnArriba";
-            btnArriba.Size = new Size(35, 30);
+            btnArriba.Size = new Size(34, 32);
             btnArriba.TabIndex = 3;
             btnArriba.Text = "↑";
             btnArriba.UseVisualStyleBackColor = true;
             btnArriba.Click += btnArriba_Click;
-            //
+            // 
             // btnAbajo
-            //
-            btnAbajo.Location = new Point(180, 260);
+            // 
+            btnAbajo.Location = new Point(170, 259);
             btnAbajo.Name = "btnAbajo";
-            btnAbajo.Size = new Size(35, 30);
+            btnAbajo.Size = new Size(34, 32);
             btnAbajo.TabIndex = 4;
             btnAbajo.Text = "↓";
             btnAbajo.UseVisualStyleBackColor = true;
             btnAbajo.Click += btnAbajo_Click;
-            //
+            // 
             // btnDerecha
-            //
-            btnDerecha.Location = new Point(220, 260);
+            // 
+            btnDerecha.Location = new Point(208, 259);
             btnDerecha.Name = "btnDerecha";
-            btnDerecha.Size = new Size(35, 30);
+            btnDerecha.Size = new Size(34, 32);
             btnDerecha.TabIndex = 5;
             btnDerecha.Text = "→";
             btnDerecha.UseVisualStyleBackColor = true;
             btnDerecha.Click += btnDerecha_Click;
-            //
+            // 
             // btnTurnoEnemigo
-            //
-            btnTurnoEnemigo.Location = new Point(265, 260);
+            // 
+            btnTurnoEnemigo.Location = new Point(248, 259);
             btnTurnoEnemigo.Name = "btnTurnoEnemigo";
-            btnTurnoEnemigo.Size = new Size(146, 30);
+            btnTurnoEnemigo.Size = new Size(168, 32);
             btnTurnoEnemigo.TabIndex = 6;
             btnTurnoEnemigo.Text = "Turno enemigo";
             btnTurnoEnemigo.UseVisualStyleBackColor = true;
             btnTurnoEnemigo.Click += btnTurnoEnemigo_Click;
-            //
-            // lblMensaje
-            //
-            lblMensaje.Location = new Point(10, 335);
-            lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(401, 45);
-            lblMensaje.TabIndex = 7;
-            lblMensaje.Text = "¡Comienza el combate!";
-            //
-            // btnVolver
-            //
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVolver.Location = new Point(20, 505);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(160, 35);
-            btnVolver.TabIndex = 8;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
-            //
+            // 
             // btnCurar
-            //
-            btnCurar.Location = new Point(10, 297);
+            // 
+            btnCurar.Location = new Point(15, 296);
             btnCurar.Name = "btnCurar";
-            btnCurar.Size = new Size(80, 30);
+            btnCurar.Size = new Size(75, 30);
             btnCurar.TabIndex = 9;
             btnCurar.Text = "Curar";
             btnCurar.UseVisualStyleBackColor = true;
             btnCurar.Click += btnCurar_Click;
-            //
+            // 
             // btnConstruir
-            //
-            btnConstruir.Location = new Point(100, 297);
+            // 
+            btnConstruir.Location = new Point(94, 296);
             btnConstruir.Name = "btnConstruir";
             btnConstruir.Size = new Size(110, 30);
             btnConstruir.TabIndex = 10;
             btnConstruir.Text = "Construir torreta";
             btnConstruir.UseVisualStyleBackColor = true;
             btnConstruir.Click += btnConstruir_Click;
-            //
+            // 
             // btnDeshacer
-            //
-            btnDeshacer.Location = new Point(220, 297);
+            // 
+            btnDeshacer.Location = new Point(208, 296);
             btnDeshacer.Name = "btnDeshacer";
-            btnDeshacer.Size = new Size(90, 30);
+            btnDeshacer.Size = new Size(100, 30);
             btnDeshacer.TabIndex = 11;
             btnDeshacer.Text = "Deshacer";
             btnDeshacer.UseVisualStyleBackColor = true;
             btnDeshacer.Click += btnDeshacer_Click;
-            //
+            // 
             // btnRehacer
-            //
-            btnRehacer.Location = new Point(320, 297);
+            // 
+            btnRehacer.Location = new Point(312, 296);
             btnRehacer.Name = "btnRehacer";
-            btnRehacer.Size = new Size(91, 30);
+            btnRehacer.Size = new Size(104, 30);
             btnRehacer.TabIndex = 12;
             btnRehacer.Text = "Rehacer";
             btnRehacer.UseVisualStyleBackColor = true;
             btnRehacer.Click += btnRehacer_Click;
-            //
+            // 
+            // lblMensaje
+            // 
+            lblMensaje.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblMensaje.Location = new Point(15, 332);
+            lblMensaje.Name = "lblMensaje";
+            lblMensaje.Size = new Size(401, 22);
+            lblMensaje.TabIndex = 7;
+            lblMensaje.Text = "¡Comienza el combate!";
+            // 
             // lblBase
-            //
-            lblBase.Location = new Point(10, 385);
+            // 
+            lblBase.Location = new Point(15, 356);
             lblBase.Name = "lblBase";
             lblBase.Size = new Size(401, 20);
             lblBase.TabIndex = 13;
             lblBase.Text = "Recursos: 0";
-            //
+            // 
             // lstHistorial
-            //
+            // 
             lstHistorial.FormattingEnabled = true;
             lstHistorial.ItemHeight = 15;
-            lstHistorial.Location = new Point(190, 450);
+            lstHistorial.Location = new Point(15, 380);
             lstHistorial.Name = "lstHistorial";
-            lstHistorial.Size = new Size(600, 100);
+            lstHistorial.Size = new Size(401, 94);
             lstHistorial.TabIndex = 14;
-            //
+            // 
+            // btnVolver
+            // 
+            btnVolver.Location = new Point(15, 482);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(160, 34);
+            btnVolver.TabIndex = 8;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // PantallaCombate
-            //
+            // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panelEscenario);
@@ -190,16 +190,16 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(btnAbajo);
             Controls.Add(btnDerecha);
             Controls.Add(btnTurnoEnemigo);
-            Controls.Add(lblMensaje);
-            Controls.Add(btnVolver);
             Controls.Add(btnCurar);
             Controls.Add(btnConstruir);
             Controls.Add(btnDeshacer);
             Controls.Add(btnRehacer);
+            Controls.Add(lblMensaje);
             Controls.Add(lblBase);
             Controls.Add(lstHistorial);
+            Controls.Add(btnVolver);
             Name = "PantallaCombate";
-            Size = new Size(800, 560);
+            Size = new Size(810, 530);
             ResumeLayout(false);
         }
 
@@ -212,13 +212,13 @@ namespace Kepler7.Game.Pantallas
         private Button btnAbajo;
         private Button btnDerecha;
         private Button btnTurnoEnemigo;
-        private Button btnVolver;
-        private Label lblMensaje;
         private Button btnCurar;
         private Button btnConstruir;
         private Button btnDeshacer;
         private Button btnRehacer;
+        private Label lblMensaje;
         private Label lblBase;
         private ListBox lstHistorial;
+        private Button btnVolver;
     }
 }

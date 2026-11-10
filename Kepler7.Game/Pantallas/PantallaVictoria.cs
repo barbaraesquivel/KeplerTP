@@ -25,7 +25,11 @@ namespace Kepler7.Game.Pantallas
                 monedas = monedas + monedas * navegador.Partida.NaveElegida.BonusRecursos / 100;
             }
 
-            // TODO: avisar a IProgreso cuando Lautaro lo implemente
+            // Avisar a IProgreso (implementado por Lautaro)
+            navegador.Progreso.GanarXp(xp);
+            navegador.Progreso.GanarMonedas(monedas);
+            navegador.Progreso.Guardar();
+
             navegador.Partida.XpGanada += xp;
             navegador.Partida.MonedasGanadas += monedas;
 

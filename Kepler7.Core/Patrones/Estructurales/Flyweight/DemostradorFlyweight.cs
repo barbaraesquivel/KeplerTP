@@ -1,85 +1,83 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Kepler7.Core.Modelo;
 
 namespace Kepler7.Core.Patrones.Estructurales.Flyweight
 {
     public class ResultadoComparacion
     {
+        public int TotalTripulantes { get; set; }
+        public int EspeciesConFlyweight { get; set; }
+        public int EspeciesSinFlyweight { get; set; }
         public long MemoriaConFlyweightBytes { get; set; }
         public long MemoriaSinFlyweightBytes { get; set; }
-        public int ObjetosEspecieCreados { get; set; }
-        public int TotalTripulantes { get; set; }
 
         public double MemoriaConMB => MemoriaConFlyweightBytes / (1024.0 * 1024.0);
         public double MemoriaSinMB => MemoriaSinFlyweightBytes / (1024.0 * 1024.0);
-        public double AhorroPorcentaje => ((double)(MemoriaSinFlyweightBytes - MemoriaConFlyweightBytes) / MemoriaSinFlyweightBytes) * 100;
+        public double AhorroPorcentaje => MemoriaSinFlyweightBytes > 0
+            ? ((double)(MemoriaSinFlyweightBytes - MemoriaConFlyweightBytes) / MemoriaSinFlyweightBytes) * 100
+            : 0;
     }
 
     public static class DemostradorFlyweight
     {
-        public static ResultadoComparacion EjecutarDemostracion(int cantidadTripulantes = 10000)
+        // 5 especies exactas según la consigna
+        public static readonly (string Nombre, string Color, string Planeta, string Dieta)[] EspeciesDisponibles = new[]
         {
-            var datosEspecies = new (string Nombre, string Origen, string Habilidad)[]
-            {
-                ("Humano", "Tierra", "Adaptabilidad"),
-                ("Zetiano", "Zeta Reticuli", "Telepatía"),
-                ("Andromedano", "Andrómeda", "Camuflaje"),
-                ("Martiano", "Marte", "Resistencia"),
-                ("Cygnian", "Cygnus X-1", "Visión Nocturna")
-            };
+            ("Humano", "Cálido", "Tierra", "Omnívoro"),
+            ("Zetiano", "Gris", "Zeta Reticuli", "Autótrofo"),
+            ("Andromedano", "Azul", "Andrómeda", "Herbívoro"),
+            ("Martiano", "Rojo", "Marte", "Carnívoro"),
+            ("Cygnian", "Dorado", "Cygnus X-1", "Sintético")
+        };
 
-            // 1. Medición CON Flyweight
+        public static ResultadoComparacion EjecutarComparacion(FabricaEspecies fabrica, int cantidad = 10000)
+        {
+            string[] rangos = { "Capitán", "Teniente", "Oficial", "Científico", "Ingeniero", "Médico" };
+
+            // 1. CON Flyweight (compartiendo instancias de IEspecie mediante la fábrica)
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-            long memoriaInicialCon = GC.GetTotalMemory(true);
+            long memInicioCon = GC.GetTotalMemory(true);
 
-            List<Tripulante> tripulantesCon = new List<Tripulante>();
-            for (int i = 0; i < cantidadTripulantes; i++)
+            List<Tripulante> tripulantesCon = new List<Tripulante>(cantidad);
+            for (int i = 0; i < cantidad; i++)
             {
-                var datos = datosEspecies[i % 5];
-                EspecieFlyweight especie = EspecieFactory.ObtenerEspecie(datos.Nombre, datos.Origen, datos.Habilidad);
-
-                // Parámetros: legajo, nombre, vidaMax, ataqueBase, especie
-                tripulantesCon.Add(new Tripulante(i + 1, $"Tripulante_{i + 1}", 100, 10, especie));
+                var espData = EspeciesDisponibles[i % EspeciesDisponibles.Length];
+                IEspecie especie = fabrica.ObtenerEspecie(espData.Nombre, espData.Color, espData.Planeta, espData.Dieta);
+                string rango = rangos[i % rangos.Length];
+                tripulantesCon.Add(new Tripulante(i + 1, $"Tripulante_{i + 1}", rango, especie));
             }
 
-            long memoriaFinalCon = GC.GetTotalMemory(true);
-            long bytesCon = memoriaFinalCon - memoriaInicialCon;
+            long memFinCon = GC.GetTotalMemory(true);
+            long bytesCon = Math.Max(memFinCon - memInicioCon, 1);
 
-            // 2. Medición SIN Flyweight
+            // 2. SIN Flyweight (creando un objeto Especie nuevo por cada tripulante)
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-            long memoriaInicialSin = GC.GetTotalMemory(true);
+            long memInicioSin = GC.GetTotalMemory(true);
 
-            List<TripulanteSinPatron> tripulantesSin = new List<TripulanteSinPatron>();
-            for (int i = 0; i < cantidadTripulantes; i++)
+            List<Tripulante> tripulantesSin = new List<Tripulante>(cantidad);
+            for (int i = 0; i < cantidad; i++)
             {
-                var datos = datosEspecies[i % 5];
-
-                // Parámetros: legajo, nombre, vidaMax, ataqueBase, especie, origen, habilidad
-                tripulantesSin.Add(new TripulanteSinPatron(
-                    i + 1,
-                    $"Tripulante_{i + 1}",
-                    100,
-                    10,
-                    datos.Nombre,
-                    datos.Origen,
-                    datos.Habilidad
-                ));
+                var espData = EspeciesDisponibles[i % EspeciesDisponibles.Length];
+                // SIN patrón: se instancia una especie nueva para cada uno (10.000 objetos)
+                IEspecie especieDuplicada = new Especie(espData.Nombre, espData.Color, espData.Planeta, espData.Dieta);
+                string rango = rangos[i % rangos.Length];
+                tripulantesSin.Add(new Tripulante(i + 1, $"Tripulante_{i + 1}", rango, especieDuplicada));
             }
 
-            long memoriaFinalSin = GC.GetTotalMemory(true);
-            long bytesSin = memoriaFinalSin - memoriaInicialSin;
+            long memFinSin = GC.GetTotalMemory(true);
+            long bytesSin = Math.Max(memFinSin - memInicioSin, 1);
 
             return new ResultadoComparacion
             {
-                TotalTripulantes = cantidadTripulantes,
-                ObjetosEspecieCreados = EspecieFactory.CantidadEspeciesEnMemoria,
-                MemoriaConFlyweightBytes = Math.Max(bytesCon, 1),
-                MemoriaSinFlyweightBytes = Math.Max(bytesSin, 1)
+                TotalTripulantes = cantidad,
+                EspeciesConFlyweight = fabrica.CantidadEspeciesCreadas, // 5 especies
+                EspeciesSinFlyweight = cantidad,                        // 10.000 especies duplicadas
+                MemoriaConFlyweightBytes = bytesCon,
+                MemoriaSinFlyweightBytes = bytesSin
             };
         }
     }

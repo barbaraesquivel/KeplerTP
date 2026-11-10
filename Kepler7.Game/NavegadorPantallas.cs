@@ -1,4 +1,5 @@
 using Kepler7.Core.Modelo;
+using Kepler7.Core.Progreso;
 using Kepler7.Game.Pantallas;
 
 namespace Kepler7.Game
@@ -14,11 +15,15 @@ namespace Kepler7.Game
         // Misión actual (por ahora hay una sola)
         public Mision Mision { get; private set; }
 
+        // Progreso persistente del jugador (guardado en JSON)
+        public Progreso Progreso { get; private set; }
+
         public NavegadorPantallas(Control contenedor)
         {
             this.contenedor = contenedor;
             Partida = new Partida();
             Mision = new Mision();
+            Progreso = Progreso.Cargar();
         }
 
         // Saca la pantalla actual y pone la nueva ocupando todo el espacio

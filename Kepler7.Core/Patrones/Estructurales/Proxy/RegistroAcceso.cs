@@ -1,56 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Kepler7.Core.Patrones.Estructurales.Proxy
 {
-    public class LogEntrada
-    {
-        public DateTime FechaHora { get; set; }
-        public string Usuario { get; set; }
-        public string Rol { get; set; }
-        public bool Autorizado { get; set; }
-        public string Detalle { get; set; }
-
-        public override string ToString()
-        {
-            string estado = Autorizado ? "ACCESO PERMITIDO" : "ACCESO DENEGADO";
-            return $"[{FechaHora:dd/MM/yyyy HH:mm:ss}] - [{estado}] Usuario: {Usuario} ({Rol}) - {Detalle}";
-        }
-    }
-
+    // Maneja el registro persistente de accesos en %AppData%\Kepler7\registro_boveda.log
     public static class RegistroAcceso
     {
-        public static List<LogEntrada> HistorialLogs { get; } = new List<LogEntrada>();
-        private static readonly string RutaArchivoLog = "registro_boveda.log";
+        private static readonly string CarpetaLog = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Kepler7"
+        );
 
-        public static void Registrar(string usuario, string rol, bool autorizado, string detalle)
+        private static readonly string RutaArchivoLog = Path.Combine(CarpetaLog, "registro_boveda.log");
+
+        private static List<string> _historialLogs = new List<string>();
+
+        public static List<string> HistorialLogs => _historialLogs;
+
+        public static string RutaLog => RutaArchivoLog;
+
+        static RegistroAcceso()
         {
-            var log = new LogEntrada
-            {
-                FechaHora = DateTime.Now,
-                Usuario = usuario,
-                Rol = rol,
-                Autorizado = autorizado,
-                Detalle = detalle
-            };
+            CargarLogs();
+        }
 
-            HistorialLogs.Add(log);
-
-            // Registro persistente en archivo físico .log / .txt
+        // Carga los registros persistentes al iniciar. No se rompe si el archivo no existe.
+        public static void CargarLogs()
+        {
+            _historialLogs.Clear();
             try
             {
-                File.AppendAllText(RutaArchivoLog, log.ToString() + Environment.NewLine);
+                if (File.Exists(RutaArchivoLog))
+                {
+                    string[] lineas = File.ReadAllLines(RutaArchivoLog);
+                    _historialLogs.AddRange(lineas);
+                }
             }
             catch
             {
-                // Manejo silencioso en caso de permisos de escritura
+                // Manejo seguro: si no existe el archivo o hay algún error, no se rompe
+            }
+        }
+
+        // Registra de forma persistente cada intento (permitido o denegado)
+        public static void Registrar(string usuario, string rol, string accion, bool autorizado)
+        {
+            string estado = autorizado ? "ACCESO PERMITIDO" : "ACCESO DENEGADO";
+            string log = $"[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] [{estado}] Usuario: {usuario} ({rol}) - {accion}";
+
+            _historialLogs.Add(log);
+
+            try
+            {
+                if (!Directory.Exists(CarpetaLog))
+                {
+                    Directory.CreateDirectory(CarpetaLog);
+                }
+
+                File.AppendAllText(RutaArchivoLog, log + Environment.NewLine);
+            }
+            catch
+            {
+                // No se rompe si ocurre algún error de escritura
+            }
+        }
+
+        public static void LimpiarHistorial()
+        {
+            _historialLogs.Clear();
+            try
+            {
+                if (File.Exists(RutaArchivoLog))
+                {
+                    File.Delete(RutaArchivoLog);
+                }
+            }
+            catch
+            {
             }
         }
     }

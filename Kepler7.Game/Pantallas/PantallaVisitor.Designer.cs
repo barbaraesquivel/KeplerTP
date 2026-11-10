@@ -1,4 +1,4 @@
-﻿namespace Kepler7.Game.Pantallas
+namespace Kepler7.Game.Pantallas
 {
     partial class PantallaVisitor
     {
@@ -28,81 +28,156 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnAnalizar = new Button();
-            txtReporte = new TextBox();
-            lblValorTotal = new Label();
-            lblTotalItems = new Label();
+            lblTitulo = new Label();
+            lblInventario = new Label();
+            lstInventario = new ListBox();
+            lblVisitante = new Label();
+            cmbVisitante = new ComboBox();
+            btnAplicar = new Button();
+            btnRestablecer = new Button();
+            lblResultado = new Label();
+            txtResultado = new TextBox();
             btnVolver = new Button();
             SuspendLayout();
             // 
-            // btnAnalizar
+            // lblTitulo
             // 
-            btnAnalizar.Location = new Point(59, 39);
-            btnAnalizar.Name = "btnAnalizar";
-            btnAnalizar.Size = new Size(300, 59);
-            btnAnalizar.TabIndex = 0;
-            btnAnalizar.Text = "Analizar Inventario con Visitors";
-            btnAnalizar.UseVisualStyleBackColor = true;
-            btnAnalizar.Click += btnAnalizar_Click_1;
+            lblTitulo.AutoSize = true;
+            lblTitulo.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            lblTitulo.Location = new Point(25, 12);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(440, 30);
+            lblTitulo.TabIndex = 0;
+            lblTitulo.Text = "Analizador de Inventario - Patrón Visitor";
             // 
-            // txtReporte
+            // lblInventario
             // 
-            txtReporte.Location = new Point(59, 120);
-            txtReporte.Multiline = true;
-            txtReporte.Name = "txtReporte";
-            txtReporte.Size = new Size(393, 54);
-            txtReporte.TabIndex = 1;
+            lblInventario.AutoSize = true;
+            lblInventario.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblInventario.Location = new Point(25, 48);
+            lblInventario.Name = "lblInventario";
+            lblInventario.Size = new Size(224, 20);
+            lblInventario.TabIndex = 1;
+            lblInventario.Text = "Ítems actuales en el inventario:";
             // 
-            // lblValorTotal
+            // lstInventario
             // 
-            lblValorTotal.AutoSize = true;
-            lblValorTotal.Location = new Point(59, 190);
-            lblValorTotal.Name = "lblValorTotal";
-            lblValorTotal.Size = new Size(135, 25);
-            lblValorTotal.TabIndex = 2;
-            lblValorTotal.Text = "Valor Estimado:";
+            lstInventario.Font = new Font("Consolas", 8.8F);
+            lstInventario.FormattingEnabled = true;
+            lstInventario.ItemHeight = 17;
+            lstInventario.Location = new Point(25, 71);
+            lstInventario.Name = "lstInventario";
+            lstInventario.Size = new Size(720, 106);
+            lstInventario.TabIndex = 2;
             // 
-            // lblTotalItems
+            // lblVisitante
             // 
-            lblTotalItems.AutoSize = true;
-            lblTotalItems.Location = new Point(58, 221);
-            lblTotalItems.Name = "lblTotalItems";
-            lblTotalItems.Size = new Size(102, 25);
-            lblTotalItems.TabIndex = 3;
-            lblTotalItems.Text = "Total Items:";
+            lblVisitante.AutoSize = true;
+            lblVisitante.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblVisitante.Location = new Point(25, 187);
+            lblVisitante.Name = "lblVisitante";
+            lblVisitante.Size = new Size(187, 20);
+            lblVisitante.TabIndex = 3;
+            lblVisitante.Text = "Elegir Visitante a aplicar:";
+            // 
+            // cmbVisitante
+            // 
+            cmbVisitante.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbVisitante.FormattingEnabled = true;
+            cmbVisitante.Items.AddRange(new object[] { "Calculador de Precio (CalculadorPrecio)", "Contador de Armas (ContadorArmas)", "Aplicador de Veneno (AplicadorVeneno)" });
+            cmbVisitante.Location = new Point(25, 210);
+            cmbVisitante.Name = "cmbVisitante";
+            cmbVisitante.Size = new Size(340, 28);
+            cmbVisitante.TabIndex = 4;
+            // 
+            // btnAplicar
+            // 
+            btnAplicar.BackColor = Color.LightSteelBlue;
+            btnAplicar.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnAplicar.Location = new Point(380, 208);
+            btnAplicar.Name = "btnAplicar";
+            btnAplicar.Size = new Size(180, 32);
+            btnAplicar.TabIndex = 5;
+            btnAplicar.Text = "Aplicar Visitante";
+            btnAplicar.UseVisualStyleBackColor = false;
+            btnAplicar.Click += btnAplicar_Click;
+            // 
+            // btnRestablecer
+            // 
+            btnRestablecer.Location = new Point(570, 208);
+            btnRestablecer.Name = "btnRestablecer";
+            btnRestablecer.Size = new Size(175, 32);
+            btnRestablecer.TabIndex = 6;
+            btnRestablecer.Text = "Restablecer Inventario";
+            btnRestablecer.UseVisualStyleBackColor = true;
+            btnRestablecer.Click += btnRestablecer_Click;
+            // 
+            // lblResultado
+            // 
+            lblResultado.AutoSize = true;
+            lblResultado.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblResultado.Location = new Point(25, 250);
+            lblResultado.Name = "lblResultado";
+            lblResultado.Size = new Size(276, 20);
+            lblResultado.TabIndex = 7;
+            lblResultado.Text = "Resultado de la operación del Visitor:";
+            // 
+            // txtResultado
+            // 
+            txtResultado.BackColor = Color.Black;
+            txtResultado.Font = new Font("Consolas", 9F);
+            txtResultado.ForeColor = Color.LimeGreen;
+            txtResultado.Location = new Point(25, 273);
+            txtResultado.Multiline = true;
+            txtResultado.Name = "txtResultado";
+            txtResultado.ReadOnly = true;
+            txtResultado.ScrollBars = ScrollBars.Vertical;
+            txtResultado.Size = new Size(720, 155);
+            txtResultado.TabIndex = 8;
+            txtResultado.Text = "Seleccioná un visitante y hacé clic en 'Aplicar Visitante'.";
             // 
             // btnVolver
             // 
             btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVolver.Location = new Point(29, 384);
+            btnVolver.Location = new Point(25, 442);
             btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(229, 58);
-            btnVolver.TabIndex = 4;
+            btnVolver.Size = new Size(180, 36);
+            btnVolver.TabIndex = 9;
             btnVolver.Text = "Volver al hub";
             btnVolver.UseVisualStyleBackColor = true;
             btnVolver.Click += btnVolver_Click;
             // 
             // PantallaVisitor
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnVolver);
-            Controls.Add(lblTotalItems);
-            Controls.Add(lblValorTotal);
-            Controls.Add(txtReporte);
-            Controls.Add(btnAnalizar);
+            Controls.Add(txtResultado);
+            Controls.Add(lblResultado);
+            Controls.Add(btnRestablecer);
+            Controls.Add(btnAplicar);
+            Controls.Add(cmbVisitante);
+            Controls.Add(lblVisitante);
+            Controls.Add(lstInventario);
+            Controls.Add(lblInventario);
+            Controls.Add(lblTitulo);
             Name = "PantallaVisitor";
-            Size = new Size(618, 475);
+            Size = new Size(770, 495);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private Label lblTitulo;
+        private Label lblInventario;
+        private ListBox lstInventario;
+        private Label lblVisitante;
+        private ComboBox cmbVisitante;
+        private Button btnAplicar;
+        private Button btnRestablecer;
+        private Label lblResultado;
+        private TextBox txtResultado;
         private Button btnVolver;
-        private Button btnAnalizar;
-        private TextBox txtReporte;
-        private Label lblValorTotal;
-        private Label lblTotalItems;
     }
 }

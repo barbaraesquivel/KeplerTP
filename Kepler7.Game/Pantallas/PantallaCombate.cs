@@ -41,12 +41,74 @@ namespace Kepler7.Game.Pantallas
                 animador.Registrar(enemigo);
             }
             panelCadena = new PanelCadenaDefensa(jugador, random, this);
-            panelCadena.Location = new Point(420, 10);
             Controls.Add(panelCadena);
             panelEstado = new PanelEstadoPersonaje(jugador, this);
-            panelEstado.Location = new Point(420, 295);
             Controls.Add(panelEstado);
+            AcomodarControles();
+            Load += (s, e) => AcomodarControles();
             Actualizar();
+        }
+
+        // Asegura que las interfaces no se superpongan sin importar el escalado de Windows
+        private void AcomodarControles()
+        {
+            panelEscenario.Location = new Point(15, 12);
+            panelEscenario.Size = new Size(401, 241);
+
+            if (panelCadena != null)
+            {
+                panelCadena.Location = new Point(425, 12);
+                panelCadena.BringToFront();
+            }
+
+            if (panelEstado != null)
+            {
+                panelEstado.Location = new Point(425, 296);
+                panelEstado.BringToFront();
+            }
+
+            btnAtacar.Location = new Point(15, 259);
+            btnAtacar.Size = new Size(75, 32);
+
+            btnIzquierda.Location = new Point(94, 259);
+            btnIzquierda.Size = new Size(34, 32);
+
+            btnArriba.Location = new Point(132, 259);
+            btnArriba.Size = new Size(34, 32);
+
+            btnAbajo.Location = new Point(170, 259);
+            btnAbajo.Size = new Size(34, 32);
+
+            btnDerecha.Location = new Point(208, 259);
+            btnDerecha.Size = new Size(34, 32);
+
+            btnTurnoEnemigo.Location = new Point(248, 259);
+            btnTurnoEnemigo.Size = new Size(168, 32);
+
+            btnCurar.Location = new Point(15, 296);
+            btnCurar.Size = new Size(75, 30);
+
+            btnConstruir.Location = new Point(94, 296);
+            btnConstruir.Size = new Size(110, 30);
+
+            btnDeshacer.Location = new Point(208, 296);
+            btnDeshacer.Size = new Size(100, 30);
+
+            btnRehacer.Location = new Point(312, 296);
+            btnRehacer.Size = new Size(104, 30);
+
+            lblMensaje.Location = new Point(15, 332);
+            lblMensaje.Size = new Size(401, 22);
+
+            lblBase.Location = new Point(15, 356);
+            lblBase.Size = new Size(401, 20);
+
+            lstHistorial.Location = new Point(15, 380);
+            lstHistorial.Size = new Size(401, 94);
+
+            btnVolver.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnVolver.Location = new Point(15, 482);
+            btnVolver.Size = new Size(160, 34);
         }
 
         private void CrearPersonajes()
