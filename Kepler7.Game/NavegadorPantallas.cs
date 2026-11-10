@@ -18,12 +18,16 @@ namespace Kepler7.Game
         // Progreso persistente del jugador (guardado en JSON)
         public Progreso Progreso { get; private set; }
 
+        // Servicio de logros por uso de patrones (guardado en JSON)
+        public ServicioLogros ServicioLogros { get; private set; }
+
         public NavegadorPantallas(Control contenedor)
         {
             this.contenedor = contenedor;
             Partida = new Partida();
             Mision = new Mision();
             Progreso = Progreso.Cargar();
+            ServicioLogros = new ServicioLogros();
         }
 
         // Saca la pantalla actual y pone la nueva ocupando todo el espacio
@@ -72,6 +76,11 @@ namespace Kepler7.Game
         public void IrAVisitor()
         {
             Mostrar(new PantallaVisitor(this));
+        }
+
+        public void IrALogros()
+        {
+            Mostrar(new PantallaLogros(this));
         }
 
         public void IrACombate()
@@ -123,16 +132,19 @@ namespace Kepler7.Game
 
         public void IrAComunicaciones()
         {
+            ServicioLogros.RegistrarUsoPatron("Bridge");
             Mostrar(new PantallaComunicaciones());
         }
 
         public void IrAEstrategiaIA()
         {
+            ServicioLogros.RegistrarUsoPatron("Strategy");
             Mostrar(new PantallaEstrategiaIA_strategy());
         }
 
         public void IrATurnos()
         {
+            ServicioLogros.RegistrarUsoPatron("Template Method");
             Mostrar(new PantallaTurnos());
         }
     }

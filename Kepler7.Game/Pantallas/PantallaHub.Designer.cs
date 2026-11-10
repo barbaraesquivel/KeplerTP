@@ -29,6 +29,7 @@ namespace Kepler7.Game.Pantallas
             btnComunicaciones = new Button();
             btnEstrategiaIA = new Button();
             btnTurnos = new Button();
+            btnLogros = new Button();
             SuspendLayout();
             // 
             // lblTitulo
@@ -151,10 +152,21 @@ namespace Kepler7.Game.Pantallas
             btnTurnos.UseVisualStyleBackColor = true;
             btnTurnos.Click += btnTurnos_Click;
             // 
+            // btnLogros
+            // 
+            btnLogros.Location = new Point(360, 90);
+            btnLogros.Name = "btnLogros";
+            btnLogros.Size = new Size(300, 35);
+            btnLogros.TabIndex = 10;
+            btnLogros.Text = "Logros: patrones desbloqueados";
+            btnLogros.UseVisualStyleBackColor = true;
+            btnLogros.Click += btnLogros_Click;
+            // 
             // PantallaHub
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnLogros);
             Controls.Add(btnTurnos);
             Controls.Add(btnEstrategiaIA);
             Controls.Add(btnComunicaciones);
@@ -188,5 +200,6 @@ namespace Kepler7.Game.Pantallas
         private Button btnComunicaciones;
         private Button btnEstrategiaIA;
         private Button btnTurnos;
+        private Button btnLogros;
     }
 }

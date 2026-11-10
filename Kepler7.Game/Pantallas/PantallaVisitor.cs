@@ -75,6 +75,7 @@ namespace Kepler7.Game.Pantallas
 
             // Mostramos el resultado generado por el Visitor en el cuadro de texto
             txtResultado.Text = visitante.ObtenerResultado();
+            navegador.ServicioLogros.RegistrarUsoPatron("Visitor");
 
             // Si se aplicó veneno, los ítems cambiaron su estado, actualizamos la lista
             ActualizarListaInventario();

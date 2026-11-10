@@ -25,7 +25,7 @@ namespace Kepler7.Core.Patrones.Estructurales.Flyweight
 
         public override string ToString()
         {
-            return $"[ID {Id}] {Nombre} ({Rango}) - Especie: {Especie?.Nombre} ({Especie?.PlanetaOrigen})";
+            return $"[ID {Id}] {Nombre} ({Rango}) - Especie: {Especie.Nombre} ({Especie.PlanetaOrigen})";
         }
     }
 }

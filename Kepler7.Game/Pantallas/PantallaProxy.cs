@@ -51,23 +51,24 @@ namespace Kepler7.Game.Pantallas
         private void btnLeer_Click(object sender, EventArgs e)
         {
             string usuario = string.IsNullOrWhiteSpace(txtUsuario.Text) ? "Desconocido" : txtUsuario.Text.Trim();
-            string rol = cmbRol.SelectedItem?.ToString() ?? "Tripulante";
-            string archivo = cmbArchivo.SelectedItem?.ToString() ?? "coordenadas_salto.dat";
+            string rol = cmbRol.SelectedItem != null ? cmbRol.SelectedItem.ToString() : "Tripulante";
+            string archivo = cmbArchivo.SelectedItem != null ? cmbArchivo.SelectedItem.ToString() : "coordenadas_salto.dat";
 
             try
             {
                 // El cliente siempre interactúa a través de la interfaz IBoveda / ProxyBoveda
                 string contenido = _bovedaProxy.LeerArchivo(archivo, usuario, rol);
                 txtResultado.ForeColor = Color.DarkGreen;
-                txtResultado.Text = $"=== ACCESO AUTORIZADO ===\r\nArchivo: {archivo}\r\nContenido: {contenido}";
+                txtResultado.Text = $"[ACCESO AUTORIZADO]\r\nArchivo: {archivo}\r\nContenido: {contenido}";
             }
             catch (UnauthorizedAccessException ex)
             {
                 txtResultado.ForeColor = Color.Red;
-                txtResultado.Text = $"=== ACCESO RECHAZADO ===\r\n{ex.Message}";
+                txtResultado.Text = $"[ACCESO RECHAZADO]\r\n{ex.Message}";
             }
             finally
             {
+                navegador.ServicioLogros.RegistrarUsoPatron("Proxy");
                 ActualizarListaLogs();
             }
         }
@@ -75,23 +76,24 @@ namespace Kepler7.Game.Pantallas
         private void btnEscribir_Click(object sender, EventArgs e)
         {
             string usuario = string.IsNullOrWhiteSpace(txtUsuario.Text) ? "Desconocido" : txtUsuario.Text.Trim();
-            string rol = cmbRol.SelectedItem?.ToString() ?? "Tripulante";
-            string archivo = cmbArchivo.SelectedItem?.ToString() ?? "coordenadas_salto.dat";
+            string rol = cmbRol.SelectedItem != null ? cmbRol.SelectedItem.ToString() : "Tripulante";
+            string archivo = cmbArchivo.SelectedItem != null ? cmbArchivo.SelectedItem.ToString() : "coordenadas_salto.dat";
             string nuevoContenido = txtResultado.Text;
 
             try
             {
                 _bovedaProxy.EscribirArchivo(archivo, nuevoContenido, usuario, rol);
                 txtResultado.ForeColor = Color.DarkBlue;
-                txtResultado.Text = $"=== ESCRITURA EXITOSA ===\r\nEl archivo '{archivo}' fue modificado en la bóveda por {usuario} ({rol}).";
+                txtResultado.Text = $"[ESCRITURA EXITOSA]\r\nEl archivo '{archivo}' fue modificado en la bóveda por {usuario} ({rol}).";
             }
             catch (UnauthorizedAccessException ex)
             {
                 txtResultado.ForeColor = Color.Red;
-                txtResultado.Text = $"=== ESCRITURA RECHAZADA ===\r\n{ex.Message}";
+                txtResultado.Text = $"[ESCRITURA RECHAZADA]\r\n{ex.Message}";
             }
             finally
             {
+                navegador.ServicioLogros.RegistrarUsoPatron("Proxy");
                 ActualizarListaLogs();
             }
         }

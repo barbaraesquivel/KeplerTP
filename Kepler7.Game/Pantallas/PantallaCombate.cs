@@ -160,6 +160,10 @@ namespace Kepler7.Game.Pantallas
             }
             lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
             panelEstado.ActualizarEstado();
+            if (jugador.Estado.Nombre != "Normal")
+            {
+                navegador.ServicioLogros.RegistrarUsoPatron("State");
+            }
             animador.ColorObjetivo = PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual);
             panelEscenario.Invalidate();
             // Agregado: Actualizar() se llama después de cada acción, deshacer o rehacer
@@ -184,6 +188,10 @@ namespace Kepler7.Game.Pantallas
         public void MostrarMensaje(string mensaje)
         {
             lblMensaje.Text = mensaje;
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                navegador.ServicioLogros.RegistrarUsoPatron("Chain of Responsibility");
+            }
         }
 
         private void InformarBloqueo(string mensaje)
@@ -446,6 +454,7 @@ namespace Kepler7.Game.Pantallas
         private void MostrarUltimoComando()
         {
             lblMensaje.Text = gestor.Historial[gestor.Historial.Count - 1];
+            navegador.ServicioLogros.RegistrarUsoPatron("Command");
         }
 
         private void btnCurar_Click(object sender, EventArgs e)
@@ -577,6 +586,7 @@ namespace Kepler7.Game.Pantallas
                         animador.MostrarTexto(jugador, "Bloqueado", Color.LightSkyBlue);
                     }
                     panelCadena.MostrarRecorrido(enemigo.Nombre, resultado);
+                    navegador.ServicioLogros.RegistrarUsoPatron("Chain of Responsibility");
                 }
                 else if (enemigo.Vida > 0)
                 {

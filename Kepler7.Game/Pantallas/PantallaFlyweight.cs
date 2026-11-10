@@ -51,7 +51,7 @@ namespace Kepler7.Game.Pantallas
 
             var datos = DemostradorFlyweight.EspeciesDisponibles[cmbEspecies.SelectedIndex];
             string nombre = string.IsNullOrWhiteSpace(txtNombre.Text) ? $"Tripulante_{proximoId}" : txtNombre.Text;
-            string rango = cmbRango.SelectedItem?.ToString() ?? "Tripulante";
+            string rango = cmbRango.SelectedItem != null ? cmbRango.SelectedItem.ToString() : "Tripulante";
 
             int especiesAntes = fabrica.CantidadEspeciesCreadas;
 
@@ -62,6 +62,7 @@ namespace Kepler7.Game.Pantallas
 
             Tripulante nuevo = new Tripulante(proximoId++, nombre, rango, especie);
             tripulantes.Add(nuevo);
+            navegador.ServicioLogros.RegistrarUsoPatron("Flyweight");
 
             lstTripulantes.Items.Insert(0, $"{nuevo} [Dieta: {especie.Dieta}, Color: {especie.Color}]");
 
@@ -80,13 +81,14 @@ namespace Kepler7.Game.Pantallas
         private void btnDemostracion10k_Click(object sender, EventArgs e)
         {
             ResultadoComparacion resultado = DemostradorFlyweight.EjecutarComparacion(fabrica, 10000);
+            navegador.ServicioLogros.RegistrarUsoPatron("Flyweight");
 
             // Sincronizamos la cantidad de tripulantes para el contador de pantalla
             int totalTripulantesActual = tripulantes.Count + resultado.TotalTripulantes;
             lblContador.Text = $"Especies creadas: {fabrica.CantidadEspeciesCreadas} / Tripulantes creados: {totalTripulantesActual}";
 
             txtComparacion.Text =
-                "=== DEMOSTRACIÓN NUMÉRICA ===" + Environment.NewLine +
+                "DEMOSTRACIÓN NUMÉRICA" + Environment.NewLine +
                 $"Tripulantes simulados: {resultado.TotalTripulantes:N0}" + Environment.NewLine +
                 $"Especies en la estación: {resultado.EspeciesConFlyweight}" + Environment.NewLine +
                 Environment.NewLine +

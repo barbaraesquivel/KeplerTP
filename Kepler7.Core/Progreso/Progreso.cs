@@ -87,7 +87,10 @@ namespace Kepler7.Core.Progreso
 
         public static void Guardar(Progreso progreso)
         {
-            progreso?.Guardar();
+            if (progreso != null)
+            {
+                progreso.Guardar();
+            }
         }
 
         // Carga el progreso desde JSON. Si no existe o está dañado, arranca con progreso nuevo.

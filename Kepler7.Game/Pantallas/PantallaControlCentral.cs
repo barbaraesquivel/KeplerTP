@@ -20,18 +20,21 @@ namespace Kepler7.Game.Pantallas
         private void btnIniciarTurno_Click(object sender, EventArgs e)
         {
             control.IniciarTurno();
+            navegador.ServicioLogros.RegistrarUsoPatron("Facade");
             ActualizarPantalla();
         }
 
         private void btnEmergencia_Click(object sender, EventArgs e)
         {
             control.EntrarEnEmergencia();
+            navegador.ServicioLogros.RegistrarUsoPatron("Facade");
             ActualizarPantalla();
         }
 
         private void btnApagar_Click(object sender, EventArgs e)
         {
             control.ApagarEstacion();
+            navegador.ServicioLogros.RegistrarUsoPatron("Facade");
             ActualizarPantalla();
         }
 

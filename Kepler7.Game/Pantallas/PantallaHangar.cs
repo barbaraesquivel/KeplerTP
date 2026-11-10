@@ -35,6 +35,7 @@ namespace Kepler7.Game.Pantallas
         {
             IngenieroJefe ingeniero = new IngenieroJefe(CrearReceta());
             naveConstruida = ingeniero.ConstruirNaveCompleta();
+            navegador.ServicioLogros.RegistrarUsoPatron("Builder");
             MostrarNave();
         }
 
@@ -42,6 +43,7 @@ namespace Kepler7.Game.Pantallas
         {
             IngenieroJefe ingeniero = new IngenieroJefe(CrearReceta());
             naveConstruida = ingeniero.ConstruirNaveBasica();
+            navegador.ServicioLogros.RegistrarUsoPatron("Builder");
             MostrarNave();
         }
 

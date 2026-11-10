@@ -30,10 +30,10 @@ namespace Kepler7.Core.Patrones.Comportamiento.Visitor
 
         public string ObtenerResultado()
         {
-            return "=== APLICADOR DE VENENO Y TOXINAS ===" + Environment.NewLine +
+            return "APLICADOR DE VENENO Y TOXINAS" + Environment.NewLine +
                    string.Join(Environment.NewLine, _acciones) + Environment.NewLine +
                    Environment.NewLine +
-                   "¡Cada tipo de ítem reaccionó de manera distinta mediante Doble Dispatch!";
+                   "Cada tipo de ítem reaccionó de manera distinta mediante Doble Dispatch.";
         }
     }
 }

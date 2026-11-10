@@ -14,7 +14,7 @@ namespace Kepler7.Core.Patrones.Comportamiento.Visitor
         {
             CantidadArmas++;
             DanioTotal += arma.Danio;
-            _detalleArmas.Add($"• {arma.Nombre} (Daño: {arma.Danio}, Precio: {arma.Precio} cr.)");
+            _detalleArmas.Add($"- {arma.Nombre} (Daño: {arma.Danio}, Precio: {arma.Precio} cr.)");
         }
 
         public void Visitar(Pocion pocion)
@@ -31,7 +31,7 @@ namespace Kepler7.Core.Patrones.Comportamiento.Visitor
         {
             string detalle = _detalleArmas.Count > 0 ? string.Join(Environment.NewLine, _detalleArmas) : "(No se encontraron armas)";
 
-            return "=== RECUENTO Y ANÁLISIS DE ARMAS ===" + Environment.NewLine +
+            return "RECUENTO Y ANÁLISIS DE ARMAS" + Environment.NewLine +
                    $"Total de armas encontradas: {CantidadArmas}" + Environment.NewLine +
                    $"Daño de ataque acumulado: {DanioTotal} pts" + Environment.NewLine +
                    Environment.NewLine +

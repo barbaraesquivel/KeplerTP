@@ -19,7 +19,8 @@ namespace Kepler7.Core.Patrones.Estructurales.Proxy
         // Verifica si el rol tiene privilegios de acceso a la bóveda
         private bool TieneAcceso(string rol)
         {
-            string rolLimpio = rol?.Trim().ToUpper() ?? "";
+            if (rol == null) return false;
+            string rolLimpio = rol.Trim().ToUpper();
             return rolLimpio == "CAPITAN" ||
                    rolLimpio == "CAPITÁN" ||
                    rolLimpio == "OFICIAL DE SEGURIDAD";

@@ -30,7 +30,7 @@ namespace Kepler7.Core.Patrones.Comportamiento.Visitor
 
         public string ObtenerResultado()
         {
-            return "=== CÁLCULO DE VALOR TOTAL DEL INVENTARIO ===" + Environment.NewLine +
+            return "CÁLCULO DE VALOR TOTAL DEL INVENTARIO" + Environment.NewLine +
                    $"- Valor en Armas: {TotalArmas:N2} créditos" + Environment.NewLine +
                    $"- Valor en Pociones: {TotalPociones:N2} créditos" + Environment.NewLine +
                    $"- Valor en Armaduras: {TotalArmaduras:N2} créditos" + Environment.NewLine +

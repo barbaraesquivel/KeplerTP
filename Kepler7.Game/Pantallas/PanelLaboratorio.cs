@@ -80,6 +80,7 @@ namespace Kepler7.Game.Pantallas
             }
             clon = nuevo;
             clon.Nombre = "Ana (clon)";
+            navegador.ServicioLogros.RegistrarUsoPatron("Prototype");
             ActualizarPantalla();
         }
 

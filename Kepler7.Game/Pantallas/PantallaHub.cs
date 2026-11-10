@@ -71,5 +71,10 @@ namespace Kepler7.Game.Pantallas
         {
             navegador.IrATurnos();
         }
+
+        private void btnLogros_Click(object sender, EventArgs e)
+        {
+            navegador.IrALogros();
+        }
     }
 }
