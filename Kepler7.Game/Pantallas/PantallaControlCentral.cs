@@ -32,6 +32,13 @@ namespace Kepler7.Game.Pantallas
             ActualizarPantalla();
         }
 
+        private void btnSalirEmergencia_Click(object sender, EventArgs e)
+        {
+            control.SalirDeEmergencia();
+            navegador.ServicioLogros.RegistrarUsoPatron("Facade");
+            ActualizarPantalla();
+        }
+
         private void btnApagar_Click(object sender, EventArgs e)
         {
             control.ApagarEstacion();
@@ -44,6 +51,11 @@ namespace Kepler7.Game.Pantallas
         {
             lblEstado.Text = "Estado: " + control.Estado;
             lblEstado.ForeColor = ColorDelEstado(control.Estado);
+            bool hayEnergia = control.NivelEnergia > 0;
+            btnIniciarTurno.Enabled = hayEnergia && control.Estado == EstadoEstacion.Apagada;
+            btnEmergencia.Enabled = hayEnergia && control.Estado == EstadoEstacion.Normal;
+            btnSalirEmergencia.Enabled = control.Estado == EstadoEstacion.Emergencia;
+            btnApagar.Enabled = control.Estado != EstadoEstacion.Apagada;
 
             barEnergia.Value = control.NivelEnergia;
             lblEnergia.Text = "Energía: " + control.NivelEnergia;

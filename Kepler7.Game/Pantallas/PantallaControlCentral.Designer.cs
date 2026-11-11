@@ -21,6 +21,7 @@ namespace Kepler7.Game.Pantallas
             btnIniciarTurno = new Button();
             btnEmergencia = new Button();
             btnApagar = new Button();
+            btnSalirEmergencia = new Button();
             lblEstado = new Label();
             lblEnergia = new Label();
             barEnergia = new ProgressBar();
@@ -62,6 +63,15 @@ namespace Kepler7.Game.Pantallas
             btnApagar.Text = "Apagar estación";
             btnApagar.UseVisualStyleBackColor = true;
             btnApagar.Click += btnApagar_Click;
+            //
+            // btnSalirEmergencia
+            //
+            btnSalirEmergencia.Location = new Point(540, 80);
+            btnSalirEmergencia.Name = "btnSalirEmergencia";
+            btnSalirEmergencia.Size = new Size(180, 35);
+            btnSalirEmergencia.Text = "Salir de emergencia";
+            btnSalirEmergencia.UseVisualStyleBackColor = true;
+            btnSalirEmergencia.Click += btnSalirEmergencia_Click;
             //
             // lblEstado
             //
@@ -112,6 +122,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(btnIniciarTurno);
             Controls.Add(btnEmergencia);
             Controls.Add(btnApagar);
+            Controls.Add(btnSalirEmergencia);
             Controls.Add(lblEstado);
             Controls.Add(barEnergia);
             Controls.Add(lblEnergia);
@@ -129,6 +140,7 @@ namespace Kepler7.Game.Pantallas
         private Button btnIniciarTurno;
         private Button btnEmergencia;
         private Button btnApagar;
+        private Button btnSalirEmergencia;
         private Label lblEstado;
         private Label lblEnergia;
         private ProgressBar barEnergia;

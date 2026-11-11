@@ -53,6 +53,15 @@ namespace Kepler7.Core.Patrones.Estructurales.Facade
             Estado = EstadoEstacion.Emergencia;
         }
 
+        public void SalirDeEmergencia()
+        {
+            secuencia.Clear();
+            secuencia.Add(defensa.Desactivar());
+            secuencia.Add(soporteVital.Estabilizar());
+            secuencia.Add(seguridad.RevisarSectores());
+            Estado = EstadoEstacion.Normal;
+        }
+
         // Apaga todo y deja la estación inactiva
         public void ApagarEstacion()
         {
