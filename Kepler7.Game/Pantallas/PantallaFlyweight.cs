@@ -51,6 +51,12 @@ namespace Kepler7.Game.Pantallas
             string nombre = string.IsNullOrWhiteSpace(txtNombre.Text) ? $"Tripulante_{proximoId}" : txtNombre.Text;
             string rango = cmbRango.SelectedItem != null ? cmbRango.SelectedItem.ToString() : "Tripulante";
 
+            if (ExisteTripulante(nombre, rango))
+            {
+                MessageBox.Show("Ya existe un tripulante llamado " + nombre + " con el rango " + rango + ".");
+                return;
+            }
+
             int especiesAntes = fabrica.CantidadEspeciesCreadas;
 
             // Se solicita la instancia compartida a la fábrica
@@ -74,6 +80,19 @@ namespace Kepler7.Game.Pantallas
             {
                 lblDetalle.Text = $"Tripulante #{nuevo.Id} creado. Se registró NUEVA especie '{especie.Nombre}' en el diccionario.";
             }
+        }
+
+        private bool ExisteTripulante(string nombre, string rango)
+        {
+            foreach (Tripulante tripulante in tripulantes)
+            {
+                bool mismoNombre = string.Equals(tripulante.Nombre.Trim(), nombre.Trim(), StringComparison.OrdinalIgnoreCase);
+                if (mismoNombre && tripulante.Rango == rango)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void btnDemostracion10k_Click(object sender, EventArgs e)
