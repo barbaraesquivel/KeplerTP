@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Kepler7.Core.Patrones.Comportamiento.Visitor;
 
 namespace Kepler7.Game.Pantallas
@@ -13,6 +10,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaVisitor(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             InicializarInventario();
 
@@ -49,7 +47,7 @@ namespace Kepler7.Game.Pantallas
 
         private void btnAplicar_Click(object sender, EventArgs e)
         {
-            IVisitor visitante = null;
+            IVisitor visitante;
 
             switch (cmbVisitante.SelectedIndex)
             {

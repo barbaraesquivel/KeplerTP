@@ -20,6 +20,8 @@ namespace Kepler7.Game.Pantallas
             components = new System.ComponentModel.Container();
             lblTitulo = new Label();
             lblRecompensas = new Label();
+            lblTotal = new Label();
+            lblSubioNivel = new Label();
             btnHub = new Button();
             btnResumen = new Button();
             timerTitulo = new System.Windows.Forms.Timer(components);
@@ -29,7 +31,7 @@ namespace Kepler7.Game.Pantallas
             //
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblTitulo.ForeColor = Color.Green;
+            lblTitulo.ForeColor = Color.FromArgb(90, 220, 140);
             lblTitulo.Location = new Point(30, 30);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Text = "¡Misión cumplida!";
@@ -42,9 +44,27 @@ namespace Kepler7.Game.Pantallas
             lblRecompensas.Name = "lblRecompensas";
             lblRecompensas.Text = "Recompensas:";
             //
+            // lblTotal
+            //
+            lblTotal.AutoSize = true;
+            lblTotal.Font = new Font("Segoe UI", 11F);
+            lblTotal.Location = new Point(30, 125);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Text = "Nivel 1 - XP 0/100 - Monedas totales 0";
+            //
+            // lblSubioNivel
+            //
+            lblSubioNivel.AutoSize = true;
+            lblSubioNivel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblSubioNivel.ForeColor = Color.DarkOrange;
+            lblSubioNivel.Location = new Point(30, 155);
+            lblSubioNivel.Name = "lblSubioNivel";
+            lblSubioNivel.Text = "¡Subiste de nivel!";
+            lblSubioNivel.Visible = false;
+            //
             // btnHub
             //
-            btnHub.Location = new Point(30, 150);
+            btnHub.Location = new Point(30, 195);
             btnHub.Name = "btnHub";
             btnHub.Size = new Size(160, 35);
             btnHub.Text = "Volver al hub";
@@ -53,7 +73,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnResumen
             //
-            btnResumen.Location = new Point(200, 150);
+            btnResumen.Location = new Point(200, 195);
             btnResumen.Name = "btnResumen";
             btnResumen.Size = new Size(160, 35);
             btnResumen.Text = "Ver resumen final";
@@ -71,6 +91,8 @@ namespace Kepler7.Game.Pantallas
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lblTitulo);
             Controls.Add(lblRecompensas);
+            Controls.Add(lblTotal);
+            Controls.Add(lblSubioNivel);
             Controls.Add(btnHub);
             Controls.Add(btnResumen);
             Name = "PantallaVictoria";
@@ -83,6 +105,8 @@ namespace Kepler7.Game.Pantallas
 
         private Label lblTitulo;
         private Label lblRecompensas;
+        private Label lblTotal;
+        private Label lblSubioNivel;
         private Button btnHub;
         private Button btnResumen;
         private System.Windows.Forms.Timer timerTitulo;

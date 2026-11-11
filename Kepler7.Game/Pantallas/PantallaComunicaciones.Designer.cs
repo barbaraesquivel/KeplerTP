@@ -39,6 +39,7 @@
             txtMensajeCifradoMuestra = new TextBox();
             lblMensajeOriginal = new Label();
             lblMensajeCifrado = new Label();
+            btnVolver = new Button();
             SuspendLayout();
             // 
             // cmbTipoMensaje
@@ -109,7 +110,7 @@
             txtMensajeOriginalMuestra.Multiline = true;
             txtMensajeOriginalMuestra.Name = "txtMensajeOriginalMuestra";
             txtMensajeOriginalMuestra.ReadOnly = true;
-            txtMensajeOriginalMuestra.Size = new Size(347, 219);
+            txtMensajeOriginalMuestra.Size = new Size(347, 150);
             txtMensajeOriginalMuestra.TabIndex = 4;
             // 
             // txtMensajeCifradoMuestra
@@ -118,7 +119,7 @@
             txtMensajeCifradoMuestra.Multiline = true;
             txtMensajeCifradoMuestra.Name = "txtMensajeCifradoMuestra";
             txtMensajeCifradoMuestra.ReadOnly = true;
-            txtMensajeCifradoMuestra.Size = new Size(347, 219);
+            txtMensajeCifradoMuestra.Size = new Size(347, 150);
             txtMensajeCifradoMuestra.TabIndex = 4;
             // 
             // lblMensajeOriginal
@@ -139,10 +140,22 @@
             lblMensajeCifrado.TabIndex = 1;
             lblMensajeCifrado.Text = "Mensaje Cifrado";
             // 
+            // btnVolver
+            // 
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnVolver.Location = new Point(603, 585);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(160, 35);
+            btnVolver.TabIndex = 5;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // PantallaComunicaciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnVolver);
             Controls.Add(txtMensajeCifradoMuestra);
             Controls.Add(txtMensajeOriginalMuestra);
             Controls.Add(btnEnviar);
@@ -155,8 +168,7 @@
             Controls.Add(cmbCifrado);
             Controls.Add(cmbTipoMensaje);
             Name = "PantallaComunicaciones";
-            Size = new Size(798, 671);
-            Load += PantallaComunicaciones_Load;
+            Size = new Size(800, 630);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -174,5 +186,6 @@
         private TextBox txtMensajeCifradoMuestra;
         private Label lblMensajeOriginal;
         private Label lblMensajeCifrado;
+        private Button btnVolver;
     }
 }

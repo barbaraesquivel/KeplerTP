@@ -13,6 +13,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaControlCentral(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             ActualizarPantalla();
         }
@@ -58,13 +59,13 @@ namespace Kepler7.Game.Pantallas
         {
             if (estado == EstadoEstacion.Normal)
             {
-                return Color.Green;
+                return Tema.Exito;
             }
             if (estado == EstadoEstacion.Emergencia)
             {
-                return Color.Red;
+                return Tema.Peligro;
             }
-            return Color.Gray;
+            return Color.DarkGray;
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

@@ -133,19 +133,19 @@ namespace Kepler7.Game
         public void IrAComunicaciones()
         {
             ServicioLogros.RegistrarUsoPatron("Bridge");
-            Mostrar(new PantallaComunicaciones());
+            Mostrar(new PantallaComunicaciones(this));
         }
 
         public void IrAEstrategiaIA()
         {
             ServicioLogros.RegistrarUsoPatron("Strategy");
-            Mostrar(new PantallaEstrategiaIA_strategy());
+            Mostrar(new PantallaEstrategiaIA(this));
         }
 
         public void IrATurnos()
         {
             ServicioLogros.RegistrarUsoPatron("Template Method");
-            Mostrar(new PantallaTurnos());
+            Mostrar(new PantallaTurnos(this));
         }
     }
 }

@@ -1,22 +1,17 @@
 ﻿using Kepler7.Core.Patrones.Estructurales.Bridge;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Kepler7.Game.Pantallas
 {
     public partial class PantallaComunicaciones : UserControl
     {
+        private NavegadorPantallas navegador;
         private Mensaje mensajeActual;
-        public PantallaComunicaciones()
+
+        public PantallaComunicaciones(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
+            this.navegador = navegador;
             ConfigurarListas();
         }
 
@@ -31,11 +26,6 @@ namespace Kepler7.Game.Pantallas
             cmbCifrado.Items.Add("AES-256");
             cmbCifrado.Items.Add("Cuántico");
             cmbCifrado.SelectedIndex = 0;
-        }
-
-        private void PantallaComunicaciones_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnEnviar_Click(object sender, EventArgs e)
@@ -84,6 +74,11 @@ namespace Kepler7.Game.Pantallas
 
                 ActualizarPantalla();
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            navegador.IrAHub();
         }
     }
 }

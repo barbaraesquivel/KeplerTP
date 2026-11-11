@@ -18,6 +18,7 @@ namespace Kepler7.Game.Pantallas
         private void InitializeComponent()
         {
             lblTitulo = new Label();
+            lblSubtitulo = new Label();
             lblEquipo = new Label();
             btnJugar = new Button();
             btnTutorial = new Button();
@@ -35,10 +36,20 @@ namespace Kepler7.Game.Pantallas
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Kepler-7";
             //
+            // lblSubtitulo
+            //
+            lblSubtitulo.AutoSize = true;
+            lblSubtitulo.Font = new Font("Segoe UI", 11F, FontStyle.Italic);
+            lblSubtitulo.Location = new Point(47, 106);
+            lblSubtitulo.Margin = new Padding(4, 0, 4, 0);
+            lblSubtitulo.Name = "lblSubtitulo";
+            lblSubtitulo.TabIndex = 5;
+            lblSubtitulo.Text = "Estación orbital en crisis · rol táctico por turnos";
+            //
             // lblEquipo
             //
             lblEquipo.AutoSize = true;
-            lblEquipo.Location = new Point(47, 110);
+            lblEquipo.Location = new Point(47, 145);
             lblEquipo.Margin = new Padding(4, 0, 4, 0);
             lblEquipo.Name = "lblEquipo";
             lblEquipo.TabIndex = 1;
@@ -46,7 +57,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnJugar
             //
-            btnJugar.Location = new Point(43, 167);
+            btnJugar.Location = new Point(43, 200);
             btnJugar.Margin = new Padding(4, 5, 4, 5);
             btnJugar.Name = "btnJugar";
             btnJugar.Size = new Size(229, 58);
@@ -57,7 +68,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnTutorial
             //
-            btnTutorial.Location = new Point(43, 250);
+            btnTutorial.Location = new Point(43, 283);
             btnTutorial.Margin = new Padding(4, 5, 4, 5);
             btnTutorial.Name = "btnTutorial";
             btnTutorial.Size = new Size(229, 58);
@@ -68,7 +79,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnSalir
             //
-            btnSalir.Location = new Point(43, 333);
+            btnSalir.Location = new Point(43, 366);
             btnSalir.Margin = new Padding(4, 5, 4, 5);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(229, 58);
@@ -82,6 +93,7 @@ namespace Kepler7.Game.Pantallas
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lblTitulo);
+            Controls.Add(lblSubtitulo);
             Controls.Add(lblEquipo);
             Controls.Add(btnJugar);
             Controls.Add(btnTutorial);
@@ -96,6 +108,7 @@ namespace Kepler7.Game.Pantallas
         #endregion
 
         private Label lblTitulo;
+        private Label lblSubtitulo;
         private Label lblEquipo;
         private Button btnJugar;
         private Button btnTutorial;

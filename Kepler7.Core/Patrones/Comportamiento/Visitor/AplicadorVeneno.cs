@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Kepler7.Core.Patrones.Comportamiento.Visitor
 {
     // Visitante 3: Aplica toxina alienígena modificando el estado de cada ítem según su tipo

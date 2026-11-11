@@ -1,6 +1,3 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using Kepler7.Core.Patrones.Estructurales.Proxy;
 
 namespace Kepler7.Game.Pantallas
@@ -13,6 +10,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaProxy(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             _bovedaProxy = new ProxyBoveda();
         }
@@ -58,12 +56,12 @@ namespace Kepler7.Game.Pantallas
             {
                 // El cliente siempre interactúa a través de la interfaz IBoveda / ProxyBoveda
                 string contenido = _bovedaProxy.LeerArchivo(archivo, usuario, rol);
-                txtResultado.ForeColor = Color.DarkGreen;
+                txtResultado.ForeColor = Tema.Exito;
                 txtResultado.Text = $"[ACCESO AUTORIZADO]\r\nArchivo: {archivo}\r\nContenido: {contenido}";
             }
             catch (UnauthorizedAccessException ex)
             {
-                txtResultado.ForeColor = Color.Red;
+                txtResultado.ForeColor = Tema.Peligro;
                 txtResultado.Text = $"[ACCESO RECHAZADO]\r\n{ex.Message}";
             }
             finally
@@ -83,12 +81,12 @@ namespace Kepler7.Game.Pantallas
             try
             {
                 _bovedaProxy.EscribirArchivo(archivo, nuevoContenido, usuario, rol);
-                txtResultado.ForeColor = Color.DarkBlue;
+                txtResultado.ForeColor = Tema.Acento;
                 txtResultado.Text = $"[ESCRITURA EXITOSA]\r\nEl archivo '{archivo}' fue modificado en la bóveda por {usuario} ({rol}).";
             }
             catch (UnauthorizedAccessException ex)
             {
-                txtResultado.ForeColor = Color.Red;
+                txtResultado.ForeColor = Tema.Peligro;
                 txtResultado.Text = $"[ESCRITURA RECHAZADA]\r\n{ex.Message}";
             }
             finally

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-
 namespace Kepler7.Core.Patrones.Estructurales.Proxy
 {
     // Maneja el registro persistente de accesos en %AppData%\Kepler7\registro_boveda.log

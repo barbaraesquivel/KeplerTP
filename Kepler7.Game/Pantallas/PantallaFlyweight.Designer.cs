@@ -49,7 +49,7 @@ namespace Kepler7.Game.Pantallas
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
-            lblTitulo.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            lblTitulo.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
             lblTitulo.Location = new Point(25, 12);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(410, 30);
@@ -60,7 +60,7 @@ namespace Kepler7.Game.Pantallas
             // 
             lblContador.AutoSize = true;
             lblContador.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblContador.ForeColor = Color.DarkBlue;
+            lblContador.ForeColor = Color.FromArgb(90, 220, 140);
             lblContador.Location = new Point(25, 46);
             lblContador.Name = "lblContador";
             lblContador.Size = new Size(392, 25);
@@ -155,7 +155,6 @@ namespace Kepler7.Game.Pantallas
             // lblDetalle
             // 
             lblDetalle.AutoSize = true;
-            lblDetalle.ForeColor = Color.DarkSlateGray;
             lblDetalle.Location = new Point(25, 187);
             lblDetalle.Name = "lblDetalle";
             lblDetalle.Size = new Size(423, 20);

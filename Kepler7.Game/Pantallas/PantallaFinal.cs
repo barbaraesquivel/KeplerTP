@@ -10,6 +10,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaFinal(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             MostrarResumen();
         }
@@ -30,7 +31,9 @@ namespace Kepler7.Game.Pantallas
                 + "Comandos usados: " + partida.ComandosUsados + Environment.NewLine
                 + "Nave elegida: " + nave + Environment.NewLine
                 + "XP ganada: " + partida.XpGanada + Environment.NewLine
-                + "Monedas ganadas: " + partida.MonedasGanadas;
+                + "Monedas ganadas: " + partida.MonedasGanadas + Environment.NewLine
+                + "Nivel actual: " + navegador.Progreso.Nivel + Environment.NewLine
+                + "Monedas totales: " + navegador.Progreso.Monedas;
         }
 
         private void btnInicio_Click(object sender, EventArgs e)

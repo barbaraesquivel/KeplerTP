@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using System.Text.Json;
 
 namespace Kepler7.Core.Progreso

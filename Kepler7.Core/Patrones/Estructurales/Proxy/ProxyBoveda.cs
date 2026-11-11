@@ -1,5 +1,3 @@
-using System;
-
 namespace Kepler7.Core.Patrones.Estructurales.Proxy
 {
     // Proxy de Protección: controla el acceso según el rol del usuario y registra cada intento

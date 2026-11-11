@@ -30,6 +30,7 @@ namespace Kepler7.Game.Pantallas
             btnEstrategiaIA = new Button();
             btnTurnos = new Button();
             btnLogros = new Button();
+            lblProgreso = new Label();
             SuspendLayout();
             // 
             // lblTitulo
@@ -128,7 +129,7 @@ namespace Kepler7.Game.Pantallas
             btnComunicaciones.Name = "btnComunicaciones";
             btnComunicaciones.Size = new Size(300, 35);
             btnComunicaciones.TabIndex = 9;
-            btnComunicaciones.Text = "Comunicaciones";
+            btnComunicaciones.Text = "Comunicaciones: mensajes cifrados";
             btnComunicaciones.UseVisualStyleBackColor = true;
             btnComunicaciones.Click += btnComunicaciones_Click;
             // 
@@ -138,7 +139,7 @@ namespace Kepler7.Game.Pantallas
             btnEstrategiaIA.Name = "btnEstrategiaIA";
             btnEstrategiaIA.Size = new Size(300, 35);
             btnEstrategiaIA.TabIndex = 9;
-            btnEstrategiaIA.Text = "EstrategiaIA";
+            btnEstrategiaIA.Text = "Estrategia IA: cerebro de los enemigos";
             btnEstrategiaIA.UseVisualStyleBackColor = true;
             btnEstrategiaIA.Click += btnEstrategiaIA_Click;
             // 
@@ -148,7 +149,7 @@ namespace Kepler7.Game.Pantallas
             btnTurnos.Name = "btnTurnos";
             btnTurnos.Size = new Size(300, 35);
             btnTurnos.TabIndex = 9;
-            btnTurnos.Text = "Turnos";
+            btnTurnos.Text = "Turnos: protocolo de unidades";
             btnTurnos.UseVisualStyleBackColor = true;
             btnTurnos.Click += btnTurnos_Click;
             // 
@@ -161,11 +162,23 @@ namespace Kepler7.Game.Pantallas
             btnLogros.Text = "Logros: patrones desbloqueados";
             btnLogros.UseVisualStyleBackColor = true;
             btnLogros.Click += btnLogros_Click;
-            // 
+            //
+            // lblProgreso
+            //
+            lblProgreso.AutoSize = true;
+            lblProgreso.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblProgreso.ForeColor = Color.FromArgb(90, 220, 140);
+            lblProgreso.Location = new Point(360, 42);
+            lblProgreso.Name = "lblProgreso";
+            lblProgreso.Size = new Size(260, 20);
+            lblProgreso.TabIndex = 11;
+            lblProgreso.Text = "Nivel 1  |  XP 0/100  |  Monedas 0";
+            //
             // PantallaHub
-            // 
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblProgreso);
             Controls.Add(btnLogros);
             Controls.Add(btnTurnos);
             Controls.Add(btnEstrategiaIA);
@@ -201,5 +214,6 @@ namespace Kepler7.Game.Pantallas
         private Button btnEstrategiaIA;
         private Button btnTurnos;
         private Button btnLogros;
+        private Label lblProgreso;
     }
 }

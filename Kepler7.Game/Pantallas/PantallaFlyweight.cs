@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Kepler7.Core.Patrones.Estructurales.Flyweight;
 
 namespace Kepler7.Game.Pantallas
@@ -15,6 +12,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaFlyweight(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             fabrica = new FabricaEspecies();
             tripulantes = new List<Tripulante>();

@@ -41,7 +41,7 @@ namespace Kepler7.Game.Pantallas
             // 
             lblContador.AutoSize = true;
             lblContador.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblContador.ForeColor = Color.DarkBlue;
+            lblContador.ForeColor = Color.FromArgb(90, 220, 140);
             lblContador.Location = new Point(30, 56);
             lblContador.Name = "lblContador";
             lblContador.Size = new Size(235, 20);

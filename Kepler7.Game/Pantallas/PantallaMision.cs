@@ -11,6 +11,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaMision(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             MostrarMision();
         }

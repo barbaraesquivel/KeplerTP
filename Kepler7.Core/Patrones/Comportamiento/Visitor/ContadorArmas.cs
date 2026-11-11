@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Kepler7.Core.Patrones.Comportamiento.Visitor
 {
     // Visitante 2: Cuenta y clasifica exclusivamente las armas del inventario

@@ -1,3 +1,5 @@
+using Kepler7.Core.Progreso;
+
 namespace Kepler7.Game.Pantallas
 {
     // Pantalla central de la estación: desde acá se va a cada sector
@@ -8,6 +10,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaHub(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
         }
 
@@ -54,7 +57,16 @@ namespace Kepler7.Game.Pantallas
 
         private void PantallaHub_Load(object sender, EventArgs e)
         {
+            MostrarProgreso();
+        }
 
+        // Muestra nivel, XP y monedas guardados del jugador
+        private void MostrarProgreso()
+        {
+            Progreso progreso = navegador.Progreso;
+            lblProgreso.Text = "Nivel " + progreso.Nivel
+                + "  |  XP " + progreso.Xp + "/" + Progreso.XpPorNivel
+                + "  |  Monedas " + progreso.Monedas;
         }
 
         private void btnComunicaciones_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 using Kepler7.Core.Modelo;
+using Kepler7.Core.Progreso;
 
 namespace Kepler7.Game.Pantallas
 {
@@ -10,6 +11,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaVictoria(NavegadorPantallas navegador, Mision mision)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             DarRecompensas(mision);
             timerTitulo.Start();
@@ -25,7 +27,8 @@ namespace Kepler7.Game.Pantallas
                 monedas = monedas + monedas * navegador.Partida.NaveElegida.BonusRecursos / 100;
             }
 
-            // Avisar a IProgreso (implementado por Lautaro)
+            // Suma la XP y las monedas al progreso y lo guarda
+            int nivelAntes = navegador.Progreso.Nivel;
             navegador.Progreso.GanarXp(xp);
             navegador.Progreso.GanarMonedas(monedas);
             navegador.Progreso.Guardar();
@@ -34,6 +37,22 @@ namespace Kepler7.Game.Pantallas
             navegador.Partida.MonedasGanadas += monedas;
 
             lblRecompensas.Text = "Recompensas: +" + xp + " XP y +" + monedas + " monedas";
+            MostrarProgreso(nivelAntes);
+        }
+
+        // Muestra el total acumulado y avisa si subió de nivel
+        private void MostrarProgreso(int nivelAntes)
+        {
+            Progreso progreso = navegador.Progreso;
+            lblTotal.Text = "Nivel " + progreso.Nivel
+                + " - XP " + progreso.Xp + "/" + Progreso.XpPorNivel
+                + " - Monedas totales " + progreso.Monedas;
+
+            if (progreso.Nivel > nivelAntes)
+            {
+                lblSubioNivel.Text = "¡Subiste al nivel " + progreso.Nivel + "!";
+                lblSubioNivel.Visible = true;
+            }
         }
 
         // Efecto simple: el título cambia de color
@@ -41,7 +60,7 @@ namespace Kepler7.Game.Pantallas
         {
             if (lblTitulo.ForeColor == Color.Gold)
             {
-                lblTitulo.ForeColor = Color.Green;
+                lblTitulo.ForeColor = Tema.Exito;
             }
             else
             {

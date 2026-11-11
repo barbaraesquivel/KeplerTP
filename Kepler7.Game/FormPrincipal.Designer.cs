@@ -27,7 +27,7 @@ namespace Kepler7.Game
             MinimumSize = new Size(815, 630);
             Name = "FormPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Kepler-7";
+            Text = "Kepler-7: Protocolo Crisis";
             ResumeLayout(false);
         }
 

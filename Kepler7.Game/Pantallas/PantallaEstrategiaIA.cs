@@ -1,23 +1,18 @@
 ﻿using Kepler7.Core.Patrones.Comportamiento.Strategy;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Kepler7.Game.Pantallas
 {
-    public partial class PantallaEstrategiaIA_strategy : UserControl
+    public partial class PantallaEstrategiaIA : UserControl
     {
+        private NavegadorPantallas navegador;
         private List<Enemigo> escuadron;
         private Contexto contextoSimulado;
-        public PantallaEstrategiaIA_strategy()
+
+        public PantallaEstrategiaIA(NavegadorPantallas navegador)
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            Tema.Preparar(this);
+            this.navegador = navegador;
             ConfigurarPantalla();
         }
 
@@ -51,11 +46,6 @@ namespace Kepler7.Game.Pantallas
             if (seleccionPrevia >= 0) lstEnemigos.SelectedIndex = seleccionPrevia;
         }
 
-        private void PantallaEstrategiaIA_strategy_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void cmbEstrategia_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstEnemigos.SelectedIndex == -1 || cmbEstrategias.SelectedIndex == -1) return;
@@ -86,6 +76,11 @@ namespace Kepler7.Game.Pantallas
             Enemigo enemigoSeleccionado = escuadron[lstEnemigos.SelectedIndex];
 
             txtDecision.Text = enemigoSeleccionado.EjecutarAccion(contextoSimulado);
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            navegador.IrAHub();
         }
     }
 }

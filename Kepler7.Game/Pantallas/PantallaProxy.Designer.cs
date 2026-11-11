@@ -49,7 +49,7 @@ namespace Kepler7.Game.Pantallas
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
-            lblTitulo.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            lblTitulo.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
             lblTitulo.Location = new Point(25, 12);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(460, 30);
@@ -158,7 +158,6 @@ namespace Kepler7.Game.Pantallas
             // 
             lblRutaLog.AutoSize = true;
             lblRutaLog.Font = new Font("Segoe UI", 8.5F, FontStyle.Italic);
-            lblRutaLog.ForeColor = Color.DarkSlateGray;
             lblRutaLog.Location = new Point(25, 233);
             lblRutaLog.Name = "lblRutaLog";
             lblRutaLog.Size = new Size(420, 19);

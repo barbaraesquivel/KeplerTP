@@ -1,6 +1,6 @@
 ﻿namespace Kepler7.Game.Pantallas
 {
-    partial class PantallaEstrategiaIA_strategy
+    partial class PantallaEstrategiaIA
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -34,6 +34,7 @@
             txtDecision = new TextBox();
             lblEstrategias = new Label();
             lblListaEnemigos = new Label();
+            btnVolver = new Button();
             SuspendLayout();
             // 
             // lstEnemigos
@@ -91,19 +92,30 @@
             lblListaEnemigos.TabIndex = 4;
             lblListaEnemigos.Text = "Lista Enemigos";
             // 
-            // PantallaEstrategiaIA_strategy
+            // btnVolver
+            // 
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnVolver.Location = new Point(533, 420);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(160, 35);
+            btnVolver.TabIndex = 5;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
+            // PantallaEstrategiaIA
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnVolver);
             Controls.Add(lblListaEnemigos);
             Controls.Add(lblEstrategias);
             Controls.Add(txtDecision);
             Controls.Add(btnEjecutarTurno);
             Controls.Add(cmbEstrategias);
             Controls.Add(lstEnemigos);
-            Name = "PantallaEstrategiaIA_strategy";
-            Size = new Size(736, 455);
-            Load += PantallaEstrategiaIA_strategy_Load;
+            Name = "PantallaEstrategiaIA";
+            Size = new Size(736, 470);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -116,5 +128,6 @@
         private TextBox txtDecision;
         private Label lblEstrategias;
         private Label lblListaEnemigos;
+        private Button btnVolver;
     }
 }

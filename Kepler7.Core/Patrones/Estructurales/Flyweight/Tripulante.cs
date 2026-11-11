@@ -17,12 +17,6 @@ namespace Kepler7.Core.Patrones.Estructurales.Flyweight
             Especie = especie;
         }
 
-        // Sobrecarga de constructor con orden alternativo de parámetros
-        public Tripulante(string nombre, int id, string rango, IEspecie especie)
-            : this(id, nombre, rango, especie)
-        {
-        }
-
         public override string ToString()
         {
             return $"[ID {Id}] {Nombre} ({Rango}) - Especie: {Especie.Nombre} ({Especie.PlanetaOrigen})";

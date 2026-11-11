@@ -1,6 +1,3 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using Kepler7.Core.Progreso;
 
 namespace Kepler7.Game.Pantallas
@@ -14,6 +11,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaLogros(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             this.servicioLogros = navegador.ServicioLogros;
 
@@ -51,14 +49,14 @@ namespace Kepler7.Game.Pantallas
                 if (logro.Desbloqueado)
                 {
                     lblLogro.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-                    lblLogro.ForeColor = Color.Green;
+                    lblLogro.ForeColor = Tema.Exito;
                     lblLogro.Text = "[DESBLOQUEADO] " + logro.Nombre + " (" + logro.Patron + ") - " + logro.Descripcion;
                     cantidadDesbloqueados++;
                 }
                 else
                 {
                     lblLogro.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
-                    lblLogro.ForeColor = Color.Gray;
+                    lblLogro.ForeColor = Color.DarkGray;
                     lblLogro.Text = "[BLOQUEADO] " + logro.Nombre + " (" + logro.Patron + ") - " + logro.Descripcion;
                 }
 

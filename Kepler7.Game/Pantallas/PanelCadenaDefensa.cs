@@ -12,6 +12,8 @@ namespace Kepler7.Game.Pantallas
         public PanelCadenaDefensa(Personaje jugador, Random random, PantallaCombate pantalla)
         {
             InitializeComponent();
+            BackColor = Tema.FondoPanel;
+            Tema.Aplicar(this);
             this.jugador = jugador;
             this.random = random;
             this.pantalla = pantalla;

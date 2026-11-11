@@ -26,7 +26,7 @@ namespace Kepler7.Game.Pantallas
             //
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblTitulo.ForeColor = Color.DarkRed;
+            lblTitulo.ForeColor = Color.FromArgb(230, 80, 80);
             lblTitulo.Location = new Point(30, 30);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Text = "Misión fallida";

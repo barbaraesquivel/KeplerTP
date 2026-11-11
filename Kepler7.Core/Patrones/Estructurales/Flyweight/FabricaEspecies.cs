@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Kepler7.Core.Patrones.Estructurales.Flyweight
 {
     // Fábrica Flyweight: almacena y reutiliza las instancias compartidas de IEspecie

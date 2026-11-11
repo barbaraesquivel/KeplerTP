@@ -1,5 +1,3 @@
-using System;
-
 namespace Kepler7.Core.Patrones.Comportamiento.Visitor
 {
     // Visitante 1: Calcula el valor total en créditos sumando cada ítem

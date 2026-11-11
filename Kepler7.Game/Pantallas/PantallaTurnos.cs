@@ -1,21 +1,16 @@
 ﻿using Kepler7.Core.Patrones.Comportamiento.Template_Method;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Kepler7.Game.Pantallas
 {
     public partial class PantallaTurnos : UserControl
     {
-        public PantallaTurnos()
+        private NavegadorPantallas navegador;
+
+        public PantallaTurnos(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
+            this.navegador = navegador;
             ConfigurarDesplegable();
         }
 
@@ -28,11 +23,6 @@ namespace Kepler7.Game.Pantallas
             cmbUnidades.SelectedIndex = 0;
         }
 
-
-        private void PantallaTurnos_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnEjecutarTurno_Click(object sender, EventArgs e)
         {
@@ -78,6 +68,11 @@ namespace Kepler7.Game.Pantallas
                 lstHistorial.Items.Add("--- 4. FINALIZACIÓN ---");
                 lstHistorial.Items.Add(historial[3]);
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            navegador.IrAHub();
         }
     }
 }

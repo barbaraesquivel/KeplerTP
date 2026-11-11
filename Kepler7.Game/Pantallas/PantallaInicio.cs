@@ -8,6 +8,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaInicio(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
         }
 

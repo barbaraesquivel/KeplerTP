@@ -1,6 +1,6 @@
 namespace Kepler7.Core.Progreso
 {
-    // Progreso del jugador: experiencia y monedas (lo implementa Lautaro)
+    // Progreso del jugador: experiencia, nivel y monedas
     public interface IProgreso
     {
         int Xp { get; }

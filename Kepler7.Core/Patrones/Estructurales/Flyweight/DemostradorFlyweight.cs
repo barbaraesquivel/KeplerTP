@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Kepler7.Core.Patrones.Estructurales.Flyweight
 {
     public class ResultadoComparacion

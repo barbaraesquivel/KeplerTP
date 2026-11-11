@@ -18,11 +18,6 @@ namespace Kepler7.Core.Patrones.Creacionales.Prototype
             prototipos[clave] = prototipo;
         }
 
-        public List<string> ObtenerClaves()
-        {
-            return new List<string>(prototipos.Keys);
-        }
-
         public TripulanteClonable Fabricar(string clave)
         {
             if (!prototipos.ContainsKey(clave) || Recursos < CostoClonacion)

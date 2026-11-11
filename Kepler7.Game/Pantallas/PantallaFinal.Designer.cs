@@ -40,7 +40,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnInicio
             //
-            btnInicio.Location = new Point(30, 280);
+            btnInicio.Location = new Point(30, 300);
             btnInicio.Name = "btnInicio";
             btnInicio.Size = new Size(160, 35);
             btnInicio.Text = "Volver al inicio";

@@ -14,6 +14,7 @@ namespace Kepler7.Game.Pantallas
         public PanelLaboratorio(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             CrearOriginal();
             laboratorio = new LaboratorioClonacion(100, 20);

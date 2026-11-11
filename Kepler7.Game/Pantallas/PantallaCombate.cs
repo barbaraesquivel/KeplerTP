@@ -32,6 +32,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaCombate(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             CrearPersonajes();
             animador = new AnimadorTimer(panelEscenario, PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual));
@@ -152,13 +153,14 @@ namespace Kepler7.Game.Pantallas
             btnDeshacer.Enabled = puedeActuar;
             btnRehacer.Enabled = puedeActuar;
             btnTurnoEnemigo.Enabled = enJuego;
-            // Agregado: al terminar el combate el botón lleva a victoria o derrota
+            // Al terminar el combate el botón lleva a victoria o derrota
             btnVolver.Text = enJuego ? "Volver al hub" : "Continuar";
             if (enJuego && !puedeActuar)
             {
                 InformarBloqueo(permisoMover.Mensaje);
             }
-            lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
+            lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Bonus de nivel: +" + BonusNivel()
+                + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
             panelEstado.ActualizarEstado();
             if (jugador.Estado.Nombre != "Normal")
             {
@@ -166,11 +168,11 @@ namespace Kepler7.Game.Pantallas
             }
             animador.ColorObjetivo = PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual);
             panelEscenario.Invalidate();
-            // Agregado: Actualizar() se llama después de cada acción, deshacer o rehacer
+            // Actualizar() se llama después de cada acción, deshacer o rehacer
             MostrarHistorial();
         }
 
-        // Agregado: muestra todo el historial de Command (incluye lo deshecho y rehecho)
+        // Muestra todo el historial de Command (incluye lo deshecho y rehecho)
         private void MostrarHistorial()
         {
             lstHistorial.Items.Clear();
@@ -397,6 +399,12 @@ namespace Kepler7.Game.Pantallas
             g.FillRectangle(color, x, y, ancho * Math.Max(0, Math.Min(1, porcentaje)), 4);
         }
 
+        // Cada nivel arriba del 1 suma 1 de daño al ataque
+        private int BonusNivel()
+        {
+            return navegador.Progreso.Nivel - 1;
+        }
+
         private void btnAtacar_Click(object sender, EventArgs e)
         {
             Personaje objetivo = BuscarEnemigoAlLado();
@@ -411,12 +419,13 @@ namespace Kepler7.Game.Pantallas
                 lblMensaje.Text = resultado.Mensaje;
                 return;
             }
-            // Agregado: la nave elegida en el Hangar (Builder) suma Ataque / 10 al daño
+            // La nave elegida en el Hangar (Builder) suma Ataque / 10 al daño
             int danio = resultado.Valor;
             if (navegador.Partida.NaveElegida != null)
             {
                 danio += navegador.Partida.NaveElegida.Ataque / 10;
             }
+            danio += BonusNivel();
             gestor.Ejecutar(new AtacarComando(objetivo, danio));
             lblMensaje.Text = resultado.Mensaje + " a " + objetivo.Nombre;
             if (!QuedanEnemigos())
@@ -603,7 +612,7 @@ namespace Kepler7.Game.Pantallas
             Actualizar();
         }
 
-        // Agregado: daño total que recibieron los enemigos (ataques y torretas del jugador).
+        // Daño total que recibieron los enemigos (ataques y torretas del jugador).
         // Se calcula al final, así lo deshecho no cuenta
         private int DanioHecho()
         {
@@ -618,13 +627,13 @@ namespace Kepler7.Game.Pantallas
         private void btnVolver_Click(object sender, EventArgs e)
         {
             animador.Detener();
-            // Agregado: si el combate terminó, el navegador guarda el resultado y muestra victoria o derrota
+            // Si el combate terminó, el navegador guarda el resultado y muestra victoria o derrota
             if (jugador.Vida == 0 || !QuedanEnemigos())
             {
                 navegador.TerminarCombate(jugador.Vida > 0, DanioHecho(), gestor.Historial.Count);
                 return;
             }
-            // Cambiado: si se abandona el combate a mitad, vuelve al hub (antes iba al inicio)
+            // Si se abandona el combate a mitad, vuelve al hub
             navegador.IrAHub();
         }
     }

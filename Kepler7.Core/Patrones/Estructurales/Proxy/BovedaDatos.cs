@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Kepler7.Core.Patrones.Estructurales.Proxy
 {
     // Sujeto Real: almacena y gestiona los archivos clasificados de la estación
@@ -28,11 +25,6 @@ namespace Kepler7.Core.Patrones.Estructurales.Proxy
         public void EscribirArchivo(string nombreArchivo, string contenido, string usuario = "Desconocido", string rol = "Tripulante")
         {
             _archivos[nombreArchivo] = contenido;
-        }
-
-        public IReadOnlyCollection<string> ObtenerNombresArchivos()
-        {
-            return _archivos.Keys;
         }
     }
 }

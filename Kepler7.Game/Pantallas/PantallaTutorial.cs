@@ -22,6 +22,7 @@ namespace Kepler7.Game.Pantallas
 
             "¿Cómo se progresa?\n\n" +
             "Cada misión ganada te da XP y monedas. " +
+            "Cada nivel que subís te da +1 de daño en combate. " +
             "La nave que elijas en el Hangar suma daño en el combate y más monedas al ganar.\n\n" +
             "Los logros se desbloquean a medida que avanzás en la partida. " +
             "Al final podés ver un resumen con todo lo que hiciste."
@@ -32,6 +33,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaTutorial(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             MostrarPagina();
         }

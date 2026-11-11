@@ -32,6 +32,7 @@
             btnEjecutarTurno = new Button();
             lstHistorial = new ListBox();
             lblUnidades = new Label();
+            btnVolver = new Button();
             SuspendLayout();
             // 
             // cmbUnidades
@@ -70,17 +71,28 @@
             lblUnidades.TabIndex = 3;
             lblUnidades.Text = "Unidades";
             // 
+            // btnVolver
+            // 
+            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnVolver.Location = new Point(522, 530);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(160, 35);
+            btnVolver.TabIndex = 4;
+            btnVolver.Text = "Volver al hub";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // PantallaTurnos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnVolver);
             Controls.Add(lblUnidades);
             Controls.Add(lstHistorial);
             Controls.Add(btnEjecutarTurno);
             Controls.Add(cmbUnidades);
             Name = "PantallaTurnos";
             Size = new Size(765, 584);
-            Load += PantallaTurnos_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -91,5 +103,6 @@
         private Button btnEjecutarTurno;
         private ListBox lstHistorial;
         private Label lblUnidades;
+        private Button btnVolver;
     }
 }

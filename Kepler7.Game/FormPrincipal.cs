@@ -8,6 +8,7 @@ namespace Kepler7.Game
         public FormPrincipal()
         {
             InitializeComponent();
+            BackColor = Tema.FondoOscuro;
             // El formulario es el contenedor donde se van cambiando las pantallas
             navegador = new NavegadorPantallas(this);
             navegador.IrAInicio();

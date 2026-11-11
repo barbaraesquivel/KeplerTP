@@ -43,7 +43,7 @@ namespace Kepler7.Game.Pantallas
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
-            lblTitulo.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            lblTitulo.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
             lblTitulo.Location = new Point(25, 12);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(440, 30);

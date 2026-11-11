@@ -13,6 +13,7 @@ namespace Kepler7.Game.Pantallas
         public PantallaHangar(NavegadorPantallas navegador)
         {
             InitializeComponent();
+            Tema.Preparar(this);
             this.navegador = navegador;
             cmbReceta.SelectedIndex = 0;
         }
@@ -60,7 +61,7 @@ namespace Kepler7.Game.Pantallas
         {
             if (naveConstruida == null)
             {
-                e.Graphics.DrawString("Construí una nave para ver sus atributos", Font, Brushes.Gray, 10, 10);
+                e.Graphics.DrawString("Construí una nave para ver sus atributos", Font, Brushes.Silver, 10, 10);
                 return;
             }
             DibujarBarra(e.Graphics, "Ataque", naveConstruida.Ataque, Brushes.IndianRed, 20);
@@ -74,10 +75,10 @@ namespace Kepler7.Game.Pantallas
             const int maximo = 60;
             const int anchoTotal = 160;
             int ancho = Math.Min(valor, maximo) * anchoTotal / maximo;
-            g.DrawString(nombre, Font, Brushes.Black, 10, y);
+            g.DrawString(nombre, Font, Brushes.White, 10, y);
             g.FillRectangle(Brushes.LightGray, 85, y, anchoTotal, 18);
             g.FillRectangle(color, 85, y, ancho, 18);
-            g.DrawString(valor.ToString(), Font, Brushes.Black, 255, y);
+            g.DrawString(valor.ToString(), Font, Brushes.White, 255, y);
         }
 
         // Guarda la nave en la partida para que dé bonus en la misión

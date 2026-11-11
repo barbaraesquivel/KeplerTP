@@ -12,6 +12,8 @@ namespace Kepler7.Game.Pantallas
         public PanelEstadoPersonaje(Personaje jugador, PantallaCombate pantalla)
         {
             InitializeComponent();
+            BackColor = Tema.FondoPanel;
+            Tema.Aplicar(this);
             this.jugador = jugador;
             this.pantalla = pantalla;
             ActualizarEstado();
