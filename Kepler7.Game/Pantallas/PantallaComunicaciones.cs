@@ -65,17 +65,6 @@ namespace Kepler7.Game.Pantallas
             txtMensajeCifradoMuestra.Text = mensajeActual.Enviar();
         }
 
-        private void cmbCifrado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (mensajeActual != null)
-            {
-                ICifrado nuevoCifrado = ObtenerCifradoSeleccionado();
-                mensajeActual.CambiarCifrado(nuevoCifrado);
-
-                ActualizarPantalla();
-            }
-        }
-
         private void btnVolver_Click(object sender, EventArgs e)
         {
             navegador.IrAHub();

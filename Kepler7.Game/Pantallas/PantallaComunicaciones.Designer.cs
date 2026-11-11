@@ -57,7 +57,6 @@
             cmbCifrado.Name = "cmbCifrado";
             cmbCifrado.Size = new Size(194, 23);
             cmbCifrado.TabIndex = 0;
-            cmbCifrado.SelectedIndexChanged += cmbCifrado_SelectedIndexChanged;
             // 
             // label1
             // 
