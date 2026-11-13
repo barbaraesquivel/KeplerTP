@@ -39,13 +39,15 @@
             txtMensajeCifradoMuestra = new TextBox();
             lblMensajeOriginal = new Label();
             lblMensajeCifrado = new Label();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
+            lblSaldo = new Label();
             SuspendLayout();
             // 
             // cmbTipoMensaje
             // 
             cmbTipoMensaje.FormattingEnabled = true;
-            cmbTipoMensaje.Location = new Point(216, 58);
+            cmbTipoMensaje.Location = new Point(216, 80);
             cmbTipoMensaje.Name = "cmbTipoMensaje";
             cmbTipoMensaje.Size = new Size(194, 23);
             cmbTipoMensaje.TabIndex = 0;
@@ -53,15 +55,24 @@
             // cmbCifrado
             // 
             cmbCifrado.FormattingEnabled = true;
-            cmbCifrado.Location = new Point(416, 58);
+            cmbCifrado.Location = new Point(416, 80);
             cmbCifrado.Name = "cmbCifrado";
             cmbCifrado.Size = new Size(194, 23);
             cmbCifrado.TabIndex = 0;
+            cmbCifrado.SelectedIndexChanged += cmbCifrado_SelectedIndexChanged;
+            // 
+            // lblSaldo
+            // 
+            lblSaldo.Location = new Point(216, 110);
+            lblSaldo.Name = "lblSaldo";
+            lblSaldo.Size = new Size(394, 50);
+            lblSaldo.TabIndex = 51;
+            lblSaldo.Text = "Monedas: 0";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(216, 40);
+            label1.Location = new Point(216, 62);
             label1.Name = "label1";
             label1.Size = new Size(93, 15);
             label1.TabIndex = 1;
@@ -70,7 +81,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(416, 40);
+            label2.Location = new Point(416, 62);
             label2.Name = "label2";
             label2.Size = new Size(46, 15);
             label2.TabIndex = 1;
@@ -78,7 +89,7 @@
             // 
             // txtMensaje
             // 
-            txtMensaje.Location = new Point(216, 168);
+            txtMensaje.Location = new Point(216, 190);
             txtMensaje.Multiline = true;
             txtMensaje.Name = "txtMensaje";
             txtMensaje.Size = new Size(394, 124);
@@ -87,7 +98,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(216, 150);
+            label3.Location = new Point(216, 172);
             label3.Name = "label3";
             label3.Size = new Size(51, 15);
             label3.TabIndex = 1;
@@ -95,7 +106,7 @@
             // 
             // btnEnviar
             // 
-            btnEnviar.Location = new Point(305, 309);
+            btnEnviar.Location = new Point(305, 331);
             btnEnviar.Name = "btnEnviar";
             btnEnviar.Size = new Size(199, 56);
             btnEnviar.TabIndex = 3;
@@ -139,22 +150,37 @@
             lblMensajeCifrado.TabIndex = 1;
             lblMensajeCifrado.Text = "Mensaje Cifrado";
             // 
-            // btnVolver
+            // btnContinuar
             // 
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnVolver.Location = new Point(603, 585);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(160, 35);
-            btnVolver.TabIndex = 5;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnContinuar.Location = new Point(603, 585);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.TabIndex = 5;
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(63, 2);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(700, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             // 
             // PantallaComunicaciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnVolver);
+            Controls.Add(lblHistoria);
+            Controls.Add(lblSaldo);
+            Controls.Add(btnContinuar);
             Controls.Add(txtMensajeCifradoMuestra);
             Controls.Add(txtMensajeOriginalMuestra);
             Controls.Add(btnEnviar);
@@ -185,6 +211,8 @@
         private TextBox txtMensajeCifradoMuestra;
         private Label lblMensajeOriginal;
         private Label lblMensajeCifrado;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
+        private Label lblSaldo;
     }
 }

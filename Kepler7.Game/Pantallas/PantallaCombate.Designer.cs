@@ -32,6 +32,10 @@ namespace Kepler7.Game.Pantallas
             btnRehacer = new Button();
             lblBase = new Label();
             lstHistorial = new ListBox();
+            lblObjetivos = new Label();
+            lblK7 = new Label();
+            btnHackear = new Button();
+            lblModificadores = new Label();
             SuspendLayout();
             // 
             // panelEscenario
@@ -152,6 +156,53 @@ namespace Kepler7.Game.Pantallas
             lblMensaje.TabIndex = 7;
             lblMensaje.Text = "¡Comienza el combate!";
             // 
+            // lblK7
+            // 
+            lblK7.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblK7.ForeColor = Color.FromArgb(230, 80, 80);
+            lblK7.Location = new Point(15, 522);
+            lblK7.Name = "lblK7";
+            lblK7.Size = new Size(401, 44);
+            lblK7.TabIndex = 21;
+            lblK7.Text = "K-7 usa: IAAgresiva";
+            lblK7.Visible = false;
+            // 
+            // btnHackear
+            // 
+            btnHackear.Location = new Point(185, 482);
+            btnHackear.Name = "btnHackear";
+            btnHackear.Size = new Size(180, 34);
+            btnHackear.TabIndex = 22;
+            btnHackear.Text = "Hackear IA";
+            btnHackear.UseVisualStyleBackColor = true;
+            btnHackear.Visible = false;
+            btnHackear.Click += btnHackear_Click;
+            // 
+            // lblModificadores
+            // 
+            lblModificadores.BorderStyle = BorderStyle.FixedSingle;
+            lblModificadores.Font = new Font("Segoe UI", 9F);
+            lblModificadores.ForeColor = Color.FromArgb(90, 220, 140);
+            lblModificadores.Location = new Point(425, 432);
+            lblModificadores.Name = "lblModificadores";
+            lblModificadores.Padding = new Padding(4);
+            lblModificadores.Size = new Size(370, 190);
+            lblModificadores.TabIndex = 23;
+            lblModificadores.Text = "Modificadores";
+            lblModificadores.Visible = false;
+            // 
+            // lblObjetivos
+            // 
+            lblObjetivos.BorderStyle = BorderStyle.FixedSingle;
+            lblObjetivos.Font = new Font("Segoe UI", 9F);
+            lblObjetivos.ForeColor = Color.FromArgb(255, 220, 130);
+            lblObjetivos.Location = new Point(425, 432);
+            lblObjetivos.Name = "lblObjetivos";
+            lblObjetivos.Padding = new Padding(4);
+            lblObjetivos.Size = new Size(370, 92);
+            lblObjetivos.TabIndex = 20;
+            lblObjetivos.Text = "Objetivos";
+            // 
             // lblBase
             // 
             lblBase.Location = new Point(15, 356);
@@ -175,7 +226,7 @@ namespace Kepler7.Game.Pantallas
             btnVolver.Name = "btnVolver";
             btnVolver.Size = new Size(160, 34);
             btnVolver.TabIndex = 8;
-            btnVolver.Text = "Volver al hub";
+            btnVolver.Text = "Abandonar";
             btnVolver.UseVisualStyleBackColor = true;
             btnVolver.Click += btnVolver_Click;
             // 
@@ -198,8 +249,12 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblBase);
             Controls.Add(lstHistorial);
             Controls.Add(btnVolver);
+            Controls.Add(lblObjetivos);
+            Controls.Add(lblK7);
+            Controls.Add(btnHackear);
+            Controls.Add(lblModificadores);
             Name = "PantallaCombate";
-            Size = new Size(810, 530);
+            Size = new Size(810, 630);
             ResumeLayout(false);
         }
 
@@ -220,5 +275,9 @@ namespace Kepler7.Game.Pantallas
         private Label lblBase;
         private ListBox lstHistorial;
         private Button btnVolver;
+        private Label lblObjetivos;
+        private Label lblK7;
+        private Button btnHackear;
+        private Label lblModificadores;
     }
 }

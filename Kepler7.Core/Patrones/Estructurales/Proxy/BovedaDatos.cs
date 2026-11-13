@@ -11,6 +11,7 @@ namespace Kepler7.Core.Patrones.Estructurales.Proxy
             _archivos["coordenadas_salto.dat"] = "Coordenadas Hiperespaciales: Sector 7G (84.122 / -12.904) - Ruta segura.";
             _archivos["codigos_autodestruccion.enc"] = "Códigos Alfa de Seguridad: K7-9942-ALPHA-DELTA. Requiere doble confirmación.";
             _archivos["manifiesto_carga.log"] = "Contenedor Criogénico #04: Especímenes alienígenas en estasis criogénica Nivel 5.";
+            _archivos["codigo_apagado_IA.dat"] = "Código de apagado de K-7: OMEGA-7-SILENCIO. Usar solo en el combate final.";
         }
 
         public string LeerArchivo(string nombreArchivo, string usuario = "Desconocido", string rol = "Tripulante")

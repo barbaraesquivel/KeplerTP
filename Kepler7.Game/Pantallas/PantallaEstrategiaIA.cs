@@ -1,10 +1,13 @@
-﻿using Kepler7.Core.Patrones.Comportamiento.Strategy;
+﻿using Kepler7.Core.Modelo;
+using Kepler7.Core.Patrones.Comportamiento.Strategy;
 
 namespace Kepler7.Game.Pantallas
 {
+    // Capítulo Estrategia IA (patrón Strategy): estudiar un algoritmo de K-7
     public partial class PantallaEstrategiaIA : UserControl
     {
         private NavegadorPantallas navegador;
+        private string iaEstudiada = "";
         private List<Enemigo> escuadron;
         private Contexto contextoSimulado;
 
@@ -13,13 +16,14 @@ namespace Kepler7.Game.Pantallas
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.EstrategiaIA);
             ConfigurarPantalla();
         }
 
         private void ConfigurarPantalla()
         {
             // Se simula un entorno para que la IA tome decisiones
-            contextoSimulado = new Contexto { DistanciaAlJugador = 15, SaludDelJugador = 100 };
+            contextoSimulado = new Contexto { DistanciaAlJugador = 1, SaludDelJugador = 100 };
 
             escuadron = new List<Enemigo>
             {
@@ -75,12 +79,19 @@ namespace Kepler7.Game.Pantallas
 
             Enemigo enemigoSeleccionado = escuadron[lstEnemigos.SelectedIndex];
 
-            txtDecision.Text = enemigoSeleccionado.EjecutarAccion(contextoSimulado);
+            DecisionIA decision = enemigoSeleccionado.EjecutarAccion(contextoSimulado);
+            txtDecision.Text = decision.Texto + Environment.NewLine + "Acción elegida: " + decision.Accion;
+
+            // La estrategia cuya decisión se vio es la que queda estudiada
+            iaEstudiada = enemigoSeleccionado.NombreEstrategiaActual;
+            txtDecision.Text += Environment.NewLine + Environment.NewLine + "Estrategia estudiada: " + iaEstudiada;
+            btnContinuar.Enabled = true;
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.Campana.IaAnalizada = iaEstudiada;
+            navegador.TerminarCapitulo(Capitulo.EstrategiaIA);
         }
     }
 }

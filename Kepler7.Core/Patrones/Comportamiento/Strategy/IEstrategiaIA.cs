@@ -1,8 +1,8 @@
 ﻿namespace Kepler7.Core.Patrones.Comportamiento.Strategy
 {
+    // Interfaz Strategy: cada IA decide qué hacer en su turno
     public interface IEstrategiaIA
     {
-        string DecidirAccion(Enemigo enemigo, Contexto contexto);
-
+        DecisionIA DecidirAccion(Enemigo enemigo, Contexto contexto);
     }
 }

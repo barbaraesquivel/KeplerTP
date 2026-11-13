@@ -1,3 +1,4 @@
+using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Estructurales.Facade;
 
 namespace Kepler7.Game.Pantallas
@@ -15,6 +16,7 @@ namespace Kepler7.Game.Pantallas
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.ControlCentral);
             ActualizarPantalla();
         }
 
@@ -22,6 +24,8 @@ namespace Kepler7.Game.Pantallas
         {
             control.IniciarTurno();
             navegador.ServicioLogros.RegistrarUsoPatron("Facade");
+            // Con un turno iniciado ya se puede seguir (aunque después se apague)
+            btnContinuar.Enabled = true;
             ActualizarPantalla();
         }
 
@@ -80,9 +84,12 @@ namespace Kepler7.Game.Pantallas
             return Color.DarkGray;
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        // Guarda cómo quedó la estación
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.Campana.EnergiaRestante = control.NivelEnergia;
+            navegador.Campana.EstadoEstacion = control.Estado;
+            navegador.TerminarCapitulo(Capitulo.ControlCentral);
         }
     }
 }

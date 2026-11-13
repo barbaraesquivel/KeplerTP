@@ -1,3 +1,5 @@
+using Kepler7.Core.Modelo;
+
 namespace Kepler7.Game.Pantallas
 {
     // Pantalla que se muestra al perder el combate
@@ -12,15 +14,11 @@ namespace Kepler7.Game.Pantallas
             this.navegador = navegador;
         }
 
-        // Vuelve al briefing para intentar la misión otra vez
-        private void btnReintentar_Click(object sender, EventArgs e)
+        // La derrota vale: no hay reintento, se llega herido al final
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAMision();
-        }
-
-        private void btnHub_Click(object sender, EventArgs e)
-        {
-            navegador.IrAHub();
+            navegador.Campana.PracticaGanada = false;
+            navegador.TerminarCapitulo(Capitulo.Practica);
         }
     }
 }

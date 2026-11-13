@@ -104,6 +104,16 @@ namespace Kepler7.Game.Pantallas
             pantalla.Actualizar();
         }
 
+        // En el combate final la cadena se muestra pero no se puede editar
+        public void SoloLectura()
+        {
+            btnSubir.Enabled = false;
+            btnBajar.Enabled = false;
+            btnQuitar.Enabled = false;
+            btnAgregar.Enabled = false;
+            cmbTipo.Enabled = false;
+        }
+
         private void btnSubir_Click(object sender, EventArgs e)
         {
             int indice = lstEslabones.SelectedIndex;

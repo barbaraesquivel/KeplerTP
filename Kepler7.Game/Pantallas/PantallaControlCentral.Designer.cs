@@ -26,7 +26,8 @@ namespace Kepler7.Game.Pantallas
             lblEnergia = new Label();
             barEnergia = new ProgressBar();
             lstSecuencia = new ListBox();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
             SuspendLayout();
             //
             // lblTitulo
@@ -39,7 +40,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnIniciarTurno
             //
-            btnIniciarTurno.Location = new Point(30, 80);
+            btnIniciarTurno.Location = new Point(30, 130);
             btnIniciarTurno.Name = "btnIniciarTurno";
             btnIniciarTurno.Size = new Size(160, 35);
             btnIniciarTurno.Text = "Iniciar turno";
@@ -48,7 +49,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnEmergencia
             //
-            btnEmergencia.Location = new Point(200, 80);
+            btnEmergencia.Location = new Point(200, 130);
             btnEmergencia.Name = "btnEmergencia";
             btnEmergencia.Size = new Size(160, 35);
             btnEmergencia.Text = "Emergencia";
@@ -57,7 +58,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnApagar
             //
-            btnApagar.Location = new Point(370, 80);
+            btnApagar.Location = new Point(370, 130);
             btnApagar.Name = "btnApagar";
             btnApagar.Size = new Size(160, 35);
             btnApagar.Text = "Apagar estación";
@@ -66,7 +67,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnSalirEmergencia
             //
-            btnSalirEmergencia.Location = new Point(540, 80);
+            btnSalirEmergencia.Location = new Point(540, 130);
             btnSalirEmergencia.Name = "btnSalirEmergencia";
             btnSalirEmergencia.Size = new Size(180, 35);
             btnSalirEmergencia.Text = "Salir de emergencia";
@@ -77,13 +78,13 @@ namespace Kepler7.Game.Pantallas
             //
             lblEstado.AutoSize = true;
             lblEstado.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblEstado.Location = new Point(30, 135);
+            lblEstado.Location = new Point(30, 185);
             lblEstado.Name = "lblEstado";
             lblEstado.Text = "Estado: Apagada";
             //
             // barEnergia
             //
-            barEnergia.Location = new Point(30, 175);
+            barEnergia.Location = new Point(30, 225);
             barEnergia.Maximum = 100;
             barEnergia.Minimum = 0;
             barEnergia.Name = "barEnergia";
@@ -92,7 +93,7 @@ namespace Kepler7.Game.Pantallas
             // lblEnergia
             //
             lblEnergia.AutoSize = true;
-            lblEnergia.Location = new Point(440, 180);
+            lblEnergia.Location = new Point(440, 230);
             lblEnergia.Name = "lblEnergia";
             lblEnergia.Text = "Energía: 0";
             //
@@ -100,24 +101,38 @@ namespace Kepler7.Game.Pantallas
             //
             lstSecuencia.FormattingEnabled = true;
             lstSecuencia.ItemHeight = 15;
-            lstSecuencia.Location = new Point(30, 215);
+            lstSecuencia.Location = new Point(30, 265);
             lstSecuencia.Name = "lstSecuencia";
             lstSecuencia.Size = new Size(500, 154);
             //
-            // btnVolver
+            // btnContinuar
             //
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVolver.Location = new Point(20, 505);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(160, 35);
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnContinuar.Location = new Point(20, 555);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(30, 62);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(740, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             //
             // PantallaControlCentral
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblHistoria);
             Controls.Add(lblTitulo);
             Controls.Add(btnIniciarTurno);
             Controls.Add(btnEmergencia);
@@ -127,9 +142,9 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(barEnergia);
             Controls.Add(lblEnergia);
             Controls.Add(lstSecuencia);
-            Controls.Add(btnVolver);
+            Controls.Add(btnContinuar);
             Name = "PantallaControlCentral";
-            Size = new Size(800, 560);
+            Size = new Size(800, 610);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -145,6 +160,7 @@ namespace Kepler7.Game.Pantallas
         private Label lblEnergia;
         private ProgressBar barEnergia;
         private ListBox lstSecuencia;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
     }
 }

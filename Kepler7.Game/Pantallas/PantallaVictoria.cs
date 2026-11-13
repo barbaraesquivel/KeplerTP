@@ -68,16 +68,12 @@ namespace Kepler7.Game.Pantallas
             }
         }
 
-        private void btnHub_Click(object sender, EventArgs e)
+        // Ganó la práctica: llega entero al final
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
             timerTitulo.Stop();
-            navegador.IrAHub();
-        }
-
-        private void btnResumen_Click(object sender, EventArgs e)
-        {
-            timerTitulo.Stop();
-            navegador.IrAFinal();
+            navegador.Campana.PracticaGanada = true;
+            navegador.TerminarCapitulo(Capitulo.Practica);
         }
     }
 }

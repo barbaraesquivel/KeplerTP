@@ -1,3 +1,4 @@
+using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Creacionales.Prototype;
 
 namespace Kepler7.Game.Pantallas
@@ -10,15 +11,21 @@ namespace Kepler7.Game.Pantallas
         private TripulanteClonable clon;
         private string originalAlEmpezar;
         private PruebaIndependencia prueba = new PruebaIndependencia();
+        private int clonesCreados = 0;
 
         public PanelLaboratorio(NavegadorPantallas navegador)
         {
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.Laboratorio);
+            // Clonar es opcional: se puede seguir sin clonar
+            btnContinuar.Enabled = true;
             CrearOriginal();
             laboratorio = new LaboratorioClonacion(100, 20);
             laboratorio.RegistrarPrototipo("Ana", original);
+            // Registrar el prototipo ya usa el patrón (clonar es opcional en la campaña)
+            navegador.ServicioLogros.RegistrarUsoPatron("Prototype");
             btnClonar.Text = "Clonar (cuesta " + laboratorio.CostoClonacion + ")";
             ActualizarPantalla();
         }
@@ -60,7 +67,7 @@ namespace Kepler7.Game.Pantallas
 
         private void ActualizarPantalla()
         {
-            lblRecursos.Text = "Recursos: " + laboratorio.Recursos;
+            lblRecursos.Text = "Recursos: " + laboratorio.Recursos + "  |  Clones creados: " + clonesCreados + " (cuentan hasta " + Campana.MaxClones + ")";
             MostrarTripulante(lstOriginal, original);
             MostrarTripulante(lstClon, clon);
             if (clon == null)
@@ -81,6 +88,7 @@ namespace Kepler7.Game.Pantallas
             }
             clon = nuevo;
             clon.Nombre = "Ana (clon)";
+            clonesCreados++;
             navegador.ServicioLogros.RegistrarUsoPatron("Prototype");
             ActualizarPantalla();
         }
@@ -96,9 +104,10 @@ namespace Kepler7.Game.Pantallas
             ActualizarPantalla();
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.Campana.ClonesCreados = clonesCreados;
+            navegador.TerminarCapitulo(Capitulo.Laboratorio);
         }
     }
 }

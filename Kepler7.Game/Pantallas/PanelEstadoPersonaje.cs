@@ -56,6 +56,15 @@ namespace Kepler7.Game.Pantallas
             pantalla.Actualizar();
         }
 
+        // En el combate final el estado cambia solo por el combate, no a mano
+        public void SoloLectura()
+        {
+            btnVeneno.Enabled = false;
+            btnAturdir.Enabled = false;
+            btnBerserk.Enabled = false;
+            btnNormal.Enabled = false;
+        }
+
         private void btnVeneno_Click(object sender, EventArgs e)
         {
             CambiarEstado(new Envenenado(5, 3));

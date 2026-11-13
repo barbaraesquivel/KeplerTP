@@ -1,9 +1,13 @@
+using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Estructurales.Proxy;
 
 namespace Kepler7.Game.Pantallas
 {
+    // Capítulo Bóveda (patrón Proxy): conseguir el código de apagado de K-7
     public partial class PantallaProxy : UserControl
     {
+        private const string ArchivoCodigo = "codigo_apagado_IA.dat";
+
         private IBoveda _bovedaProxy;
         private NavegadorPantallas navegador;
 
@@ -13,6 +17,7 @@ namespace Kepler7.Game.Pantallas
             Tema.Preparar(this);
             this.navegador = navegador;
             _bovedaProxy = new ProxyBoveda();
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.Boveda);
         }
 
         private void PantallaProxy_Load(object sender, EventArgs e)
@@ -58,17 +63,36 @@ namespace Kepler7.Game.Pantallas
                 string contenido = _bovedaProxy.LeerArchivo(archivo, usuario, rol);
                 txtResultado.ForeColor = Tema.Exito;
                 txtResultado.Text = $"[ACCESO AUTORIZADO]\r\nArchivo: {archivo}\r\nContenido: {contenido}";
+                if (archivo == ArchivoCodigo)
+                {
+                    navegador.Campana.TieneCodigoApagado = true;
+                }
             }
             catch (UnauthorizedAccessException ex)
             {
                 txtResultado.ForeColor = Tema.Peligro;
                 txtResultado.Text = $"[ACCESO RECHAZADO]\r\n{ex.Message}";
+                navegador.Campana.AccesosRechazados++;
             }
             finally
             {
                 navegador.ServicioLogros.RegistrarUsoPatron("Proxy");
                 ActualizarListaLogs();
             }
+
+            // Ya se intentó leer el código: se puede seguir (con o sin él)
+            if (archivo == ArchivoCodigo)
+            {
+                btnContinuar.Enabled = true;
+            }
+            MostrarIntentos();
+        }
+
+        // Muestra cuántos rechazos van y si ya se tiene el código
+        private void MostrarIntentos()
+        {
+            string codigo = navegador.Campana.TieneCodigoApagado ? "CONSEGUIDO" : "no";
+            lblRutaLog.Text = "Accesos rechazados: " + navegador.Campana.AccesosRechazados + "  |  Código de apagado: " + codigo;
         }
 
         private void btnEscribir_Click(object sender, EventArgs e)
@@ -88,6 +112,7 @@ namespace Kepler7.Game.Pantallas
             {
                 txtResultado.ForeColor = Tema.Peligro;
                 txtResultado.Text = $"[ESCRITURA RECHAZADA]\r\n{ex.Message}";
+                navegador.Campana.AccesosRechazados++;
             }
             finally
             {
@@ -109,9 +134,9 @@ namespace Kepler7.Game.Pantallas
             txtResultado.Text = "Registro de auditoría borrado.";
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.TerminarCapitulo(Capitulo.Boveda);
         }
     }
 }

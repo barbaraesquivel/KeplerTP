@@ -19,7 +19,7 @@
             this.estrategia = nuevaEstrategia;
         }
 
-        public string EjecutarAccion(Contexto contextoActual)
+        public DecisionIA EjecutarAccion(Contexto contextoActual)
         {
             return this.estrategia.DecidirAccion(this, contextoActual);
         }

@@ -32,7 +32,8 @@
             btnEjecutarTurno = new Button();
             lstHistorial = new ListBox();
             lblUnidades = new Label();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
             SuspendLayout();
             // 
             // cmbUnidades
@@ -71,22 +72,36 @@
             lblUnidades.TabIndex = 3;
             lblUnidades.Text = "Unidades";
             // 
-            // btnVolver
+            // btnContinuar
             // 
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnVolver.Location = new Point(522, 530);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(160, 35);
-            btnVolver.TabIndex = 4;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnContinuar.Location = new Point(522, 530);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.TabIndex = 4;
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(76, 2);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(606, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             // 
             // PantallaTurnos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnVolver);
+            Controls.Add(lblHistoria);
+            Controls.Add(btnContinuar);
             Controls.Add(lblUnidades);
             Controls.Add(lstHistorial);
             Controls.Add(btnEjecutarTurno);
@@ -103,6 +118,7 @@
         private Button btnEjecutarTurno;
         private ListBox lstHistorial;
         private Label lblUnidades;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
     }
 }

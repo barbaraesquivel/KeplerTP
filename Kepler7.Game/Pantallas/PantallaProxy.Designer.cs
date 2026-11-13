@@ -43,7 +43,8 @@ namespace Kepler7.Game.Pantallas
             lstLogs = new ListBox();
             btnRecargarLogs = new Button();
             btnLimpiarLogs = new Button();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
             SuspendLayout();
             // 
             // lblTitulo
@@ -59,7 +60,7 @@ namespace Kepler7.Game.Pantallas
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(25, 52);
+            label2.Location = new Point(25, 112);
             label2.Name = "label2";
             label2.Size = new Size(62, 20);
             label2.TabIndex = 1;
@@ -67,7 +68,7 @@ namespace Kepler7.Game.Pantallas
             // 
             // txtUsuario
             // 
-            txtUsuario.Location = new Point(90, 48);
+            txtUsuario.Location = new Point(90, 108);
             txtUsuario.Name = "txtUsuario";
             txtUsuario.Size = new Size(160, 27);
             txtUsuario.TabIndex = 2;
@@ -76,7 +77,7 @@ namespace Kepler7.Game.Pantallas
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(270, 52);
+            label1.Location = new Point(270, 112);
             label1.Name = "label1";
             label1.Size = new Size(34, 20);
             label1.TabIndex = 3;
@@ -87,7 +88,7 @@ namespace Kepler7.Game.Pantallas
             cmbRol.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRol.FormattingEnabled = true;
             cmbRol.Items.AddRange(new object[] { "Capitán", "Oficial de Seguridad", "Ingeniero", "Tripulante", "Cocinero" });
-            cmbRol.Location = new Point(310, 48);
+            cmbRol.Location = new Point(310, 108);
             cmbRol.Name = "cmbRol";
             cmbRol.Size = new Size(170, 28);
             cmbRol.TabIndex = 4;
@@ -95,7 +96,7 @@ namespace Kepler7.Game.Pantallas
             // lblArchivo
             // 
             lblArchivo.AutoSize = true;
-            lblArchivo.Location = new Point(25, 90);
+            lblArchivo.Location = new Point(25, 150);
             lblArchivo.Name = "lblArchivo";
             lblArchivo.Size = new Size(62, 20);
             lblArchivo.TabIndex = 5;
@@ -105,8 +106,8 @@ namespace Kepler7.Game.Pantallas
             // 
             cmbArchivo.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbArchivo.FormattingEnabled = true;
-            cmbArchivo.Items.AddRange(new object[] { "coordenadas_salto.dat", "codigos_autodestruccion.enc", "manifiesto_carga.log" });
-            cmbArchivo.Location = new Point(90, 86);
+            cmbArchivo.Items.AddRange(new object[] { "codigo_apagado_IA.dat", "coordenadas_salto.dat", "codigos_autodestruccion.enc", "manifiesto_carga.log" });
+            cmbArchivo.Location = new Point(90, 146);
             cmbArchivo.Name = "cmbArchivo";
             cmbArchivo.Size = new Size(220, 28);
             cmbArchivo.TabIndex = 6;
@@ -115,7 +116,7 @@ namespace Kepler7.Game.Pantallas
             // 
             btnLeer.BackColor = Color.LightSteelBlue;
             btnLeer.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnLeer.Location = new Point(320, 85);
+            btnLeer.Location = new Point(320, 145);
             btnLeer.Name = "btnLeer";
             btnLeer.Size = new Size(130, 30);
             btnLeer.TabIndex = 7;
@@ -125,7 +126,7 @@ namespace Kepler7.Game.Pantallas
             // 
             // btnEscribir
             // 
-            btnEscribir.Location = new Point(458, 85);
+            btnEscribir.Location = new Point(458, 145);
             btnEscribir.Name = "btnEscribir";
             btnEscribir.Size = new Size(130, 30);
             btnEscribir.TabIndex = 8;
@@ -137,7 +138,7 @@ namespace Kepler7.Game.Pantallas
             // 
             lblContenido.AutoSize = true;
             lblContenido.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblContenido.Location = new Point(25, 126);
+            lblContenido.Location = new Point(25, 186);
             lblContenido.Name = "lblContenido";
             lblContenido.Size = new Size(224, 20);
             lblContenido.TabIndex = 9;
@@ -147,7 +148,7 @@ namespace Kepler7.Game.Pantallas
             // 
             txtResultado.BackColor = Color.White;
             txtResultado.Font = new Font("Consolas", 9F);
-            txtResultado.Location = new Point(25, 149);
+            txtResultado.Location = new Point(25, 209);
             txtResultado.Multiline = true;
             txtResultado.Name = "txtResultado";
             txtResultado.ScrollBars = ScrollBars.Vertical;
@@ -158,7 +159,7 @@ namespace Kepler7.Game.Pantallas
             // 
             lblRutaLog.AutoSize = true;
             lblRutaLog.Font = new Font("Segoe UI", 8.5F, FontStyle.Italic);
-            lblRutaLog.Location = new Point(25, 233);
+            lblRutaLog.Location = new Point(25, 293);
             lblRutaLog.Name = "lblRutaLog";
             lblRutaLog.Size = new Size(420, 19);
             lblRutaLog.TabIndex = 11;
@@ -169,14 +170,14 @@ namespace Kepler7.Game.Pantallas
             lstLogs.Font = new Font("Consolas", 8.5F);
             lstLogs.FormattingEnabled = true;
             lstLogs.ItemHeight = 17;
-            lstLogs.Location = new Point(25, 256);
+            lstLogs.Location = new Point(25, 316);
             lstLogs.Name = "lstLogs";
             lstLogs.Size = new Size(720, 174);
             lstLogs.TabIndex = 12;
             // 
             // btnRecargarLogs
             // 
-            btnRecargarLogs.Location = new Point(220, 442);
+            btnRecargarLogs.Location = new Point(220, 502);
             btnRecargarLogs.Name = "btnRecargarLogs";
             btnRecargarLogs.Size = new Size(130, 36);
             btnRecargarLogs.TabIndex = 13;
@@ -186,7 +187,7 @@ namespace Kepler7.Game.Pantallas
             // 
             // btnLimpiarLogs
             // 
-            btnLimpiarLogs.Location = new Point(360, 442);
+            btnLimpiarLogs.Location = new Point(360, 502);
             btnLimpiarLogs.Name = "btnLimpiarLogs";
             btnLimpiarLogs.Size = new Size(130, 36);
             btnLimpiarLogs.TabIndex = 14;
@@ -194,24 +195,38 @@ namespace Kepler7.Game.Pantallas
             btnLimpiarLogs.UseVisualStyleBackColor = true;
             btnLimpiarLogs.Click += btnLimpiarLogs_Click;
             // 
-            // btnVolver
+            // btnContinuar
             // 
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVolver.Location = new Point(25, 442);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(180, 36);
-            btnVolver.TabIndex = 15;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnContinuar.Location = new Point(25, 502);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(180, 36);
+            btnContinuar.TabIndex = 15;
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(25, 46);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(720, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             // 
             // PantallaProxy
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblHistoria);
             Controls.Add(btnLimpiarLogs);
             Controls.Add(btnRecargarLogs);
-            Controls.Add(btnVolver);
+            Controls.Add(btnContinuar);
             Controls.Add(lstLogs);
             Controls.Add(lblRutaLog);
             Controls.Add(txtResultado);
@@ -226,7 +241,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(label2);
             Controls.Add(lblTitulo);
             Name = "PantallaProxy";
-            Size = new Size(770, 495);
+            Size = new Size(770, 555);
             Load += PantallaProxy_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -249,6 +264,7 @@ namespace Kepler7.Game.Pantallas
         private ListBox lstLogs;
         private Button btnRecargarLogs;
         private Button btnLimpiarLogs;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
     }
 }

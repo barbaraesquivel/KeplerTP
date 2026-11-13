@@ -47,6 +47,14 @@ namespace Kepler7.Core.Progreso
             Monedas += cantidad;
         }
 
+        // Descuenta monedas si alcanzan. Devuelve false si no alcanzan.
+        public bool GastarMonedas(int cantidad)
+        {
+            if (cantidad < 0 || cantidad > Monedas) return false;
+            Monedas -= cantidad;
+            return true;
+        }
+
         // Obtiene la ruta del archivo en %AppData%\Kepler7\progreso.json
         public static string ObtenerRutaArchivo()
         {

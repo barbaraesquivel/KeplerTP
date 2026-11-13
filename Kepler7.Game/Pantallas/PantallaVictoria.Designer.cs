@@ -22,8 +22,7 @@ namespace Kepler7.Game.Pantallas
             lblRecompensas = new Label();
             lblTotal = new Label();
             lblSubioNivel = new Label();
-            btnHub = new Button();
-            btnResumen = new Button();
+            btnContinuar = new Button();
             timerTitulo = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             //
@@ -62,23 +61,14 @@ namespace Kepler7.Game.Pantallas
             lblSubioNivel.Text = "¡Subiste de nivel!";
             lblSubioNivel.Visible = false;
             //
-            // btnHub
+            // btnContinuar
             //
-            btnHub.Location = new Point(30, 195);
-            btnHub.Name = "btnHub";
-            btnHub.Size = new Size(160, 35);
-            btnHub.Text = "Volver al hub";
-            btnHub.UseVisualStyleBackColor = true;
-            btnHub.Click += btnHub_Click;
-            //
-            // btnResumen
-            //
-            btnResumen.Location = new Point(200, 195);
-            btnResumen.Name = "btnResumen";
-            btnResumen.Size = new Size(160, 35);
-            btnResumen.Text = "Ver resumen final";
-            btnResumen.UseVisualStyleBackColor = true;
-            btnResumen.Click += btnResumen_Click;
+            btnContinuar.Location = new Point(30, 195);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.Text = "Continuar";
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
             //
             // timerTitulo
             //
@@ -93,8 +83,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblRecompensas);
             Controls.Add(lblTotal);
             Controls.Add(lblSubioNivel);
-            Controls.Add(btnHub);
-            Controls.Add(btnResumen);
+            Controls.Add(btnContinuar);
             Name = "PantallaVictoria";
             Size = new Size(800, 450);
             ResumeLayout(false);
@@ -107,8 +96,7 @@ namespace Kepler7.Game.Pantallas
         private Label lblRecompensas;
         private Label lblTotal;
         private Label lblSubioNivel;
-        private Button btnHub;
-        private Button btnResumen;
+        private Button btnContinuar;
         private System.Windows.Forms.Timer timerTitulo;
     }
 }

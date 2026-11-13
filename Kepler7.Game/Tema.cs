@@ -131,7 +131,15 @@ namespace Kepler7.Game
         // Los que ya tienen un color propio (victoria, derrota, estados) lo conservan.
         private static void AplicarLabel(Label label)
         {
-            label.BackColor = Color.Transparent;
+            // La caja de historia de cada capítulo lleva fondo para que se vea como recuadro
+            if (label.Name == "lblHistoria")
+            {
+                label.BackColor = FondoPanel;
+            }
+            else
+            {
+                label.BackColor = Color.Transparent;
+            }
             if (label.ForeColor != SystemColors.ControlText)
             {
                 return;

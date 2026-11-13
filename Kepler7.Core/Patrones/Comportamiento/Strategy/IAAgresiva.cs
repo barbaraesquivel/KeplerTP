@@ -1,10 +1,15 @@
 ﻿namespace Kepler7.Core.Patrones.Comportamiento.Strategy
 {
+    // Si está al lado ataca; si no, se acerca
     public class IAAgresiva : IEstrategiaIA
     {
-        public string DecidirAccion(Enemigo enemigo, Contexto contexto)
+        public DecisionIA DecidirAccion(Enemigo enemigo, Contexto contexto)
         {
-            return $"[Agresiva] {enemigo.Nombre} ignora su propia salud y ataca con todo su arsenal.";
+            if (contexto.EstaAlLado)
+            {
+                return new DecisionIA(AccionIA.Atacar, $"[Agresiva] {enemigo.Nombre} ataca con todo su arsenal.");
+            }
+            return new DecisionIA(AccionIA.Acercarse, $"[Agresiva] {enemigo.Nombre} avanza directo hacia vos.");
         }
     }
 }

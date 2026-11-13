@@ -34,14 +34,15 @@
             txtDecision = new TextBox();
             lblEstrategias = new Label();
             lblListaEnemigos = new Label();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
             SuspendLayout();
             // 
             // lstEnemigos
             // 
             lstEnemigos.FormattingEnabled = true;
             lstEnemigos.ItemHeight = 15;
-            lstEnemigos.Location = new Point(67, 129);
+            lstEnemigos.Location = new Point(67, 151);
             lstEnemigos.Name = "lstEnemigos";
             lstEnemigos.Size = new Size(267, 169);
             lstEnemigos.TabIndex = 0;
@@ -49,7 +50,7 @@
             // cmbEstrategias
             // 
             cmbEstrategias.FormattingEnabled = true;
-            cmbEstrategias.Location = new Point(67, 56);
+            cmbEstrategias.Location = new Point(67, 78);
             cmbEstrategias.Name = "cmbEstrategias";
             cmbEstrategias.Size = new Size(267, 23);
             cmbEstrategias.TabIndex = 1;
@@ -57,7 +58,7 @@
             // 
             // btnEjecutarTurno
             // 
-            btnEjecutarTurno.Location = new Point(78, 340);
+            btnEjecutarTurno.Location = new Point(78, 362);
             btnEjecutarTurno.Name = "btnEjecutarTurno";
             btnEjecutarTurno.Size = new Size(234, 63);
             btnEjecutarTurno.TabIndex = 2;
@@ -67,7 +68,7 @@
             // 
             // txtDecision
             // 
-            txtDecision.Location = new Point(395, 56);
+            txtDecision.Location = new Point(395, 78);
             txtDecision.Multiline = true;
             txtDecision.Name = "txtDecision";
             txtDecision.ReadOnly = true;
@@ -77,7 +78,7 @@
             // lblEstrategias
             // 
             lblEstrategias.AutoSize = true;
-            lblEstrategias.Location = new Point(67, 38);
+            lblEstrategias.Location = new Point(67, 60);
             lblEstrategias.Name = "lblEstrategias";
             lblEstrategias.Size = new Size(63, 15);
             lblEstrategias.TabIndex = 4;
@@ -86,28 +87,42 @@
             // lblListaEnemigos
             // 
             lblListaEnemigos.AutoSize = true;
-            lblListaEnemigos.Location = new Point(67, 111);
+            lblListaEnemigos.Location = new Point(67, 133);
             lblListaEnemigos.Name = "lblListaEnemigos";
             lblListaEnemigos.Size = new Size(86, 15);
             lblListaEnemigos.TabIndex = 4;
             lblListaEnemigos.Text = "Lista Enemigos";
             // 
-            // btnVolver
+            // btnContinuar
             // 
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnVolver.Location = new Point(533, 420);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(160, 35);
-            btnVolver.TabIndex = 5;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnContinuar.Location = new Point(533, 442);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.TabIndex = 5;
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(67, 2);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(626, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             // 
             // PantallaEstrategiaIA
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnVolver);
+            Controls.Add(lblHistoria);
+            Controls.Add(btnContinuar);
             Controls.Add(lblListaEnemigos);
             Controls.Add(lblEstrategias);
             Controls.Add(txtDecision);
@@ -115,7 +130,7 @@
             Controls.Add(cmbEstrategias);
             Controls.Add(lstEnemigos);
             Name = "PantallaEstrategiaIA";
-            Size = new Size(736, 470);
+            Size = new Size(736, 492);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -128,6 +143,7 @@
         private TextBox txtDecision;
         private Label lblEstrategias;
         private Label lblListaEnemigos;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
     }
 }

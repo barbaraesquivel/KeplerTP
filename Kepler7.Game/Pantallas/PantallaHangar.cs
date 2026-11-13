@@ -1,3 +1,4 @@
+using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Creacionales.Builder;
 
 namespace Kepler7.Game.Pantallas
@@ -15,6 +16,7 @@ namespace Kepler7.Game.Pantallas
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.Hangar);
             cmbReceta.SelectedIndex = 0;
         }
 
@@ -89,13 +91,15 @@ namespace Kepler7.Game.Pantallas
                 lblAviso.Text = "Primero construí una nave";
                 return;
             }
-            navegador.Partida.NaveElegida = naveConstruida;
+            navegador.Campana.NaveElegida = naveConstruida;
             lblAviso.Text = "Nave " + naveConstruida.Tipo + " lista para la misión";
+            btnContinuar.Enabled = true;
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        // La nave ya quedó guardada en la campaña al tocar "Usar esta nave"
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.TerminarCapitulo(Capitulo.Hangar);
         }
     }
 }

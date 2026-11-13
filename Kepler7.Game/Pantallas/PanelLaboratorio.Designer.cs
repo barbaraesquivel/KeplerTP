@@ -26,7 +26,8 @@ namespace Kepler7.Game.Pantallas
             lblClon = new Label();
             lstClon = new ListBox();
             lblComparacion = new Label();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
             SuspendLayout();
             //
             // lblTitulo
@@ -41,14 +42,14 @@ namespace Kepler7.Game.Pantallas
             // lblRecursos
             //
             lblRecursos.AutoSize = true;
-            lblRecursos.Location = new Point(10, 48);
+            lblRecursos.Location = new Point(10, 108);
             lblRecursos.Name = "lblRecursos";
             lblRecursos.TabIndex = 1;
             lblRecursos.Text = "Recursos: 0";
             //
             // btnClonar
             //
-            btnClonar.Location = new Point(10, 70);
+            btnClonar.Location = new Point(10, 130);
             btnClonar.Name = "btnClonar";
             btnClonar.Size = new Size(150, 30);
             btnClonar.TabIndex = 2;
@@ -58,7 +59,7 @@ namespace Kepler7.Game.Pantallas
             //
             // btnModificarClon
             //
-            btnModificarClon.Location = new Point(170, 70);
+            btnModificarClon.Location = new Point(170, 130);
             btnModificarClon.Name = "btnModificarClon";
             btnModificarClon.Size = new Size(150, 30);
             btnModificarClon.TabIndex = 3;
@@ -70,7 +71,7 @@ namespace Kepler7.Game.Pantallas
             //
             lblOriginal.AutoSize = true;
             lblOriginal.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblOriginal.Location = new Point(10, 110);
+            lblOriginal.Location = new Point(10, 170);
             lblOriginal.Name = "lblOriginal";
             lblOriginal.TabIndex = 4;
             lblOriginal.Text = "Original";
@@ -78,7 +79,7 @@ namespace Kepler7.Game.Pantallas
             // lstOriginal
             //
             lstOriginal.ItemHeight = 15;
-            lstOriginal.Location = new Point(10, 130);
+            lstOriginal.Location = new Point(10, 190);
             lstOriginal.Name = "lstOriginal";
             lstOriginal.Size = new Size(375, 199);
             lstOriginal.TabIndex = 5;
@@ -87,7 +88,7 @@ namespace Kepler7.Game.Pantallas
             //
             lblClon.AutoSize = true;
             lblClon.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblClon.Location = new Point(400, 110);
+            lblClon.Location = new Point(400, 170);
             lblClon.Name = "lblClon";
             lblClon.TabIndex = 6;
             lblClon.Text = "Clon";
@@ -95,34 +96,48 @@ namespace Kepler7.Game.Pantallas
             // lstClon
             //
             lstClon.ItemHeight = 15;
-            lstClon.Location = new Point(400, 130);
+            lstClon.Location = new Point(400, 190);
             lstClon.Name = "lstClon";
             lstClon.Size = new Size(375, 199);
             lstClon.TabIndex = 7;
             //
             // lblComparacion
             //
-            lblComparacion.Location = new Point(10, 340);
+            lblComparacion.Location = new Point(10, 400);
             lblComparacion.Name = "lblComparacion";
             lblComparacion.Size = new Size(765, 60);
             lblComparacion.TabIndex = 8;
             lblComparacion.Text = "";
             //
-            // btnVolver
+            // btnContinuar
             //
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVolver.Location = new Point(20, 505);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(160, 35);
-            btnVolver.TabIndex = 9;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnContinuar.Location = new Point(20, 565);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.TabIndex = 9;
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(10, 45);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(765, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             //
             // PanelLaboratorio
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblHistoria);
             Controls.Add(lblTitulo);
             Controls.Add(lblRecursos);
             Controls.Add(btnClonar);
@@ -132,9 +147,9 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblClon);
             Controls.Add(lstClon);
             Controls.Add(lblComparacion);
-            Controls.Add(btnVolver);
+            Controls.Add(btnContinuar);
             Name = "PanelLaboratorio";
-            Size = new Size(800, 560);
+            Size = new Size(800, 620);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,6 +165,7 @@ namespace Kepler7.Game.Pantallas
         private Label lblClon;
         private ListBox lstClon;
         private Label lblComparacion;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
     }
 }

@@ -1,14 +1,14 @@
 ﻿namespace Kepler7.Core.Patrones.Comportamiento.Strategy
 {
+    // Elige cualquier acción al azar
     public class IAAleatoria : IEstrategiaIA
     {
-        private Random numRandom = new Random();
-        public string DecidirAccion(Enemigo enemigo, Contexto contexto)
+        private static Random random = new Random();
+
+        public DecisionIA DecidirAccion(Enemigo enemigo, Contexto contexto)
         {
-            int accion = numRandom.Next(0, 3);
-            if (accion == 0) return $"[Aleatoria] {enemigo.Nombre} dispara al techo por error.";
-            if (accion == 1) return $"[Aleatoria] {enemigo.Nombre} da vueltas sobre su propio eje.";
-            return $"[Aleatoria] {enemigo.Nombre} emite un sonido estático y no hace nada.";
+            AccionIA accion = (AccionIA)random.Next(0, 5);
+            return new DecisionIA(accion, $"[Aleatoria] {enemigo.Nombre} tiene los circuitos cruzados y elige: {accion}.");
         }
     }
 }

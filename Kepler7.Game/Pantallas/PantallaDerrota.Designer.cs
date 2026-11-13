@@ -18,8 +18,7 @@ namespace Kepler7.Game.Pantallas
         private void InitializeComponent()
         {
             lblTitulo = new Label();
-            btnReintentar = new Button();
-            btnHub = new Button();
+            btnContinuar = new Button();
             SuspendLayout();
             //
             // lblTitulo
@@ -29,33 +28,23 @@ namespace Kepler7.Game.Pantallas
             lblTitulo.ForeColor = Color.FromArgb(230, 80, 80);
             lblTitulo.Location = new Point(30, 30);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Text = "Misión fallida";
+            lblTitulo.Text = "Práctica perdida: llegás herido al final";
             //
-            // btnReintentar
+            // btnContinuar
             //
-            btnReintentar.Location = new Point(30, 100);
-            btnReintentar.Name = "btnReintentar";
-            btnReintentar.Size = new Size(160, 35);
-            btnReintentar.Text = "Reintentar";
-            btnReintentar.UseVisualStyleBackColor = true;
-            btnReintentar.Click += btnReintentar_Click;
-            //
-            // btnHub
-            //
-            btnHub.Location = new Point(200, 100);
-            btnHub.Name = "btnHub";
-            btnHub.Size = new Size(160, 35);
-            btnHub.Text = "Volver al hub";
-            btnHub.UseVisualStyleBackColor = true;
-            btnHub.Click += btnHub_Click;
+            btnContinuar.Location = new Point(30, 100);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(160, 35);
+            btnContinuar.Text = "Continuar";
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
             //
             // PantallaDerrota
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lblTitulo);
-            Controls.Add(btnReintentar);
-            Controls.Add(btnHub);
+            Controls.Add(btnContinuar);
             Name = "PantallaDerrota";
             Size = new Size(800, 450);
             ResumeLayout(false);
@@ -65,7 +54,6 @@ namespace Kepler7.Game.Pantallas
         #endregion
 
         private Label lblTitulo;
-        private Button btnReintentar;
-        private Button btnHub;
+        private Button btnContinuar;
     }
 }

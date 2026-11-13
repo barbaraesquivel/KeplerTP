@@ -12,9 +12,10 @@ namespace Kepler7.Game.Pantallas
             this.navegador = navegador;
         }
 
+        // Empieza una campaña nueva desde cero
         private void btnJugar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.IniciarCampana();
         }
 
         private void btnTutorial_Click(object sender, EventArgs e)

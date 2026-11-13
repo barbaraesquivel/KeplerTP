@@ -3,6 +3,8 @@ using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Comportamiento.Chain;
 using Kepler7.Core.Patrones.Comportamiento.Command;
 using Kepler7.Core.Patrones.Comportamiento.State;
+using Kepler7.Core.Patrones.Comportamiento.Strategy;
+using Kepler7.Core.Progreso;
 using Kepler7.Game.Animacion;
 
 namespace Kepler7.Game.Pantallas
@@ -17,8 +19,17 @@ namespace Kepler7.Game.Pantallas
         private const int CostoTorreta = 30;
         private const int DanioTorreta = 6;
         private const int AlcanceTorreta = 3;
+        // El blindaje de K-7 absorbe casi todo el disparo de una torreta
+        private const int DanioTorretaK7 = 2;
 
         private NavegadorPantallas navegador;
+        private ModoCombate modo;
+
+        // Solo en el combate final
+        private ModificadoresFinal mods;
+        private JefeK7 jefe;
+        private int curasDisponibles;
+        private bool disparoEspecialListo;
         private Personaje jugador;
         private List<Personaje> enemigos = new List<Personaje>();
         private Random random = new Random();
@@ -29,11 +40,12 @@ namespace Kepler7.Game.Pantallas
         private AnimadorTimer animador;
         private Font fuenteEfectos = new Font("Segoe UI", 9F, FontStyle.Bold);
 
-        public PantallaCombate(NavegadorPantallas navegador)
+        public PantallaCombate(NavegadorPantallas navegador, ModoCombate modo)
         {
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
+            this.modo = modo;
             CrearPersonajes();
             animador = new AnimadorTimer(panelEscenario, PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual));
             animador.Registrar(jugador);
@@ -45,6 +57,10 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(panelCadena);
             panelEstado = new PanelEstadoPersonaje(jugador, this);
             Controls.Add(panelEstado);
+            if (modo == ModoCombate.Final)
+            {
+                ConfigurarPantallaFinal();
+            }
             AcomodarControles();
             Load += (s, e) => AcomodarControles();
             Actualizar();
@@ -107,6 +123,9 @@ namespace Kepler7.Game.Pantallas
             lstHistorial.Location = new Point(15, 380);
             lstHistorial.Size = new Size(401, 94);
 
+            lblObjetivos.Location = new Point(425, 432);
+            lblObjetivos.Size = new Size(370, 92);
+
             btnVolver.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             btnVolver.Location = new Point(15, 482);
             btnVolver.Size = new Size(160, 34);
@@ -114,6 +133,11 @@ namespace Kepler7.Game.Pantallas
 
         private void CrearPersonajes()
         {
+            if (modo == ModoCombate.Final)
+            {
+                CrearCombateFinal();
+                return;
+            }
             jugador = new Personaje("Comandante", 100, 12);
             jugador.X = 1;
             jugador.Y = 2;
@@ -154,22 +178,53 @@ namespace Kepler7.Game.Pantallas
             btnRehacer.Enabled = puedeActuar;
             btnTurnoEnemigo.Enabled = enJuego;
             // Al terminar el combate el botón lleva a victoria o derrota
-            btnVolver.Text = enJuego ? "Volver al hub" : "Continuar";
+            btnVolver.Text = enJuego ? "Abandonar" : "Continuar";
             if (enJuego && !puedeActuar)
             {
                 InformarBloqueo(permisoMover.Mensaje);
             }
-            lblBase.Text = "Recursos: " + baseJugador.Recursos + "   Bonus de nivel: +" + BonusNivel()
+            // En el final el daño sale de los modificadores de la campaña, no del nivel
+            string bonusNivel = modo == ModoCombate.Final ? "" : "   Bonus de nivel: +" + BonusNivel();
+            lblBase.Text = "Recursos: " + baseJugador.Recursos + bonusNivel
                 + "   Estructuras: " + string.Join(", ", baseJugador.Estructuras);
             panelEstado.ActualizarEstado();
             if (jugador.Estado.Nombre != "Normal")
             {
                 navegador.ServicioLogros.RegistrarUsoPatron("State");
             }
+            MostrarObjetivos();
+            if (modo == ModoCombate.Final)
+            {
+                btnHackear.Enabled = enJuego && !jefe.HackUsado;
+                MostrarK7();
+                MostrarModificadores();
+            }
             animador.ColorObjetivo = PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual);
             panelEscenario.Invalidate();
             // Actualizar() se llama después de cada acción, deshacer o rehacer
             MostrarHistorial();
+        }
+
+        // Los 3 logros que solo se consiguen en combate, con lo que hay que hacer
+        private void MostrarObjetivos()
+        {
+            lblObjetivos.Text = "Logros de combate:\n"
+                + Objetivo("Command") + "\n"
+                + Objetivo("Chain of Responsibility") + "\n"
+                + Objetivo("State");
+        }
+
+        private string Objetivo(string patron)
+        {
+            foreach (Logro logro in navegador.ServicioLogros.Logros)
+            {
+                if (logro.Patron == patron)
+                {
+                    string marca = logro.Desbloqueado ? "[✓] " : "[  ] ";
+                    return marca + patron + ": " + Historia.PistaLogro(patron);
+                }
+            }
+            return "";
         }
 
         // Muestra todo el historial de Command (incluye lo deshecho y rehecho)
@@ -379,7 +434,8 @@ namespace Kepler7.Game.Pantallas
             PointF posicion = animador.Posicion(enemigo);
             float x = posicion.X * Celda;
             float y = posicion.Y * Celda;
-            Brush color = Brushes.DarkRed;
+            // K-7 se dibuja violeta para diferenciarla de los aliens
+            Brush color = modo == ModoCombate.Final ? Brushes.DarkMagenta : Brushes.DarkRed;
             if (enemigo.Vida == 0)
             {
                 color = Brushes.Gray;
@@ -419,20 +475,31 @@ namespace Kepler7.Game.Pantallas
                 lblMensaje.Text = resultado.Mensaje;
                 return;
             }
-            // La nave elegida en el Hangar (Builder) suma Ataque / 10 al daño
-            int danio = resultado.Valor;
-            if (navegador.Partida.NaveElegida != null)
+            int danio;
+            string extra = "";
+            if (modo == ModoCombate.Final)
             {
-                danio += navegador.Partida.NaveElegida.Ataque / 10;
+                danio = DanioContraK7(resultado.Valor, out extra);
             }
-            danio += BonusNivel();
+            else
+            {
+                // La nave elegida en el Hangar (Builder) suma Ataque / 10 al daño
+                danio = resultado.Valor;
+                if (navegador.Partida.NaveElegida != null)
+                {
+                    danio += navegador.Partida.NaveElegida.Ataque / 10;
+                }
+                danio += BonusNivel();
+            }
             gestor.Ejecutar(new AtacarComando(objetivo, danio));
-            lblMensaje.Text = resultado.Mensaje + " a " + objetivo.Nombre;
+            navegador.ServicioLogros.RegistrarUsoPatron("Command");
+            lblMensaje.Text = "Atacás a " + objetivo.Nombre + " y hacés " + danio + " de daño" + extra;
             if (!QuedanEnemigos())
             {
                 lblMensaje.Text += ". ¡Ganaste el combate!";
             }
             Actualizar();
+            TurnoDeK7SiEsFinal();
         }
 
         private void MoverJugador(int dx, int dy)
@@ -458,6 +525,7 @@ namespace Kepler7.Game.Pantallas
             gestor.Ejecutar(new MoverComando(jugador, nuevaX, nuevaY));
             MostrarUltimoComando();
             Actualizar();
+            TurnoDeK7SiEsFinal();
         }
 
         private void MostrarUltimoComando()
@@ -473,9 +541,20 @@ namespace Kepler7.Game.Pantallas
                 lblMensaje.Text = "Ya tenés la vida al máximo";
                 return;
             }
+            // En el final solo hay las curaciones que se consiguieron en la campaña
+            if (modo == ModoCombate.Final)
+            {
+                if (curasDisponibles == 0)
+                {
+                    lblMensaje.Text = "No te quedan curaciones";
+                    return;
+                }
+                curasDisponibles--;
+            }
             gestor.Ejecutar(new CurarComando(jugador, Curacion));
             MostrarUltimoComando();
             Actualizar();
+            TurnoDeK7SiEsFinal();
         }
 
         private void btnConstruir_Click(object sender, EventArgs e)
@@ -494,6 +573,7 @@ namespace Kepler7.Game.Pantallas
             gestor.Ejecutar(new ConstruirComando(baseJugador, torreta, CostoTorreta));
             MostrarUltimoComando();
             Actualizar();
+            TurnoDeK7SiEsFinal();
         }
 
         private void btnDeshacer_Click(object sender, EventArgs e)
@@ -541,14 +621,23 @@ namespace Kepler7.Game.Pantallas
         private string DispararTorretas()
         {
             string mensaje = "";
+            int danio = DanioTorreta;
+            if (modo == ModoCombate.Final)
+            {
+                danio = DanioTorretaK7;
+                if (jefe.Defendiendo)
+                {
+                    danio = danio / 2;
+                }
+            }
             foreach (string torreta in baseJugador.Estructuras)
             {
                 Point posicion = PosicionDeTorreta(torreta);
                 Personaje objetivo = BuscarEnemigoVivoMasCercano(posicion.X, posicion.Y);
                 if (objetivo != null && Math.Abs(objetivo.X - posicion.X) + Math.Abs(objetivo.Y - posicion.Y) <= AlcanceTorreta)
                 {
-                    objetivo.Vida = Math.Max(0, objetivo.Vida - DanioTorreta);
-                    mensaje += "Torreta dispara a " + objetivo.Nombre + " (" + DanioTorreta + "). ";
+                    objetivo.Vida = Math.Max(0, objetivo.Vida - danio);
+                    mensaje += "Torreta dispara a " + objetivo.Nombre + " (" + danio + "). ";
                 }
             }
             return mensaje;
@@ -572,6 +661,13 @@ namespace Kepler7.Game.Pantallas
 
         private void btnTurnoEnemigo_Click(object sender, EventArgs e)
         {
+            // En el final este botón es "Esperar": el jugador pasa y juega K-7
+            if (modo == ModoCombate.Final)
+            {
+                lblMensaje.Text = "Esperás. ";
+                TurnoK7();
+                return;
+            }
             string mensaje = DispararTorretas();
             if (!QuedanEnemigos())
             {
@@ -626,15 +722,245 @@ namespace Kepler7.Game.Pantallas
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            animador.Detener();
             // Si el combate terminó, el navegador guarda el resultado y muestra victoria o derrota
             if (jugador.Vida == 0 || !QuedanEnemigos())
             {
-                navegador.TerminarCombate(jugador.Vida > 0, DanioHecho(), gestor.Historial.Count);
+                animador.Detener();
+                navegador.TerminarCombate(modo, jugador.Vida > 0, DanioHecho(), gestor.Historial.Count);
                 return;
             }
-            // Si se abandona el combate a mitad, vuelve al hub
-            navegador.IrAHub();
+            // Abandonar el entrenamiento no cuenta; en la práctica y el final cuenta como derrota
+            if (modo == ModoCombate.Entrenamiento)
+            {
+                animador.Detener();
+                navegador.IrADiario();
+                return;
+            }
+            DialogResult respuesta = MessageBox.Show("Abandonar cuenta como derrota y no hay reintento. ¿Abandonar?", "Abandonar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (respuesta == DialogResult.Yes)
+            {
+                animador.Detener();
+                navegador.TerminarCombate(modo, false, DanioHecho(), gestor.Historial.Count);
+            }
+        }
+
+        // ================== Combate final contra K-7 ==================
+
+        // Comandante con los modificadores de la campaña y K-7 como único enemigo
+        private void CrearCombateFinal()
+        {
+            mods = navegador.Campana.CalcularModificadores();
+
+            jugador = new Personaje("Comandante", 100 + mods.VidaExtra, 12);
+            jugador.X = 1;
+            jugador.Y = 2;
+            jugador.Defensa = new CadenaDefensa();
+            if (mods.EscudoInicial > 0)
+            {
+                jugador.Defensa.Agregar(new Escudo(mods.EscudoInicial));
+            }
+            jugador.Defensa.Agregar(new Armadura(3 + mods.ArmaduraExtra));
+            jugador.Defensa.Agregar(new Vida(jugador));
+
+            baseJugador.Recursos = 100 + mods.RecursosExtra;
+            curasDisponibles = mods.CuracionesExtra;
+            disparoEspecialListo = mods.DisparoEspecial;
+
+            jefe = new JefeK7(mods.JefeVidaExtra, mods.JefeAtaqueExtra, 8, 2);
+            enemigos.Add(jefe.Cuerpo);
+        }
+
+        // Cambios de la pantalla solo para el final
+        private void ConfigurarPantallaFinal()
+        {
+            panelCadena.SoloLectura();
+            panelEstado.SoloLectura();
+            lblObjetivos.Visible = false;
+            btnDeshacer.Visible = false;
+            btnRehacer.Visible = false;
+            btnTurnoEnemigo.Text = "Esperar";
+            lblK7.Visible = true;
+            lblModificadores.Visible = true;
+            // El botón de hackeo solo existe si se consiguió el código en la Bóveda
+            btnHackear.Visible = mods.PuedeHackearIA;
+            lblMensaje.Text = "K-7 te espera. Cada acción tuya es un turno; después juega K-7.";
+        }
+
+        // Daño del Comandante contra K-7 con los bonus de la campaña
+        private int DanioContraK7(int danioBase, out string extra)
+        {
+            int danio = danioBase + mods.DanioExtra + mods.DanioContraJefe;
+            extra = "";
+            if (disparoEspecialListo)
+            {
+                danio = danio * 2;
+                disparoEspecialListo = false;
+                extra = " (disparo doble del francotirador)";
+            }
+            if (jefe.Defendiendo)
+            {
+                danio = danio / 2;
+                extra += " (K-7 se defiende: mitad de daño)";
+            }
+            return danio;
+        }
+
+        private void TurnoDeK7SiEsFinal()
+        {
+            if (modo == ModoCombate.Final)
+            {
+                TurnoK7();
+            }
+        }
+
+        // Turno de K-7: disparan las torretas, elige estrategia por fase y actúa según su Strategy
+        private void TurnoK7()
+        {
+            if (jugador.Vida == 0 || !QuedanEnemigos())
+            {
+                return;
+            }
+            string mensaje = lblMensaje.Text + " | " + DispararTorretas();
+            jefe.Defendiendo = false;
+            if (!QuedanEnemigos())
+            {
+                lblMensaje.Text = mensaje + "¡K-7 fue destruido!";
+                Actualizar();
+                return;
+            }
+
+            mensaje += jefe.ActualizarFase();
+            DecisionIA decision = jefe.Decidir(Distancia(jefe.Cuerpo, jugador), jugador.Vida);
+            mensaje += "K-7 usa " + jefe.EstrategiaActual + ": " + AplicarDecision(decision);
+            jefe.FinDeTurno();
+            jugador.FinTurno();
+            if (jugador.Vida == 0)
+            {
+                mensaje += " ¡K-7 te derrotó!";
+            }
+            lblMensaje.Text = mensaje;
+            Actualizar();
+        }
+
+        private string AplicarDecision(DecisionIA decision)
+        {
+            switch (decision.Accion)
+            {
+                case AccionIA.Atacar:
+                    if (EstanAlLado(jefe.Cuerpo, jugador))
+                    {
+                        return AtaqueDeK7();
+                    }
+                    return decision.Texto + " Pero estás lejos y falla.";
+                case AccionIA.Acercarse:
+                    AcercarEnemigo(jefe.Cuerpo);
+                    return decision.Texto;
+                case AccionIA.Defender:
+                    jefe.Defendiendo = true;
+                    return decision.Texto;
+                case AccionIA.Huir:
+                    AlejarEnemigo(jefe.Cuerpo);
+                    return decision.Texto;
+                default:
+                    return decision.Texto;
+            }
+        }
+
+        // El golpe pasa por la cadena de defensa. Si conocés su estrategia, recibís la mitad.
+        private string AtaqueDeK7()
+        {
+            int vidaAntes = jugador.Vida;
+            ResultadoDanio resultado = jugador.RecibirDanio(new Danio(jefe.Cuerpo.AtaqueBase, "Fisico", jefe.Cuerpo));
+            int danio = resultado.DanioFinal;
+            string nota = "";
+            if (jefe.EstrategiaActual == mods.IaAnalizada && danio > 0)
+            {
+                danio = danio - danio / 2;
+                jugador.Vida = Math.Max(0, vidaAntes - danio);
+                nota = " (la estudiaste: mitad de daño)";
+            }
+            panelCadena.MostrarRecorrido("K-7", resultado);
+            navegador.ServicioLogros.RegistrarUsoPatron("Chain of Responsibility");
+            if (danio == 0)
+            {
+                animador.MostrarTexto(jugador, "Bloqueado", Color.LightSkyBlue);
+            }
+            return "ataca y te hace " + danio + " de daño" + nota + ".";
+        }
+
+        // Distancia en casillas contando diagonales (1 = al lado)
+        private int Distancia(Personaje a, Personaje b)
+        {
+            return Math.Max(Math.Abs(a.X - b.X), Math.Abs(a.Y - b.Y));
+        }
+
+        // Un paso en dirección contraria al jugador, si la casilla está libre
+        private void AlejarEnemigo(Personaje enemigo)
+        {
+            int dx = Math.Sign(enemigo.X - jugador.X);
+            int dy = Math.Sign(enemigo.Y - jugador.Y);
+            if (dx != 0 && PuedeIr(enemigo.X + dx, enemigo.Y))
+            {
+                enemigo.Mover(dx, 0);
+            }
+            else if (dy != 0 && PuedeIr(enemigo.X, enemigo.Y + dy))
+            {
+                enemigo.Mover(0, dy);
+            }
+        }
+
+        private bool PuedeIr(int x, int y)
+        {
+            bool dentro = x >= 0 && x < Columnas && y >= 0 && y < Filas;
+            return dentro && !EstaOcupada(x, y);
+        }
+
+        private void btnHackear_Click(object sender, EventArgs e)
+        {
+            if (!jefe.Hackear())
+            {
+                return;
+            }
+            lblMensaje.Text = "Usás el código de apagado: K-7 queda en IAAleatoria por " + JefeK7.TurnosHackeo + " turnos.";
+            Actualizar();
+            TurnoK7();
+        }
+
+        private void MostrarK7()
+        {
+            string texto = "K-7 usa: " + jefe.EstrategiaActual;
+            if (jefe.TurnosHackeado > 0)
+            {
+                texto += " (hackeada, " + jefe.TurnosHackeado + " turnos)";
+            }
+            if (jefe.Defendiendo)
+            {
+                texto += " (defendiéndose)";
+            }
+            texto += "\nVida de K-7: " + jefe.Cuerpo.Vida + " / " + jefe.Cuerpo.VidaMax;
+            lblK7.Text = texto;
+        }
+
+        // Panel lateral con los modificadores de la campaña que están en juego
+        private void MostrarModificadores()
+        {
+            string ia = mods.IaAnalizada == "" ? "ninguna" : mods.IaAnalizada;
+            string francotirador = mods.DisparoEspecial ? (disparoEspecialListo ? "listo" : "usado") : "no";
+            string hackeo = mods.PuedeHackearIA ? (jefe.HackUsado ? "usado" : "disponible") : "no (sin código)";
+            lblModificadores.Text = "Modificadores de la campaña:\n"
+                + "Vida: " + jugador.Vida + " / " + jugador.VidaMax + " (base 100, " + ConSigno(mods.VidaExtra) + ")\n"
+                + "Daño: 12 " + ConSigno(mods.DanioExtra) + " " + ConSigno(mods.DanioContraJefe) + " contra K-7\n"
+                + "Armadura: " + (3 + mods.ArmaduraExtra) + "   Escudo: " + PuntosDeEscudo() + "\n"
+                + "Recursos: " + baseJugador.Recursos + " (torreta: " + CostoTorreta + ", hace " + DanioTorretaK7 + " a K-7)\n"
+                + "Curaciones: " + curasDisponibles + " de +" + Curacion + "\n"
+                + "Disparo doble: " + francotirador + "   Hackeo: " + hackeo + "\n"
+                + "IA estudiada: " + ia + " (mitad de daño)\n"
+                + "K-7: vida " + JefeK7.VidaBase + " " + ConSigno(mods.JefeVidaExtra) + ", ataque " + JefeK7.AtaqueBase + " " + ConSigno(mods.JefeAtaqueExtra);
+        }
+
+        private string ConSigno(int valor)
+        {
+            return valor >= 0 ? "+" + valor : valor.ToString();
         }
     }
 }

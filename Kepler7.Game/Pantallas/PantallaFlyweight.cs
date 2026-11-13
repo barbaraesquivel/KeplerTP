@@ -1,3 +1,4 @@
+using Kepler7.Core.Modelo;
 using Kepler7.Core.Patrones.Estructurales.Flyweight;
 
 namespace Kepler7.Game.Pantallas
@@ -8,12 +9,14 @@ namespace Kepler7.Game.Pantallas
         private FabricaEspecies fabrica;
         private List<Tripulante> tripulantes;
         private int proximoId = 1;
+        private int censados = 0;
 
         public PantallaFlyweight(NavegadorPantallas navegador)
         {
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.Censo);
             fabrica = new FabricaEspecies();
             tripulantes = new List<Tripulante>();
 
@@ -36,6 +39,8 @@ namespace Kepler7.Game.Pantallas
             cmbRango.Items.Clear();
             cmbRango.Items.AddRange(new object[] { "Capitán", "Teniente", "Oficial", "Científico", "Ingeniero", "Médico" });
             cmbRango.SelectedIndex = 0;
+
+            cmbCantidad.SelectedIndex = 0;
         }
 
         private void ActualizarContador()
@@ -95,9 +100,13 @@ namespace Kepler7.Game.Pantallas
             return false;
         }
 
-        private void btnDemostracion10k_Click(object sender, EventArgs e)
+        // Censo masivo con la cantidad elegida (500, 2000 o 10000)
+        private void btnCensoMasivo_Click(object sender, EventArgs e)
         {
-            ResultadoComparacion resultado = DemostradorFlyweight.EjecutarComparacion(fabrica, 10000);
+            int cantidad = int.Parse(cmbCantidad.SelectedItem.ToString());
+            ResultadoComparacion resultado = DemostradorFlyweight.EjecutarComparacion(fabrica, cantidad);
+            censados = cantidad;
+            btnContinuar.Enabled = true;
             navegador.ServicioLogros.RegistrarUsoPatron("Flyweight");
 
             // Sincronizamos la cantidad de tripulantes para el contador de pantalla
@@ -121,7 +130,7 @@ namespace Kepler7.Game.Pantallas
                 $"¡Ahorro de memoria!: {resultado.AhorroPorcentaje:F1}%" + Environment.NewLine +
                 $"Instancias evitadas: {resultado.EspeciesSinFlyweight - resultado.EspeciesConFlyweight:N0}";
 
-            lblDetalle.Text = "Prueba de 10.000 tripulantes ejecutada. Revisá el cuadro verde con los resultados numéricos.";
+            lblDetalle.Text = "Censo de " + cantidad + " tripulantes ejecutado. Revisá el cuadro verde con los resultados.";
         }
 
         private void btnReiniciar_Click(object sender, EventArgs e)
@@ -130,14 +139,17 @@ namespace Kepler7.Game.Pantallas
             tripulantes.Clear();
             lstTripulantes.Items.Clear();
             proximoId = 1;
+            censados = 0;
+            btnContinuar.Enabled = false;
             ActualizarContador();
-            txtComparacion.Text = "Demostración numérica:\r\nPresioná el botón de comparación para medir 10.000 tripulantes con y sin el patrón Flyweight.";
+            txtComparacion.Text = "Demostración numérica:\r\nElegí la cantidad y tocá \"Ejecutar censo de:\" para comparar con y sin el patrón Flyweight.";
             lblDetalle.Text = "Censo reiniciado a cero.";
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.Campana.TripulantesCensados = censados;
+            navegador.TerminarCapitulo(Capitulo.Censo);
         }
     }
 }

@@ -54,6 +54,25 @@ namespace Kepler7.Core.Progreso
             }
         }
 
+        // Logros que todavía están bloqueados
+        public List<Logro> Faltantes()
+        {
+            List<Logro> faltantes = new List<Logro>();
+            foreach (Logro logro in Logros)
+            {
+                if (!logro.Desbloqueado)
+                {
+                    faltantes.Add(logro);
+                }
+            }
+            return faltantes;
+        }
+
+        public bool TodosDesbloqueados()
+        {
+            return Faltantes().Count == 0;
+        }
+
         // Permite reconocer variantes del nombre de un patrón (ej: "Chain" o "Template-Method")
         private string NormalizarNombrePatron(string patron)
         {

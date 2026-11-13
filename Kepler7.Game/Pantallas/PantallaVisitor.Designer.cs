@@ -37,7 +37,10 @@ namespace Kepler7.Game.Pantallas
             btnRestablecer = new Button();
             lblResultado = new Label();
             txtResultado = new TextBox();
-            btnVolver = new Button();
+            btnContinuar = new Button();
+            lblHistoria = new Label();
+            btnComprar = new Button();
+            lblSaldo = new Label();
             SuspendLayout();
             // 
             // lblTitulo
@@ -54,18 +57,18 @@ namespace Kepler7.Game.Pantallas
             // 
             lblInventario.AutoSize = true;
             lblInventario.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblInventario.Location = new Point(25, 48);
+            lblInventario.Location = new Point(25, 108);
             lblInventario.Name = "lblInventario";
-            lblInventario.Size = new Size(224, 20);
+            lblInventario.Size = new Size(300, 20);
             lblInventario.TabIndex = 1;
-            lblInventario.Text = "Ítems actuales en el inventario:";
+            lblInventario.Text = "Tienda: seleccioná un ítem y tocá Comprar.";
             // 
             // lstInventario
             // 
             lstInventario.Font = new Font("Consolas", 8.8F);
             lstInventario.FormattingEnabled = true;
             lstInventario.ItemHeight = 17;
-            lstInventario.Location = new Point(25, 71);
+            lstInventario.Location = new Point(25, 131);
             lstInventario.Name = "lstInventario";
             lstInventario.Size = new Size(720, 106);
             lstInventario.TabIndex = 2;
@@ -74,7 +77,7 @@ namespace Kepler7.Game.Pantallas
             // 
             lblVisitante.AutoSize = true;
             lblVisitante.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblVisitante.Location = new Point(25, 187);
+            lblVisitante.Location = new Point(25, 247);
             lblVisitante.Name = "lblVisitante";
             lblVisitante.Size = new Size(187, 20);
             lblVisitante.TabIndex = 3;
@@ -85,7 +88,7 @@ namespace Kepler7.Game.Pantallas
             cmbVisitante.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbVisitante.FormattingEnabled = true;
             cmbVisitante.Items.AddRange(new object[] { "Calculador de Precio (CalculadorPrecio)", "Contador de Armas (ContadorArmas)", "Aplicador de Veneno (AplicadorVeneno)" });
-            cmbVisitante.Location = new Point(25, 210);
+            cmbVisitante.Location = new Point(25, 270);
             cmbVisitante.Name = "cmbVisitante";
             cmbVisitante.Size = new Size(340, 28);
             cmbVisitante.TabIndex = 4;
@@ -94,7 +97,7 @@ namespace Kepler7.Game.Pantallas
             // 
             btnAplicar.BackColor = Color.LightSteelBlue;
             btnAplicar.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAplicar.Location = new Point(380, 208);
+            btnAplicar.Location = new Point(380, 268);
             btnAplicar.Name = "btnAplicar";
             btnAplicar.Size = new Size(180, 32);
             btnAplicar.TabIndex = 5;
@@ -104,7 +107,7 @@ namespace Kepler7.Game.Pantallas
             // 
             // btnRestablecer
             // 
-            btnRestablecer.Location = new Point(570, 208);
+            btnRestablecer.Location = new Point(570, 268);
             btnRestablecer.Name = "btnRestablecer";
             btnRestablecer.Size = new Size(175, 32);
             btnRestablecer.TabIndex = 6;
@@ -116,7 +119,7 @@ namespace Kepler7.Game.Pantallas
             // 
             lblResultado.AutoSize = true;
             lblResultado.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblResultado.Location = new Point(25, 250);
+            lblResultado.Location = new Point(25, 310);
             lblResultado.Name = "lblResultado";
             lblResultado.Size = new Size(276, 20);
             lblResultado.TabIndex = 7;
@@ -127,7 +130,7 @@ namespace Kepler7.Game.Pantallas
             txtResultado.BackColor = Color.Black;
             txtResultado.Font = new Font("Consolas", 9F);
             txtResultado.ForeColor = Color.LimeGreen;
-            txtResultado.Location = new Point(25, 273);
+            txtResultado.Location = new Point(25, 333);
             txtResultado.Multiline = true;
             txtResultado.Name = "txtResultado";
             txtResultado.ReadOnly = true;
@@ -136,22 +139,61 @@ namespace Kepler7.Game.Pantallas
             txtResultado.TabIndex = 8;
             txtResultado.Text = "Seleccioná un visitante y hacé clic en 'Aplicar Visitante'.";
             // 
-            // btnVolver
+            // btnContinuar
             // 
-            btnVolver.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnVolver.Location = new Point(25, 442);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(180, 36);
-            btnVolver.TabIndex = 9;
-            btnVolver.Text = "Volver al hub";
-            btnVolver.UseVisualStyleBackColor = true;
-            btnVolver.Click += btnVolver_Click;
+            btnContinuar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnContinuar.Location = new Point(25, 502);
+            btnContinuar.Name = "btnContinuar";
+            btnContinuar.Size = new Size(180, 36);
+            btnContinuar.TabIndex = 9;
+            btnContinuar.Text = "Continuar";
+            btnContinuar.Enabled = false;
+            btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
+            // 
+            // btnComprar
+            // 
+            btnComprar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnComprar.Location = new Point(220, 502);
+            btnComprar.Name = "btnComprar";
+            btnComprar.Size = new Size(180, 36);
+            btnComprar.TabIndex = 51;
+            btnComprar.Text = "Comprar seleccionado";
+            btnComprar.UseVisualStyleBackColor = true;
+            btnComprar.Click += btnComprar_Click;
+            // 
+            // lblSaldo
+            // 
+            lblSaldo.AutoSize = true;
+            lblSaldo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblSaldo.ForeColor = Color.FromArgb(90, 220, 140);
+            lblSaldo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblSaldo.Location = new Point(415, 510);
+            lblSaldo.Name = "lblSaldo";
+            lblSaldo.Size = new Size(90, 19);
+            lblSaldo.TabIndex = 52;
+            lblSaldo.Text = "Monedas: 0";
+            // 
+            // lblHistoria
+            // 
+            lblHistoria.BorderStyle = BorderStyle.FixedSingle;
+            lblHistoria.Font = new Font("Segoe UI", 9.5F, FontStyle.Italic);
+            lblHistoria.ForeColor = Color.FromArgb(255, 220, 130);
+            lblHistoria.Location = new Point(25, 46);
+            lblHistoria.Name = "lblHistoria";
+            lblHistoria.Padding = new Padding(4);
+            lblHistoria.Size = new Size(720, 56);
+            lblHistoria.TabIndex = 50;
+            lblHistoria.Text = "Historia del capítulo";
             // 
             // PantallaVisitor
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnVolver);
+            Controls.Add(lblHistoria);
+            Controls.Add(btnComprar);
+            Controls.Add(lblSaldo);
+            Controls.Add(btnContinuar);
             Controls.Add(txtResultado);
             Controls.Add(lblResultado);
             Controls.Add(btnRestablecer);
@@ -162,7 +204,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblInventario);
             Controls.Add(lblTitulo);
             Name = "PantallaVisitor";
-            Size = new Size(770, 495);
+            Size = new Size(770, 555);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -178,6 +220,9 @@ namespace Kepler7.Game.Pantallas
         private Button btnRestablecer;
         private Label lblResultado;
         private TextBox txtResultado;
-        private Button btnVolver;
+        private Button btnContinuar;
+        private Label lblHistoria;
+        private Button btnComprar;
+        private Label lblSaldo;
     }
 }

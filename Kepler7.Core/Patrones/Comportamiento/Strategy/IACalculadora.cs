@@ -1,19 +1,31 @@
 ﻿namespace Kepler7.Core.Patrones.Comportamiento.Strategy
 {
+    // Remata si el jugador está débil, huye si ella está débil; si no, combate normal
     public class IACalculadora : IEstrategiaIA
     {
-        public string DecidirAccion(Enemigo enemigo, Contexto contexto)
-        {
-            if (enemigo.Salud < 20)
-            {
-                return $"[Calculadora] {enemigo.Nombre} detecta salud crítica y huye para repararse.";
-            }
-            if (contexto.DistanciaAlJugador > 10)
-            {
-                return $"[Calculadora] {enemigo.Nombre} calcula la parábola perfecta y dispara un misil de largo alcance.";
-            }
+        public const int VidaJugadorDebil = 40;
+        public const int VidaPropiaCritica = 30;
 
-            return $"[Calculadora] {enemigo.Nombre} analiza la proximidad e inicia protocolo de combate cuerpo a cuerpo.";
+        public DecisionIA DecidirAccion(Enemigo enemigo, Contexto contexto)
+        {
+            // Jugador débil: va a rematar siempre
+            if (contexto.SaludDelJugador < VidaJugadorDebil)
+            {
+                if (contexto.EstaAlLado)
+                {
+                    return new DecisionIA(AccionIA.Atacar, $"[Calculadora] {enemigo.Nombre} detecta que estás débil y ataca.");
+                }
+                return new DecisionIA(AccionIA.Acercarse, $"[Calculadora] {enemigo.Nombre} detecta que estás débil y va a buscarte.");
+            }
+            if (enemigo.Salud < VidaPropiaCritica)
+            {
+                return new DecisionIA(AccionIA.Huir, $"[Calculadora] {enemigo.Nombre} detecta salud crítica y se aleja un paso.");
+            }
+            if (contexto.EstaAlLado)
+            {
+                return new DecisionIA(AccionIA.Atacar, $"[Calculadora] {enemigo.Nombre} calcula el golpe exacto y ataca.");
+            }
+            return new DecisionIA(AccionIA.Acercarse, $"[Calculadora] {enemigo.Nombre} calcula la ruta más corta y se acerca.");
         }
     }
 }

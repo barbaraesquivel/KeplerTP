@@ -18,6 +18,7 @@ namespace Kepler7.Game.Pantallas
 
         private void MostrarMision()
         {
+            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.Practica);
             Mision mision = navegador.Mision;
             lblTitulo.Text = mision.Nombre;
             lblObjetivo.Text = "Objetivo: " + mision.Objetivo;
@@ -35,12 +36,13 @@ namespace Kepler7.Game.Pantallas
 
         private void btnComenzar_Click(object sender, EventArgs e)
         {
-            navegador.IrACombate();
+            navegador.IrACombate(ModoCombate.Practica);
         }
 
+        // Vuelve al diario sin jugar (la práctica sigue pendiente)
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            navegador.IrAHub();
+            navegador.IrADiario();
         }
     }
 }
