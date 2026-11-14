@@ -28,6 +28,13 @@ namespace Kepler7.Game.Pantallas
             lstSecuencia = new ListBox();
             btnContinuar = new Button();
             lblHistoria = new Label();
+            lblAyudaIniciar = new Label();
+            lblAyudaEmergencia = new Label();
+            lblAyudaApagar = new Label();
+            lblAyudaSalir = new Label();
+            lblTituloSecuencia = new Label();
+            lblTituloEfecto = new Label();
+            lblEfecto = new Label();
             SuspendLayout();
             //
             // lblTitulo
@@ -78,13 +85,13 @@ namespace Kepler7.Game.Pantallas
             //
             lblEstado.AutoSize = true;
             lblEstado.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblEstado.Location = new Point(30, 185);
+            lblEstado.Location = new Point(30, 205);
             lblEstado.Name = "lblEstado";
             lblEstado.Text = "Estado: Apagada";
             //
             // barEnergia
             //
-            barEnergia.Location = new Point(30, 225);
+            barEnergia.Location = new Point(30, 240);
             barEnergia.Maximum = 100;
             barEnergia.Minimum = 0;
             barEnergia.Name = "barEnergia";
@@ -93,7 +100,7 @@ namespace Kepler7.Game.Pantallas
             // lblEnergia
             //
             lblEnergia.AutoSize = true;
-            lblEnergia.Location = new Point(440, 230);
+            lblEnergia.Location = new Point(440, 245);
             lblEnergia.Name = "lblEnergia";
             lblEnergia.Text = "Energía: 0";
             //
@@ -101,9 +108,9 @@ namespace Kepler7.Game.Pantallas
             //
             lstSecuencia.FormattingEnabled = true;
             lstSecuencia.ItemHeight = 15;
-            lstSecuencia.Location = new Point(30, 265);
+            lstSecuencia.Location = new Point(30, 300);
             lstSecuencia.Name = "lstSecuencia";
-            lstSecuencia.Size = new Size(500, 154);
+            lstSecuencia.Size = new Size(470, 154);
             //
             // btnContinuar
             //
@@ -128,6 +135,63 @@ namespace Kepler7.Game.Pantallas
             lblHistoria.TabIndex = 50;
             lblHistoria.Text = "Historia del capítulo";
             //
+            // lblAyudaIniciar
+            //
+            lblAyudaIniciar.Font = new Font("Segoe UI", 8F);
+            lblAyudaIniciar.Location = new Point(30, 168);
+            lblAyudaIniciar.Name = "lblAyudaIniciar";
+            lblAyudaIniciar.Size = new Size(160, 32);
+            lblAyudaIniciar.Text = "Enciende los 6 subsistemas (−10 energía)";
+            //
+            // lblAyudaEmergencia
+            //
+            lblAyudaEmergencia.Font = new Font("Segoe UI", 8F);
+            lblAyudaEmergencia.Location = new Point(200, 168);
+            lblAyudaEmergencia.Name = "lblAyudaEmergencia";
+            lblAyudaEmergencia.Size = new Size(160, 32);
+            lblAyudaEmergencia.Text = "Activa alarma y defensas (−25 energía)";
+            //
+            // lblAyudaApagar
+            //
+            lblAyudaApagar.Font = new Font("Segoe UI", 8F);
+            lblAyudaApagar.Location = new Point(370, 168);
+            lblAyudaApagar.Name = "lblAyudaApagar";
+            lblAyudaApagar.Size = new Size(160, 32);
+            lblAyudaApagar.Text = "Apaga todo, sin costo. K-7 ataca +2";
+            //
+            // lblAyudaSalir
+            //
+            lblAyudaSalir.Font = new Font("Segoe UI", 8F);
+            lblAyudaSalir.Location = new Point(540, 168);
+            lblAyudaSalir.Name = "lblAyudaSalir";
+            lblAyudaSalir.Size = new Size(180, 32);
+            lblAyudaSalir.Text = "Desactiva defensas y vuelve a Normal (sin costo)";
+            //
+            // lblTituloSecuencia
+            //
+            lblTituloSecuencia.AutoSize = true;
+            lblTituloSecuencia.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTituloSecuencia.Location = new Point(30, 278);
+            lblTituloSecuencia.Name = "lblTituloSecuencia";
+            lblTituloSecuencia.Text = "Lo que hizo la fachada (un botón, varios subsistemas):";
+            //
+            // lblTituloEfecto
+            //
+            lblTituloEfecto.AutoSize = true;
+            lblTituloEfecto.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTituloEfecto.Location = new Point(515, 278);
+            lblTituloEfecto.Name = "lblTituloEfecto";
+            lblTituloEfecto.Text = "Efecto en el combate final";
+            //
+            // lblEfecto
+            //
+            lblEfecto.BorderStyle = BorderStyle.FixedSingle;
+            lblEfecto.Location = new Point(515, 300);
+            lblEfecto.Name = "lblEfecto";
+            lblEfecto.Padding = new Padding(4);
+            lblEfecto.Size = new Size(255, 154);
+            lblEfecto.Text = "";
+            //
             // PantallaControlCentral
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -143,6 +207,13 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblEnergia);
             Controls.Add(lstSecuencia);
             Controls.Add(btnContinuar);
+            Controls.Add(lblAyudaIniciar);
+            Controls.Add(lblAyudaEmergencia);
+            Controls.Add(lblAyudaApagar);
+            Controls.Add(lblAyudaSalir);
+            Controls.Add(lblTituloSecuencia);
+            Controls.Add(lblTituloEfecto);
+            Controls.Add(lblEfecto);
             Name = "PantallaControlCentral";
             Size = new Size(800, 610);
             ResumeLayout(false);
@@ -162,5 +233,12 @@ namespace Kepler7.Game.Pantallas
         private ListBox lstSecuencia;
         private Button btnContinuar;
         private Label lblHistoria;
+        private Label lblAyudaIniciar;
+        private Label lblAyudaEmergencia;
+        private Label lblAyudaApagar;
+        private Label lblAyudaSalir;
+        private Label lblTituloSecuencia;
+        private Label lblTituloEfecto;
+        private Label lblEfecto;
     }
 }

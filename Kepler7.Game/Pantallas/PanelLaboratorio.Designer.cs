@@ -21,6 +21,7 @@ namespace Kepler7.Game.Pantallas
             lblRecursos = new Label();
             btnClonar = new Button();
             btnModificarClon = new Button();
+            cmbClones = new ComboBox();
             lblOriginal = new Label();
             lstOriginal = new ListBox();
             lblClon = new Label();
@@ -66,6 +67,15 @@ namespace Kepler7.Game.Pantallas
             btnModificarClon.Text = "Modificar clon";
             btnModificarClon.UseVisualStyleBackColor = true;
             btnModificarClon.Click += btnModificarClon_Click;
+            //
+            // cmbClones
+            //
+            cmbClones.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbClones.Location = new Point(330, 134);
+            cmbClones.Name = "cmbClones";
+            cmbClones.Size = new Size(200, 23);
+            cmbClones.TabIndex = 10;
+            cmbClones.SelectedIndexChanged += cmbClones_SelectedIndexChanged;
             //
             // lblOriginal
             //
@@ -142,6 +152,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(lblRecursos);
             Controls.Add(btnClonar);
             Controls.Add(btnModificarClon);
+            Controls.Add(cmbClones);
             Controls.Add(lblOriginal);
             Controls.Add(lstOriginal);
             Controls.Add(lblClon);
@@ -160,6 +171,7 @@ namespace Kepler7.Game.Pantallas
         private Label lblRecursos;
         private Button btnClonar;
         private Button btnModificarClon;
+        private ComboBox cmbClones;
         private Label lblOriginal;
         private ListBox lstOriginal;
         private Label lblClon;

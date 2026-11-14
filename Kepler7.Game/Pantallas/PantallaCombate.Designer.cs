@@ -31,6 +31,7 @@ namespace Kepler7.Game.Pantallas
             btnDeshacer = new Button();
             btnRehacer = new Button();
             lblBase = new Label();
+            lblTurno = new Label();
             lstHistorial = new ListBox();
             lblObjetivos = new Label();
             lblK7 = new Label();
@@ -103,7 +104,7 @@ namespace Kepler7.Game.Pantallas
             btnTurnoEnemigo.Name = "btnTurnoEnemigo";
             btnTurnoEnemigo.Size = new Size(168, 32);
             btnTurnoEnemigo.TabIndex = 6;
-            btnTurnoEnemigo.Text = "Turno enemigo";
+            btnTurnoEnemigo.Text = "Terminar turno";
             btnTurnoEnemigo.UseVisualStyleBackColor = true;
             btnTurnoEnemigo.Click += btnTurnoEnemigo_Click;
             // 
@@ -210,6 +211,12 @@ namespace Kepler7.Game.Pantallas
             lblBase.Size = new Size(401, 20);
             lblBase.TabIndex = 13;
             lblBase.Text = "Recursos: 0";
+            //
+            // lblTurno
+            //
+            lblTurno.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTurno.Name = "lblTurno";
+            lblTurno.Text = "Turno 1";
             // 
             // lstHistorial
             // 
@@ -247,6 +254,7 @@ namespace Kepler7.Game.Pantallas
             Controls.Add(btnRehacer);
             Controls.Add(lblMensaje);
             Controls.Add(lblBase);
+            Controls.Add(lblTurno);
             Controls.Add(lstHistorial);
             Controls.Add(btnVolver);
             Controls.Add(lblObjetivos);
@@ -273,6 +281,7 @@ namespace Kepler7.Game.Pantallas
         private Button btnRehacer;
         private Label lblMensaje;
         private Label lblBase;
+        private Label lblTurno;
         private ListBox lstHistorial;
         private Button btnVolver;
         private Label lblObjetivos;

@@ -21,6 +21,8 @@ namespace Kepler7.Game.Pantallas
         private const int AlcanceTorreta = 3;
         // El blindaje de K-7 absorbe casi todo el disparo de una torreta
         private const int DanioTorretaK7 = 2;
+        private const int MaxMovimientosPorTurno = 2;
+        private const int EsperaTurnoEnemigo = 600;
 
         private NavegadorPantallas navegador;
         private ModoCombate modo;
@@ -40,12 +42,22 @@ namespace Kepler7.Game.Pantallas
         private AnimadorTimer animador;
         private Font fuenteEfectos = new Font("Segoe UI", 9F, FontStyle.Bold);
 
+        private System.Windows.Forms.Timer timerTurnoEnemigo = new System.Windows.Forms.Timer();
+        private int turno = 1;
+        private int movimientosEnTurno = 0;
+        private int comandosDelTurno = 0;
+        private int deshechosDelTurno = 0;
+        private bool juegaEnemigo = false;
+        private string mensajeJugador = "";
+
         public PantallaCombate(NavegadorPantallas navegador, ModoCombate modo)
         {
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
             this.modo = modo;
+            timerTurnoEnemigo.Interval = EsperaTurnoEnemigo;
+            timerTurnoEnemigo.Tick += timerTurnoEnemigo_Tick;
             CrearPersonajes();
             animador = new AnimadorTimer(panelEscenario, PanelEstadoPersonaje.ColorDeEstado(jugador.EstadoVisual));
             animador.Registrar(jugador);
@@ -115,13 +127,16 @@ namespace Kepler7.Game.Pantallas
             btnRehacer.Size = new Size(104, 30);
 
             lblMensaje.Location = new Point(15, 332);
-            lblMensaje.Size = new Size(401, 22);
+            lblMensaje.Size = new Size(401, 44);
 
-            lblBase.Location = new Point(15, 356);
+            lblBase.Location = new Point(15, 378);
             lblBase.Size = new Size(401, 20);
 
-            lstHistorial.Location = new Point(15, 380);
-            lstHistorial.Size = new Size(401, 94);
+            lstHistorial.Location = new Point(15, 400);
+            lstHistorial.Size = new Size(401, 74);
+
+            lblTurno.Location = new Point(190, 490);
+            lblTurno.Size = new Size(226, 20);
 
             lblObjetivos.Location = new Point(425, 432);
             lblObjetivos.Size = new Size(370, 92);
@@ -161,7 +176,7 @@ namespace Kepler7.Game.Pantallas
 
         public void Actualizar()
         {
-            bool enJuego = jugador.Vida > 0 && QuedanEnemigos();
+            bool enJuego = jugador.Vida > 0 && QuedanEnemigos() && !juegaEnemigo;
             ResultadoAccion permisoAtacar = jugador.Estado.Atacar(jugador);
             ResultadoAccion permisoMover = jugador.Estado.Mover(jugador, 0, 0);
             bool puedeAtacar = enJuego && permisoAtacar.Exito;
@@ -174,11 +189,14 @@ namespace Kepler7.Game.Pantallas
             btnDerecha.Enabled = puedeMover;
             btnCurar.Enabled = puedeActuar;
             btnConstruir.Enabled = puedeActuar;
-            btnDeshacer.Enabled = puedeActuar;
-            btnRehacer.Enabled = puedeActuar;
+            btnDeshacer.Enabled = puedeActuar && comandosDelTurno > 0;
+            btnRehacer.Enabled = puedeActuar && deshechosDelTurno > 0;
             btnTurnoEnemigo.Enabled = enJuego;
+            lblTurno.Text = juegaEnemigo ? "Turno " + turno + " - juegan los enemigos" : "Turno " + turno + " - movimientos: " + movimientosEnTurno + "/" + MaxMovimientosPorTurno;
+            bool combateTerminado = jugador.Vida == 0 || !QuedanEnemigos();
             // Al terminar el combate el botón lleva a victoria o derrota
-            btnVolver.Text = enJuego ? "Abandonar" : "Continuar";
+            btnVolver.Text = combateTerminado ? "Continuar" : "Abandonar";
+            btnVolver.Enabled = !juegaEnemigo;
             if (enJuego && !puedeActuar)
             {
                 InformarBloqueo(permisoMover.Mensaje);
@@ -493,13 +511,12 @@ namespace Kepler7.Game.Pantallas
             }
             gestor.Ejecutar(new AtacarComando(objetivo, danio));
             navegador.ServicioLogros.RegistrarUsoPatron("Command");
-            lblMensaje.Text = "Atacás a " + objetivo.Nombre + " y hacés " + danio + " de daño" + extra;
+            string mensaje = "Atacás a " + objetivo.Nombre + " y hacés " + danio + " de daño" + extra;
             if (!QuedanEnemigos())
             {
-                lblMensaje.Text += ". ¡Ganaste el combate!";
+                mensaje += ". ¡Ganaste el combate!";
             }
-            Actualizar();
-            TurnoDeK7SiEsFinal();
+            TerminarTurnoJugador(mensaje);
         }
 
         private void MoverJugador(int dx, int dy)
@@ -524,8 +541,20 @@ namespace Kepler7.Game.Pantallas
             }
             gestor.Ejecutar(new MoverComando(jugador, nuevaX, nuevaY));
             MostrarUltimoComando();
+            SumarComandoDelTurno();
+            movimientosEnTurno++;
+            if (movimientosEnTurno >= MaxMovimientosPorTurno)
+            {
+                TerminarTurnoJugador(lblMensaje.Text);
+                return;
+            }
             Actualizar();
-            TurnoDeK7SiEsFinal();
+        }
+
+        private void SumarComandoDelTurno()
+        {
+            comandosDelTurno++;
+            deshechosDelTurno = 0;
         }
 
         private void MostrarUltimoComando()
@@ -553,8 +582,7 @@ namespace Kepler7.Game.Pantallas
             }
             gestor.Ejecutar(new CurarComando(jugador, Curacion));
             MostrarUltimoComando();
-            Actualizar();
-            TurnoDeK7SiEsFinal();
+            TerminarTurnoJugador(lblMensaje.Text);
         }
 
         private void btnConstruir_Click(object sender, EventArgs e)
@@ -572,29 +600,69 @@ namespace Kepler7.Game.Pantallas
             string torreta = "Torreta (" + jugador.X + "," + jugador.Y + ")";
             gestor.Ejecutar(new ConstruirComando(baseJugador, torreta, CostoTorreta));
             MostrarUltimoComando();
-            Actualizar();
-            TurnoDeK7SiEsFinal();
+            TerminarTurnoJugador(lblMensaje.Text);
         }
 
         private void btnDeshacer_Click(object sender, EventArgs e)
         {
-            if (!gestor.Deshacer())
+            if (comandosDelTurno == 0 || !gestor.Deshacer())
             {
-                lblMensaje.Text = "No hay nada para deshacer";
+                lblMensaje.Text = "No hay nada para deshacer en este turno";
                 return;
             }
+            comandosDelTurno--;
+            deshechosDelTurno++;
+            movimientosEnTurno = Math.Max(0, movimientosEnTurno - 1);
             MostrarUltimoComando();
             Actualizar();
         }
 
         private void btnRehacer_Click(object sender, EventArgs e)
         {
-            if (!gestor.Rehacer())
+            if (deshechosDelTurno == 0 || !gestor.Rehacer())
             {
-                lblMensaje.Text = "No hay nada para rehacer";
+                lblMensaje.Text = "No hay nada para rehacer en este turno";
                 return;
             }
+            comandosDelTurno++;
+            deshechosDelTurno--;
+            movimientosEnTurno++;
             MostrarUltimoComando();
+            Actualizar();
+        }
+
+        private void TerminarTurnoJugador(string mensaje)
+        {
+            mensajeJugador = mensaje;
+            movimientosEnTurno = 0;
+            comandosDelTurno = 0;
+            deshechosDelTurno = 0;
+            lblMensaje.Text = mensajeJugador;
+            if (jugador.Vida == 0 || !QuedanEnemigos())
+            {
+                Actualizar();
+                return;
+            }
+            juegaEnemigo = true;
+            lblMensaje.Text = mensajeJugador + " | Juegan los enemigos...";
+            Actualizar();
+            timerTurnoEnemigo.Start();
+        }
+
+        private void timerTurnoEnemigo_Tick(object sender, EventArgs e)
+        {
+            timerTurnoEnemigo.Stop();
+            lblMensaje.Text = mensajeJugador;
+            if (modo == ModoCombate.Final)
+            {
+                TurnoK7();
+            }
+            else
+            {
+                TurnoAliens();
+            }
+            juegaEnemigo = false;
+            turno++;
             Actualizar();
         }
 
@@ -664,14 +732,18 @@ namespace Kepler7.Game.Pantallas
             // En el final este botón es "Esperar": el jugador pasa y juega K-7
             if (modo == ModoCombate.Final)
             {
-                lblMensaje.Text = "Esperás. ";
-                TurnoK7();
+                TerminarTurnoJugador("Esperás.");
                 return;
             }
+            TerminarTurnoJugador("Pasás el turno.");
+        }
+
+        private void TurnoAliens()
+        {
             string mensaje = DispararTorretas();
             if (!QuedanEnemigos())
             {
-                lblMensaje.Text = mensaje + "¡Ganaste el combate!";
+                lblMensaje.Text = mensajeJugador + " | " + mensaje + "¡Ganaste el combate!";
                 Actualizar();
                 return;
             }
@@ -704,7 +776,7 @@ namespace Kepler7.Game.Pantallas
             {
                 mensaje += "¡Fuiste derrotado!";
             }
-            lblMensaje.Text = mensaje;
+            lblMensaje.Text = mensajeJugador + " | " + mensaje;
             Actualizar();
         }
 
@@ -722,6 +794,7 @@ namespace Kepler7.Game.Pantallas
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            timerTurnoEnemigo.Stop();
             // Si el combate terminó, el navegador guarda el resultado y muestra victoria o derrota
             if (jugador.Vida == 0 || !QuedanEnemigos())
             {
@@ -803,14 +876,6 @@ namespace Kepler7.Game.Pantallas
                 extra += " (K-7 se defiende: mitad de daño)";
             }
             return danio;
-        }
-
-        private void TurnoDeK7SiEsFinal()
-        {
-            if (modo == ModoCombate.Final)
-            {
-                TurnoK7();
-            }
         }
 
         // Turno de K-7: disparan las torretas, elige estrategia por fase y actúa según su Strategy
@@ -921,9 +986,7 @@ namespace Kepler7.Game.Pantallas
             {
                 return;
             }
-            lblMensaje.Text = "Usás el código de apagado: K-7 queda en IAAleatoria por " + JefeK7.TurnosHackeo + " turnos.";
-            Actualizar();
-            TurnoK7();
+            TerminarTurnoJugador("Usás el código de apagado: K-7 queda en IAAleatoria por " + JefeK7.TurnosHackeo + " turnos.");
         }
 
         private void MostrarK7()

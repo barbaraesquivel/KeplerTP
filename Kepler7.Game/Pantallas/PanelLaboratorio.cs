@@ -8,10 +8,9 @@ namespace Kepler7.Game.Pantallas
         private NavegadorPantallas navegador;
         private LaboratorioClonacion laboratorio;
         private TripulanteClonable original;
-        private TripulanteClonable clon;
+        private List<TripulanteClonable> clones = new List<TripulanteClonable>();
         private string originalAlEmpezar;
         private PruebaIndependencia prueba = new PruebaIndependencia();
-        private int clonesCreados = 0;
 
         public PanelLaboratorio(NavegadorPantallas navegador)
         {
@@ -22,7 +21,7 @@ namespace Kepler7.Game.Pantallas
             // Clonar es opcional: se puede seguir sin clonar
             btnContinuar.Enabled = true;
             CrearOriginal();
-            laboratorio = new LaboratorioClonacion(100, 20);
+            laboratorio = new LaboratorioClonacion(60, 20);
             laboratorio.RegistrarPrototipo("Ana", original);
             // Registrar el prototipo ya usa el patrón (clonar es opcional en la campaña)
             navegador.ServicioLogros.RegistrarUsoPatron("Prototype");
@@ -65,16 +64,30 @@ namespace Kepler7.Game.Pantallas
             }
         }
 
+        private TripulanteClonable ClonSeleccionado()
+        {
+            if (cmbClones.SelectedIndex < 0)
+            {
+                return null;
+            }
+            return clones[cmbClones.SelectedIndex];
+        }
+
         private void ActualizarPantalla()
         {
-            lblRecursos.Text = "Recursos: " + laboratorio.Recursos + "  |  Clones creados: " + clonesCreados + " (cuentan hasta " + Campana.MaxClones + ")";
+            TripulanteClonable clon = ClonSeleccionado();
+            lblRecursos.Text = "Recursos: " + laboratorio.Recursos + "  |  Clones: " + clones.Count + "/" + Campana.MaxClones;
+            btnClonar.Enabled = clones.Count < Campana.MaxClones && laboratorio.Recursos >= laboratorio.CostoClonacion;
+            btnModificarClon.Enabled = clon != null;
             MostrarTripulante(lstOriginal, original);
             MostrarTripulante(lstClon, clon);
             if (clon == null)
             {
+                lblClon.Text = "Clon";
                 lblComparacion.Text = "Cloná al tripulante para comparar.";
                 return;
             }
+            lblClon.Text = clon.Nombre;
             lblComparacion.Text = string.Join("\n", prueba.Comparar(original, originalAlEmpezar, clon));
         }
 
@@ -86,15 +99,22 @@ namespace Kepler7.Game.Pantallas
                 lblComparacion.Text = "No alcanzan los recursos para clonar.";
                 return;
             }
-            clon = nuevo;
-            clon.Nombre = "Ana (clon)";
-            clonesCreados++;
+            nuevo.Nombre = "Ana (clon " + (clones.Count + 1) + ")";
+            clones.Add(nuevo);
+            cmbClones.Items.Add(nuevo.Nombre);
+            cmbClones.SelectedIndex = clones.Count - 1;
             navegador.ServicioLogros.RegistrarUsoPatron("Prototype");
+            ActualizarPantalla();
+        }
+
+        private void cmbClones_SelectedIndexChanged(object sender, EventArgs e)
+        {
             ActualizarPantalla();
         }
 
         private void btnModificarClon_Click(object sender, EventArgs e)
         {
+            TripulanteClonable clon = ClonSeleccionado();
             if (clon == null)
             {
                 lblComparacion.Text = "Primero tenés que clonar.";
@@ -106,7 +126,7 @@ namespace Kepler7.Game.Pantallas
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.Campana.ClonesCreados = clonesCreados;
+            navegador.Campana.ClonesCreados = clones.Count;
             navegador.TerminarCapitulo(Capitulo.Laboratorio);
         }
     }

@@ -16,7 +16,8 @@ namespace Kepler7.Game.Pantallas
             InitializeComponent();
             Tema.Preparar(this);
             this.navegador = navegador;
-            lblHistoria.Text = Historia.TextoCapitulo(Capitulo.ControlCentral);
+            lblHistoria.Text = "K-7 desconectó los sistemas de la estación. Reactivá lo necesario sin gastar toda la energía: "
+                + "lo que te quede se convierte en recursos para el combate final.";
             ActualizarPantalla();
         }
 
@@ -69,6 +70,26 @@ namespace Kepler7.Game.Pantallas
             {
                 lstSecuencia.Items.Add(paso);
             }
+
+            MostrarEfectoEnCombate();
+        }
+
+        private void GuardarEstacionEnCampana()
+        {
+            navegador.Campana.EnergiaRestante = control.NivelEnergia;
+            navegador.Campana.EstadoEstacion = control.Estado;
+        }
+
+        private void MostrarEfectoEnCombate()
+        {
+            GuardarEstacionEnCampana();
+            ModificadoresFinal efecto = navegador.Campana.CalcularEfectoEstacion();
+            string texto = string.Join("\n\n", efecto.Resumen);
+            if (control.Estado == EstadoEstacion.Apagada)
+            {
+                texto += "\n\nConviene dejar la estación encendida (Normal) antes de continuar.";
+            }
+            lblEfecto.Text = texto;
         }
 
         private Color ColorDelEstado(EstadoEstacion estado)
@@ -87,8 +108,7 @@ namespace Kepler7.Game.Pantallas
         // Guarda cómo quedó la estación
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            navegador.Campana.EnergiaRestante = control.NivelEnergia;
-            navegador.Campana.EstadoEstacion = control.Estado;
+            GuardarEstacionEnCampana();
             navegador.TerminarCapitulo(Capitulo.ControlCentral);
         }
     }

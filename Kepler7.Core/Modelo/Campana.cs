@@ -157,6 +157,13 @@ namespace Kepler7.Core.Modelo
             return mod;
         }
 
+        public ModificadoresFinal CalcularEfectoEstacion()
+        {
+            ModificadoresFinal mod = new ModificadoresFinal();
+            AplicarEstacion(mod);
+            return mod;
+        }
+
         public bool Terminado(Capitulo capitulo)
         {
             return Actual > capitulo;

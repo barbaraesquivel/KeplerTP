@@ -42,10 +42,13 @@
             btnContinuar = new Button();
             lblHistoria = new Label();
             lblSaldo = new Label();
+            btnProbar = new Button();
+            lblEfecto = new Label();
             SuspendLayout();
             // 
             // cmbTipoMensaje
             // 
+            cmbTipoMensaje.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTipoMensaje.FormattingEnabled = true;
             cmbTipoMensaje.Location = new Point(216, 80);
             cmbTipoMensaje.Name = "cmbTipoMensaje";
@@ -54,6 +57,7 @@
             // 
             // cmbCifrado
             // 
+            cmbCifrado.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCifrado.FormattingEnabled = true;
             cmbCifrado.Location = new Point(416, 80);
             cmbCifrado.Name = "cmbCifrado";
@@ -106,13 +110,31 @@
             // 
             // btnEnviar
             // 
-            btnEnviar.Location = new Point(305, 331);
+            btnEnviar.Location = new Point(416, 325);
             btnEnviar.Name = "btnEnviar";
-            btnEnviar.Size = new Size(199, 56);
+            btnEnviar.Size = new Size(194, 50);
             btnEnviar.TabIndex = 3;
-            btnEnviar.Text = "Enviar";
+            btnEnviar.Text = "Enviar definitivo";
             btnEnviar.UseVisualStyleBackColor = true;
             btnEnviar.Click += btnEnviar_Click;
+            //
+            // btnProbar
+            //
+            btnProbar.Location = new Point(216, 325);
+            btnProbar.Name = "btnProbar";
+            btnProbar.Size = new Size(194, 50);
+            btnProbar.TabIndex = 6;
+            btnProbar.Text = "Probar";
+            btnProbar.UseVisualStyleBackColor = true;
+            btnProbar.Click += btnProbar_Click;
+            //
+            // lblEfecto
+            //
+            lblEfecto.Location = new Point(63, 380);
+            lblEfecto.Name = "lblEfecto";
+            lblEfecto.Size = new Size(700, 26);
+            lblEfecto.TabIndex = 52;
+            lblEfecto.Text = "Probá combinaciones de tipo y cifrado antes del envío definitivo.";
             // 
             // txtMensajeOriginalMuestra
             // 
@@ -184,6 +206,8 @@
             Controls.Add(txtMensajeCifradoMuestra);
             Controls.Add(txtMensajeOriginalMuestra);
             Controls.Add(btnEnviar);
+            Controls.Add(btnProbar);
+            Controls.Add(lblEfecto);
             Controls.Add(txtMensaje);
             Controls.Add(lblMensajeCifrado);
             Controls.Add(lblMensajeOriginal);
@@ -214,5 +238,7 @@
         private Button btnContinuar;
         private Label lblHistoria;
         private Label lblSaldo;
+        private Button btnProbar;
+        private Label lblEfecto;
     }
 }
